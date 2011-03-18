@@ -7,6 +7,7 @@ namespace Pandemic
 {
     public class City
     {
+        //hayley
         public string name;
         public DiseaseColor color;
         public List<City> adjacent;
