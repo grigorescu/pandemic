@@ -12,9 +12,15 @@ namespace Pandemic
         public Map map;
         public Player player;
 
-        public GameState(GameState gs)
+        public GameState(GameState gs, Player player)
         {
             map = gs.map;
+            this.player = player;
+        }
+
+        public GameState(GameState gs, Map map)
+        {
+            this.map = map;
             player = gs.player;
         }
 
@@ -34,6 +40,7 @@ namespace Pandemic
             List<Action> actions = new List<Action>();
             Player current = currentPlayer();
             actions.AddRange(map.getMoveActionsFor(current));
+            actions.AddRange(map.getCureActionsFor(current));
             return actions;
         }
     }

@@ -27,16 +27,74 @@ namespace TestPandemic2
             }
         }
 
+        public class HatesDisease : SearchEvaluate
+        {
+            int diseaseMax;
+            public HatesDisease(int diseaseMax)
+            {
+                this.diseaseMax = diseaseMax;
+            }
+
+            public static int getTotalDisease(GameState gs)
+            {
+                int totalDisease = 0;
+                foreach (City c in gs.map.allCities)
+                {
+                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLACK);
+                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLUE);
+                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.YELLOW);
+                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.ORANGE);
+                }
+                return totalDisease;
+            }
+
+            public override float evaluate(GameState gs)
+            {
+                return 1 - (float)getTotalDisease(gs) / diseaseMax;
+
+            }
+        }
+
+        City newyork, newark;
+        Map map;
+        GameState gs;
+
+        [TestInitialize()]
+        public void initialize()
+        {
+            map = new Map();
+            newyork = map.addCity("NewYork", DiseaseColor.BLUE);
+            newark = map.addCity("Newark", DiseaseColor.BLUE);
+            City.makeAdjacent(newyork, newark);
+            gs = new GameState(newyork, map);
+
+        }
+
+        [TestMethod]
+        public void TestDisease()
+        {
+            City atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
+            City.makeAdjacent(newyork, atlanta);
+            map = map.addDisease(newyork);
+            gs = new GameState(newyork, map);
+            SearchEvaluate cleaner = new HatesDisease(1);
+            Assert.AreEqual(1, HatesDisease.getTotalDisease(gs));
+            Action action = cleaner.bfs_findbest(gs, 1);
+            gs = action.execute(gs);
+            Assert.AreEqual(0, HatesDisease.getTotalDisease(gs));
+            gs = new GameState(gs, gs.map.addDisease(newark));
+            Assert.AreEqual(1, HatesDisease.getTotalDisease(gs));
+            gs = cleaner.bfs_findbest(gs, 2).execute(gs);
+            gs = cleaner.bfs_findbest(gs, 2).execute(gs);
+            Assert.AreEqual(0, HatesDisease.getTotalDisease(gs));
+        }
+
         [TestMethod]
         public void TestStationMove()
         {
-            Map map = new Map();
-            City newyork = map.addCity("NewYork", DiseaseColor.BLUE);
-            City newark = map.addCity("Newark", DiseaseColor.BLUE);
             City rio = map.addCity("Rio", DiseaseColor.YELLOW);
-            City.makeAdjacent(newyork, newark);
+            
 
-            GameState gs = new GameState(newyork, map);
             SearchEvaluate likesRio = new LikesCity(rio);
 
             Action action = likesRio.bfs_findbest(gs, 1);
@@ -56,10 +114,7 @@ namespace TestPandemic2
         [TestMethod]
         public void TestBasicMoveSearch()
         {
-            Map map = new Map();
             City atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
-            City newark = map.addCity("Newark", DiseaseColor.BLUE);
-            City newyork = map.addCity("NewYork", DiseaseColor.BLUE);
             City chicago = map.addCity("Chicago", DiseaseColor.BLUE);
 
             City.makeAdjacent(atlanta, newark);

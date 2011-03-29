@@ -43,11 +43,12 @@ namespace Pandemic
                 return station;
             }
 
-            public CityData addDisease(DiseaseColor color)
+            public CityData adjustDisease(DiseaseColor color, int adjustment)
             {
                 CityData result = new CityData(this);
-                Debug.Assert(diseases[(int)color] < 3);
-                result.diseases[(int)color]++;
+                int newValue = result.diseases[(int)color] + adjustment;
+                Debug.Assert(newValue <= 3 && newValue >= 0);
+                result.diseases[(int)color] = newValue;
                 return result;
             }
 
@@ -91,7 +92,7 @@ namespace Pandemic
             DiseaseColor color = c.color;
             if (result.cities[c].disease(color) < 3)
             {
-                result.cities[c] = result.cities[c].addDisease(color);
+                result.cities[c] = result.cities[c].adjustDisease(color,1);
 
             } else {
                 //outbreak
@@ -107,7 +108,7 @@ namespace Pandemic
                         continue;
                     if (result.cities[current].disease(color) < 3)
                     {
-                        result.cities[current] = result.cities[current].addDisease(color);
+                        result.cities[current] = result.cities[current].adjustDisease(color,1);
                     }
                     else
                     {
@@ -119,6 +120,13 @@ namespace Pandemic
                 result._outbreakCount += outbreaks.Count;
             }
             
+            return result;
+        }
+
+        public Map removeDisease(City city, DiseaseColor color)
+        {
+            Map result = new Map(this);
+            result.cities[city] = result.cities[city].adjustDisease(color, -1);
             return result;
         }
 
@@ -148,6 +156,12 @@ namespace Pandemic
             return cities[city].hasStation();
         }
 
+        public ICollection<City> allCities
+        {
+            get { return cities.Keys; }
+        }
+
+
         public List<MoveAction> getMoveActionsFor(Player player)
         {
             List<MoveAction> moves = new List<MoveAction>();
@@ -169,5 +183,18 @@ namespace Pandemic
             return moves;
         }
 
+        public List<CureAction> getCureActionsFor(Player player)
+        {
+            List<CureAction> cures = new List<CureAction>();
+            for(int i = 0; i < 4; i++)
+            {
+                DiseaseColor color = (DiseaseColor)i;
+                if (diseaseLevel(player.position, color) > 0)
+                {
+                    cures.Add(new CureAction(player.position,color));
+                }
+            }
+            return cures;
+        }
     }
 }

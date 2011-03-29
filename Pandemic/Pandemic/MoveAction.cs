@@ -20,9 +20,8 @@ namespace Pandemic
         public override GameState execute(GameState gs)
         {
 
-            GameState result = new GameState(gs);
             player = new Player(dest);
-            result.player = player;
+            GameState result = new GameState(gs, player);
             return result;
         }
     }

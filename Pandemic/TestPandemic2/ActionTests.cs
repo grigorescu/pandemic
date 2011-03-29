@@ -11,7 +11,7 @@ namespace TestPandemic2
     ///to contain all MoveActionTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class MoveActionTest
+    public class ActionTests
     {
 
 
@@ -68,7 +68,7 @@ namespace TestPandemic2
         ///A test for execute
         ///</summary>
         [TestMethod()]
-        public void executeTest()
+        public void moveExecuteTest()
         {
             City atlanta = new City("Atlanta", DiseaseColor.BLUE);
             City newyork = new City("NewYork", DiseaseColor.BLUE);
@@ -78,6 +78,23 @@ namespace TestPandemic2
             GameState newGs = action.execute(gs);
             Assert.AreEqual(newyork, newGs.player.position);
             Assert.AreEqual(atlanta, gs.player.position);
+
+        }
+
+        [TestMethod()]
+        public void cureExecuteTest()
+        {
+            Map map = new Map();
+            City atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
+            City newyork = map.addCity("NewYork", DiseaseColor.BLUE);
+            City.makeAdjacent(atlanta, newyork);
+            map = map.addDisease(atlanta);
+            GameState gs = new GameState(atlanta, map);
+            CureAction action = new CureAction(atlanta, DiseaseColor.BLUE);
+            GameState newGs = action.execute(gs);
+            Assert.AreEqual(1, gs.map.diseaseLevel(atlanta, DiseaseColor.BLUE));
+            Assert.AreEqual(atlanta, newGs.player.position);
+            Assert.AreEqual(0, newGs.map.diseaseLevel(atlanta, DiseaseColor.BLUE));
 
         }
     }
