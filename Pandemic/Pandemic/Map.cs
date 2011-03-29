@@ -51,10 +51,20 @@ namespace Pandemic
                 return result;
             }
 
+            public CityData addStation()
+            {
+                Debug.Assert(!station);
+                CityData result = new CityData(this);
+                result.station = true;
+                return result;
+            }
+
         }
 
         private Dictionary<City, CityData> cities;
-        int _outbreakCount = 0;
+        private int _outbreakCount = 0;
+        //dont modify the station list
+        public List<City> stations; 
 
         public int outbreakCount
         {
@@ -64,12 +74,14 @@ namespace Pandemic
         public Map()
         {
             cities = new Dictionary<City, CityData>();
+            stations = new List<City>();
         }
 
         public Map(Map oldMap)
         {
             cities = new Dictionary<City, CityData>(oldMap.cities);
             _outbreakCount = oldMap.outbreakCount;
+            stations = oldMap.stations;
         }
 
         //dangerous...modifies the Map
@@ -110,6 +122,14 @@ namespace Pandemic
             return result;
         }
 
+        public Map addStation(City city)
+        {
+            Map result = new Map(this);
+            result.stations.Add(city);
+            result.cities[city] = cities[city].addStation();
+            return result;
+        }
+
         public int diseaseLevel(City city, DiseaseColor color)
         {
             return cities[city].disease(color);
@@ -121,6 +141,32 @@ namespace Pandemic
             cities[city] = new CityData();
 
             return city;
+        }
+
+        public bool hasStation(City city)
+        {
+            return cities[city].hasStation();
+        }
+
+        public List<MoveAction> getMoveActionsFor(Player player)
+        {
+            List<MoveAction> moves = new List<MoveAction>();
+            foreach (City c in player.position.adjacent)
+            {
+                moves.Add(new MoveAction(player, c));
+            }
+            if (cities[player.position].hasStation())
+            {
+                foreach (City c in stations)
+                {
+                    if (c == player.position)
+                        continue;
+                    if (player.position.isAdjacent(c))
+                        continue;
+                    moves.Add(new MoveAction(player, c));
+                }
+            }
+            return moves;
         }
 
     }

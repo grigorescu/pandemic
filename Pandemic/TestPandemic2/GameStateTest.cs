@@ -70,11 +70,11 @@ namespace TestPandemic2
         [TestMethod()]
         public void moveActionsTest()
         {
-
-            City atlanta = new City("Atlanta", DiseaseColor.BLUE);
-            City newyork = new City("NewYork", DiseaseColor.BLUE);
+            Map map = new Map();
+            City atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
+            City newyork = map.addCity("NewYork", DiseaseColor.BLUE);
             City.makeAdjacent(atlanta, newyork);
-            GameState gs = new GameState(atlanta, null);
+            GameState gs = new GameState(atlanta, map);
             List<Action> actions = gs.availableActions();
             Assert.AreEqual(1, actions.Count);
             GameState newGs = actions[0].execute(gs);

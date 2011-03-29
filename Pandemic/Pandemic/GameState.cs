@@ -21,6 +21,7 @@ namespace Pandemic
         public GameState(City startCity, Map map)
         {
             player = new Player(startCity);
+            this.map = map;
         }
 
         public Player currentPlayer()
@@ -32,7 +33,7 @@ namespace Pandemic
         {
             List<Action> actions = new List<Action>();
             Player current = currentPlayer();
-            actions.AddRange(current.position.getMoveActionsFor(current));
+            actions.AddRange(map.getMoveActionsFor(current));
             return actions;
         }
     }

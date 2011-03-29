@@ -127,5 +127,17 @@ namespace TestPandemic2
             Assert.AreEqual(1, result.diseaseLevel(atlanta, DiseaseColor.ORANGE));
             Assert.AreEqual(0, result.diseaseLevel(newYork, DiseaseColor.ORANGE));
         }
+
+
+        [TestMethod()]
+        public void addStationTest()
+        {
+            Assert.IsFalse(map.hasStation(newYork));
+            Map result = map.addStation(newYork);
+            Assert.IsTrue(result.hasStation(newYork));
+            Assert.IsFalse(map.hasStation(newYork));
+            result = result.addStation(miami);
+            Assert.AreEqual(2, result.stations.Count);
+        }
     }
 }

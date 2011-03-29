@@ -42,16 +42,6 @@ namespace Pandemic
             } else return false;
         }
 
-        public List<MoveAction> getMoveActionsFor(Player player)
-        {
-            List<MoveAction> moves = new List<MoveAction>();
-            foreach (City c in adjacent)
-            {
-                moves.Add(new MoveAction(player, c));
-            }
-            return moves;
-        }
-
         override public string ToString()
         {
             String s = "City: " + name;
