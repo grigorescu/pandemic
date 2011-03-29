@@ -22,5 +22,18 @@ namespace Pandemic
         {
             player = new Player(startCity);
         }
+
+        public Player currentPlayer()
+        {
+            return player;
+        }
+
+        public List<Action> availableActions()
+        {
+            List<Action> actions = new List<Action>();
+            Player current = currentPlayer();
+            actions.AddRange(current.position.getMoveActionsFor(current));
+            return actions;
+        }
     }
 }

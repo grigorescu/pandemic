@@ -74,12 +74,22 @@ namespace Pandemic
             if (adjacent.Contains(adj))
             {
                 return true;
-            }else    return false;
+            } else return false;
         }
 
         public void setDiseaseLevel(DiseaseColor color, int lvl)
         {
             diseases[color] = lvl;
+        }
+
+        public List<MoveAction> getMoveActionsFor(Player player)
+        {
+            List<MoveAction> moves = new List<MoveAction>();
+            foreach (City c in adjacent)
+            {
+                moves.Add(new MoveAction(player, c));
+            }
+            return moves;
         }
 
         override public string ToString()

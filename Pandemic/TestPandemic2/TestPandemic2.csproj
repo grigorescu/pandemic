@@ -55,9 +55,11 @@
   <ItemGroup>
     <Compile Include="CityTest.cs" />
     <Compile Include="DeckTest.cs" />
+    <Compile Include="GameStateTest.cs" />
     <Compile Include="MapTest.cs" />
     <Compile Include="MoveActionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestSearchEvaluate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pandemic\Pandemic.csproj">
