@@ -11,46 +11,11 @@ namespace Pandemic
         public string name;
         public DiseaseColor color;
         public List<City> adjacent;
-        public Dictionary<DiseaseColor, int> diseases;
         public City(string name, DiseaseColor color)
         {
             this.name = name;
             this.color = color;
-            diseases = new Dictionary<DiseaseColor,int>();
-            diseases[DiseaseColor.BLACK] = 0;
-            diseases[DiseaseColor.YELLOW] = 0;
-            diseases[DiseaseColor.BLUE] = 0;
-            diseases[DiseaseColor.ORANGE] = 0;
             adjacent = new List<City>();
-        }
-
-        public bool addDisease()
-        {
-            return addDisease(color);
-        }
-
-        public Boolean addDisease(DiseaseColor newColor)
-        {
-            
-            if (diseases[newColor] == 3)
-            {
-                return true;
-            }
-            else
-            {
-                diseases[newColor] = diseases[newColor] + 1;
-                return false;
-            }
-        }
-
-        public int getDisease()
-        {
-            return getDisease(color);
-        }
-
-        public int getDisease(DiseaseColor newColor)
-        {
-            return diseases[newColor];
         }
 
         private void addAdjacent(City adj)
@@ -75,11 +40,6 @@ namespace Pandemic
             {
                 return true;
             } else return false;
-        }
-
-        public void setDiseaseLevel(DiseaseColor color, int lvl)
-        {
-            diseases[color] = lvl;
         }
 
         public List<MoveAction> getMoveActionsFor(Player player)

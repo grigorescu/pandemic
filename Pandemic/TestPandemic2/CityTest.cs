@@ -83,15 +83,6 @@ namespace TestPandemic2
         }
 
         [TestMethod()]
-        public void CityAddDiseaseTest()
-        {
-            newYork.addDisease();
-            Assert.AreEqual(1, newYork.getDisease());
-
-
-        }
-
-        [TestMethod()]
         public void CityAddAdj()
         {
             City newark = new City("Newark", DiseaseColor.BLUE);

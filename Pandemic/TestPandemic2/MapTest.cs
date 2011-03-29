@@ -85,11 +85,16 @@ namespace TestPandemic2
             City.makeAdjacent(newark, chicago);
             City.makeAdjacent(atlanta, miami);
 
-            newYork.setDiseaseLevel(DiseaseColor.BLUE, 3);
-            newark.setDiseaseLevel(DiseaseColor.BLUE, 3);
-            atlanta.setDiseaseLevel(DiseaseColor.BLUE, 3);
-            miami.setDiseaseLevel(DiseaseColor.ORANGE, 3);
-        }
+
+            for (int i = 0; i < 3; i++)
+            {
+                map = map.addDisease(newYork);
+                map = map.addDisease(newark);
+                map = map.addDisease(atlanta);
+                map = map.addDisease(miami);
+            }
+
+         }
 
         /// <summary>
         ///A test for addDisease
@@ -97,30 +102,30 @@ namespace TestPandemic2
         [TestMethod()]
         public void addDiseaseTest()
         {
-
-            int outbreak = map.addDisease(newYork);
-
-            Assert.AreEqual(3, outbreak);
-            Assert.AreEqual(3, newYork.getDisease());
-            Assert.AreEqual(3, newark.getDisease());
-            Assert.AreEqual(3, atlanta.getDisease());
-            Assert.AreEqual(1, chicago.getDisease());
-
+            Assert.AreEqual(3, map.diseaseLevel(newYork, DiseaseColor.BLUE));
+            Assert.AreEqual(0, map.diseaseLevel(chicago, DiseaseColor.BLUE));
+            Assert.AreEqual(0, map.outbreakCount);
+            Map result = map.addDisease(newYork);
+            Assert.AreEqual(0, map.outbreakCount);
+            Assert.AreEqual(3, result.outbreakCount);
+            Assert.AreEqual(3, result.diseaseLevel(newYork, DiseaseColor.BLUE));
+            Assert.AreEqual(3, result.diseaseLevel(newark, DiseaseColor.BLUE));
+            Assert.AreEqual(3, result.diseaseLevel(atlanta, DiseaseColor.BLUE));
+            Assert.AreEqual(1, result.diseaseLevel(chicago, DiseaseColor.BLUE));
+            Assert.AreEqual(0, map.diseaseLevel(chicago, DiseaseColor.BLUE));
         }
 
         [TestMethod()]
         public void addColorTest()
         {
-            int outbreak = map.addDisease(newYork);
-
-            Assert.AreEqual(3, outbreak);
-            Assert.AreEqual(3, miami.getDisease());
-            Assert.AreEqual(1, miami.getDisease(DiseaseColor.BLUE));
-            outbreak = map.addDisease(miami);
-            Assert.AreEqual(1, outbreak);
-            Assert.AreEqual(1, atlanta.getDisease(DiseaseColor.ORANGE));
-            Assert.AreEqual(3, miami.getDisease());
-            Assert.AreEqual(0, newYork.getDisease(DiseaseColor.ORANGE));
+            Map result = map.addDisease(newYork);
+            Assert.AreEqual(1, result.diseaseLevel(miami, DiseaseColor.BLUE));
+            Assert.AreEqual(3, result.outbreakCount);
+            result = result.addDisease(miami);
+            Assert.AreEqual(4, result.outbreakCount);
+            Assert.AreEqual(3, result.diseaseLevel(miami, DiseaseColor.ORANGE));
+            Assert.AreEqual(1, result.diseaseLevel(atlanta, DiseaseColor.ORANGE));
+            Assert.AreEqual(0, result.diseaseLevel(newYork, DiseaseColor.ORANGE));
         }
     }
 }
