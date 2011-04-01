@@ -60,6 +60,7 @@
     <Compile Include="GameState.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MoveAction.cs" />
+    <Compile Include="MoveToCardAction.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

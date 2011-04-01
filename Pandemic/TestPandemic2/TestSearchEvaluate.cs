@@ -59,6 +59,17 @@ namespace TestPandemic2
         Map map;
         GameState gs;
 
+        public GameState doSteps(GameState initial, SearchEvaluate eval, int steps, int depth)
+        {
+            GameState current = initial;
+            for (int i = 0; i < steps; i++)
+            {
+                Action move = eval.bfs_findbest(current, depth);
+                current = move.execute(current);
+            }
+            return current;
+        }
+
         [TestInitialize()]
         public void initialize()
         {
@@ -112,6 +123,19 @@ namespace TestPandemic2
         }
 
         [TestMethod]
+        public void TestTwoPlayers()
+        {
+            City atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
+            City.makeAdjacent(newyork, atlanta);
+            map = map.addDisease(newark);
+            map = map.addDisease(atlanta);
+            gs = new GameState(newyork, map, 2, 2);
+            SearchEvaluate hatesDisease = new HatesDisease(2);
+            GameState newGS = doSteps(gs, hatesDisease, 4, 4);
+            Assert.AreEqual(0,HatesDisease.getTotalDisease(newGS));
+        }
+
+        [TestMethod]
         public void TestBasicMoveSearch()
         {
             City atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
@@ -138,6 +162,22 @@ namespace TestPandemic2
             newGS = action.execute(gs);
             Assert.AreEqual(newyork, newGS.currentPlayer().position);
 
+
+        }
+
+        [TestMethod]
+        public void TestMoveToCard()
+        {
+            City rio = map.addCity("Rio", DiseaseColor.YELLOW);
+
+            SearchEvaluate likesRio = new LikesCity(rio);
+            Player pWithCard = gs.currentPlayer().addCard(rio);
+            gs = new GameState(gs,pWithCard);
+            Action action = likesRio.bfs_findbest(gs,1);
+            GameState newGS = action.execute(gs);
+            Assert.AreEqual(1, pWithCard.cards.Count);
+            Assert.AreEqual(rio, newGS.currentPlayer().position);
+            Assert.AreEqual(0, newGS.currentPlayer().cards.Count);
 
         }
     }

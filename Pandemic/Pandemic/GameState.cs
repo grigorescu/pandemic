@@ -86,6 +86,7 @@ namespace Pandemic
             Player current = currentPlayer();
             actions.AddRange(map.getMoveActionsFor(current));
             actions.AddRange(map.getCureActionsFor(current));
+            actions.AddRange(MoveToCardAction.actionsForPlayer(currentPlayer()));
             foreach (Action a in actions)
             {
                 a.debug_gs = this;
