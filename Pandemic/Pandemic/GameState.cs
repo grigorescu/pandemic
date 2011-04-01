@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Pandemic
 {
@@ -10,29 +11,68 @@ namespace Pandemic
     public class GameState
     {
         public Map map;
-        public Player player;
+        public Player[] players;
+        public int currentPlayerNum = 0;
+        public int numPlayers;
+        public int numMoves;
+        public int cpMovesUsed = 0;
 
-        public GameState(GameState gs, Player player)
+        private GameState(GameState gs)
         {
             map = gs.map;
-            this.player = player;
+            players = gs.players;
+            currentPlayerNum = gs.currentPlayerNum;
+            numPlayers = gs.numPlayers;
+            numMoves = gs.numMoves;
+            cpMovesUsed = gs.cpMovesUsed;
+        }
+
+        public GameState(GameState gs, Player player)
+            : this(gs)
+        {
+            map = gs.map;
+            players = new Player[numPlayers];
+            for (int i = 0; i < numPlayers; i++)
+            {
+                players[i] = gs.players[i];
+            }
+            Debug.Assert(player.playernum < numPlayers);
+            players[player.playernum] = player;
+            advanceMove();
         }
 
         public GameState(GameState gs, Map map)
+            : this(gs)
         {
             this.map = map;
-            player = gs.player;
+            advanceMove();
         }
 
-        public GameState(City startCity, Map map)
+        public GameState(City startCity, Map map, int num_players = 1, int num_moves = 4)
         {
-            player = new Player(startCity);
+            players = new Player[num_players];
+            for (int i = 0; i < num_players; i++)
+            {
+                players[i] = new Player(startCity, i);
+            }
             this.map = map;
+            this.numPlayers = num_players;
+            this.numMoves = num_moves;
+        }
+
+        private void advanceMove()
+        {
+            cpMovesUsed++;
+            if (cpMovesUsed == numMoves)
+            {
+                currentPlayerNum = (currentPlayerNum + 1) % numPlayers;
+                cpMovesUsed = 0;
+            }
         }
 
         public Player currentPlayer()
         {
-            return player;
+            return players[currentPlayerNum];
         }
 
         public List<Action> availableActions()
@@ -41,6 +81,10 @@ namespace Pandemic
             Player current = currentPlayer();
             actions.AddRange(map.getMoveActionsFor(current));
             actions.AddRange(map.getCureActionsFor(current));
+            foreach (Action a in actions)
+            {
+                a.debug_gs = this;
+            }
             return actions;
         }
     }

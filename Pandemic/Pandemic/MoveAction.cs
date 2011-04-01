@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Pandemic
 {
@@ -19,9 +20,9 @@ namespace Pandemic
 
         public override GameState execute(GameState gs)
         {
-
-            player = new Player(dest);
-            GameState result = new GameState(gs, player);
+            Debug.Assert(debug_gs == null || debug_gs == gs, "Action used on an unintended gamestate");
+            Player movedPlayer = new Player(dest, player);
+            GameState result = new GameState(gs, movedPlayer);
             return result;
         }
     }

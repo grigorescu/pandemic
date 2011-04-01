@@ -7,6 +7,9 @@ namespace Pandemic
 {
     abstract public class Action
     {
+        //used by debugging
+        public GameState debug_gs;
+
         public abstract GameState execute(GameState current);
     }
 }

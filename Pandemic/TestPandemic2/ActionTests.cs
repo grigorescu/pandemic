@@ -74,10 +74,10 @@ namespace TestPandemic2
             City newyork = new City("NewYork", DiseaseColor.BLUE);
             City.makeAdjacent(atlanta, newyork);
             GameState gs = new GameState(atlanta, null);
-            MoveAction action = new MoveAction(gs.player, newyork);
+            MoveAction action = new MoveAction(gs.currentPlayer(), newyork);
             GameState newGs = action.execute(gs);
-            Assert.AreEqual(newyork, newGs.player.position);
-            Assert.AreEqual(atlanta, gs.player.position);
+            Assert.AreEqual(newyork, newGs.currentPlayer().position);
+            Assert.AreEqual(atlanta, gs.currentPlayer().position);
 
         }
 
@@ -93,7 +93,7 @@ namespace TestPandemic2
             CureAction action = new CureAction(atlanta, DiseaseColor.BLUE);
             GameState newGs = action.execute(gs);
             Assert.AreEqual(1, gs.map.diseaseLevel(atlanta, DiseaseColor.BLUE));
-            Assert.AreEqual(atlanta, newGs.player.position);
+            Assert.AreEqual(atlanta, newGs.currentPlayer().position);
             Assert.AreEqual(0, newGs.map.diseaseLevel(atlanta, DiseaseColor.BLUE));
 
         }

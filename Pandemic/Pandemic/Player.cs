@@ -8,6 +8,7 @@ namespace Pandemic
     public class Player
     {
         private City _position;
+        public readonly int playernum;
         public City position
         {
             get
@@ -16,9 +17,15 @@ namespace Pandemic
             }
         }
 
-        public Player(City position)
+        public Player(City position, Player player)
+           : this(position, player.playernum)
+        {
+        }
+
+        public Player(City position, int playernum)
         {
             _position = position;
+            this.playernum = playernum;
         }
 
         public List<Action> getActions()
