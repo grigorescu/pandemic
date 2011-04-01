@@ -16,6 +16,9 @@ namespace Pandemic
         public int numPlayers;
         public int numMoves;
         public int cpMovesUsed = 0;
+        public int curesFound = 0; //TODO
+        public int diseasesEradicated = 0; //TODO
+        public Deck<City> infectionDeck;
 
         private GameState(GameState gs)
         {
@@ -25,6 +28,7 @@ namespace Pandemic
             numPlayers = gs.numPlayers;
             numMoves = gs.numMoves;
             cpMovesUsed = gs.cpMovesUsed;
+            
         }
 
         public GameState(GameState gs, Player player)
@@ -48,7 +52,7 @@ namespace Pandemic
             advanceMove();
         }
 
-        public GameState(City startCity, Map map, int num_players = 1, int num_moves = 4)
+        public GameState(City startCity, Map map, Deck<City> infectDeck, int num_players = 1, int num_moves = 4)
         {
             players = new Player[num_players];
             for (int i = 0; i < num_players; i++)
@@ -58,6 +62,7 @@ namespace Pandemic
             this.map = map;
             this.numPlayers = num_players;
             this.numMoves = num_moves;
+            this.infectionDeck = infectDeck;
         }
 
         private void advanceMove()
@@ -86,6 +91,34 @@ namespace Pandemic
                 a.debug_gs = this;
             }
             return actions;
+        }
+
+        public Map drawInfectionCards(int drawNum)
+        {
+            Map m = map;
+            List<City> drawnCard;
+            drawnCard = infectionDeck.draw(drawNum);
+
+            foreach (City current in drawnCard)
+            {
+                m = m.addDisease(current, 1);
+            }
+
+            return m;
+        }
+
+        public Map epidemicCard()
+        {
+            Map m = map;
+            m.infectionRate++;
+
+            List<City> drawnCard;
+            drawnCard = infectionDeck.draw(3);
+            m = m.addDisease(drawnCard[0], 3);
+            m = m.addDisease(drawnCard[1], 3);
+            m = m.addDisease(drawnCard[2], 3);
+
+            return m;
         }
     }
 }

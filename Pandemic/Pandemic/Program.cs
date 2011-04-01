@@ -13,9 +13,13 @@ namespace Pandemic
         [STAThread]
         static void Main()
         {
-           // Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            GameBoard gb = new GameBoard(false);
+            gb.update(gb.m);
+            Application.Run(gb);
+            
+            
 
             //City newYork = new City("New York", DiseaseColor.BLUE);
             //City newark = new City("Newark", DiseaseColor.BLUE);
@@ -33,7 +37,6 @@ namespace Pandemic
             //deck.draw(3);
 
             //deck.printDeck();
-
         }
     }
 }

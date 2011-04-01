@@ -88,7 +88,7 @@ namespace Pandemic
             this.newYorkBlue3.TabIndex = 3;
             this.newYorkBlue3.TabStop = false;
             this.newYorkBlue3.Visible = false;
-            this.newYorkBlue3.Click += new System.EventHandler(this.newYorkBlue3_Click);
+            
             // 
             // newYorkStation
             // 

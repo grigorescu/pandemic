@@ -63,7 +63,9 @@ namespace Pandemic
         }
 
         private Dictionary<City, CityData> cities;
+        public Dictionary<String, City> cityNames;
         private int _outbreakCount = 0;
+        public int infectionRate = 0; //spot on board not num cards to draw
         //dont modify the station list
         public List<City> stations; 
 
@@ -75,51 +77,59 @@ namespace Pandemic
         public Map()
         {
             cities = new Dictionary<City, CityData>();
+            cityNames = new Dictionary<string, City>();
             stations = new List<City>();
         }
 
         public Map(Map oldMap)
         {
             cities = new Dictionary<City, CityData>(oldMap.cities);
+            cityNames = new Dictionary<string, City>(oldMap.cityNames);
             _outbreakCount = oldMap.outbreakCount;
             stations = oldMap.stations;
         }
 
         //dangerous...modifies the Map
-        public Map addDisease(City c)
+        public Map addDisease(City c, int num=1)
         {
             Map result = new Map(this);
             DiseaseColor color = c.color;
-            if (result.cities[c].disease(color) < 3)
-            {
-                result.cities[c] = result.cities[c].adjustDisease(color,1);
 
-            } else {
-                //outbreak
-                List<City> outbreaks = new List<City>();
-                outbreaks.Add(c);
-                List<City> toEvaluate = new List<City>();
-                toEvaluate.AddRange(c.adjacent);
-                while(toEvaluate.Count != 0) 
+            for (int i = 0; i < num; i++)
+            {
+
+                if (result.cities[c].disease(color) < 3)
                 {
-                    City current = toEvaluate.ElementAt(0);
-                    toEvaluate.RemoveAt(0);
-                    if (outbreaks.Contains(current))
-                        continue;
-                    if (result.cities[current].disease(color) < 3)
-                    {
-                        result.cities[current] = result.cities[current].adjustDisease(color,1);
-                    }
-                    else
-                    {
-                        toEvaluate.AddRange(current.adjacent);
-                        outbreaks.Add(current);
-                    }
+                    result.cities[c] = result.cities[c].adjustDisease(color, 1);
 
                 }
-                result._outbreakCount += outbreaks.Count;
+                else
+                {
+                    //outbreak
+                    List<City> outbreaks = new List<City>();
+                    outbreaks.Add(c);
+                    List<City> toEvaluate = new List<City>();
+                    toEvaluate.AddRange(c.adjacent);
+                    while (toEvaluate.Count != 0)
+                    {
+                        City current = toEvaluate.ElementAt(0);
+                        toEvaluate.RemoveAt(0);
+                        if (outbreaks.Contains(current))
+                            continue;
+                        if (result.cities[current].disease(color) < 3)
+                        {
+                            result.cities[current] = result.cities[current].adjustDisease(color, 1);
+                        }
+                        else
+                        {
+                            toEvaluate.AddRange(current.adjacent);
+                            outbreaks.Add(current);
+                        }
+
+                    }
+                    result._outbreakCount += outbreaks.Count;
+                }
             }
-            
             return result;
         }
 
@@ -147,7 +157,7 @@ namespace Pandemic
         {
             City city = new City(name, color);
             cities[city] = new CityData();
-
+            cityNames.Add(city.name, city);
             return city;
         }
 

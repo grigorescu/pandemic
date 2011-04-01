@@ -13,12 +13,11 @@ namespace Pandemic
     public partial class GameBoard : Form
     {
         public Map m;
-        //public ArrayList diseaseCubes = new ArrayList();
-        private Dictionary<City, List<System.Windows.Forms.PictureBox>> diseaseCubes;
+        private Dictionary<String, List<System.Windows.Forms.PictureBox>> diseaseCubes;
 
         public GameBoard(bool realGame)
         {
-            this.diseaseCubes = new Dictionary<City, List<PictureBox>>();
+            this.diseaseCubes = new Dictionary<String, List<PictureBox>>();
             InitializeComponent();
             if (realGame)
             {
@@ -36,30 +35,7 @@ namespace Pandemic
         }
 
         private void initializeTestGame()
-        {
-            m = new Map();
-            //north america
-            City atlanta = m.addCity("Atlanta", DiseaseColor.BLUE);
-            City newYork = m.addCity("NewYork", DiseaseColor.BLUE);
-            City chicago = m.addCity("Chicago", DiseaseColor.BLUE);
-            City washington = m.addCity("Washington", DiseaseColor.BLUE);
-            City canadaCity = m.addCity("CanadaCity", DiseaseColor.YELLOW);
-            City losAngeles = m.addCity("LosAngeles", DiseaseColor.YELLOW);
-            City miami = m.addCity("Miami", DiseaseColor.YELLOW);
-            City mexicoCity = m.addCity("MexicoCity", DiseaseColor.YELLOW);
-
-            City.makeAdjacent(newYork, washington);
-            City.makeAdjacent(newYork, canadaCity);
-            City.makeAdjacent(washington, atlanta);
-            City.makeAdjacent(washington, miami);
-            City.makeAdjacent(canadaCity, chicago);
-            City.makeAdjacent(canadaCity, atlanta);
-            City.makeAdjacent(chicago, losAngeles);
-            City.makeAdjacent(chicago, mexicoCity);
-            City.makeAdjacent(atlanta, miami);
-            City.makeAdjacent(mexicoCity, miami);
-
-            this.m = m.addDisease(newYork);
+        {         
 
             //connect city to place on board and disease cubes
             List<System.Windows.Forms.PictureBox> ny = new List<PictureBox>();
@@ -67,37 +43,33 @@ namespace Pandemic
             ny.Add(newYorkBlue2);
             ny.Add(newYorkBlue3);
             ny.Add(newYorkStation);
-            diseaseCubes.Add(newYork, ny);
+            diseaseCubes.Add("newYork", ny);
         }
 
         public void update(Map map)//take in a map?
         {
             //update disease cubes and research station on cities
-            for (int i = 0; i < map.allCities.Count - 1; i++)
+            foreach (City currentCity in map.allCities)
             {
-                //Console.WriteLine(map.allCities.ElementAt(i).name + map.diseaseLevel(map.allCities.ElementAt(i), map.allCities.ElementAt(i).color));
-                if (map.diseaseLevel(map.allCities.ElementAt(i), map.allCities.ElementAt(i).color) == 1)
+                if(map.diseaseLevel(currentCity, currentCity.color)==1)
                 {
-                    diseaseCubes[map.allCities.ElementAt(i)][0].Visible = true;
+                    diseaseCubes[currentCity.name][0].Visible = true;
                 }
-                else if (map.diseaseLevel(map.allCities.ElementAt(i), map.allCities.ElementAt(i).color) == 2)
+                else if (map.diseaseLevel(currentCity, currentCity.color) == 2)
                 {
-                    diseaseCubes[map.allCities.ElementAt(i)][1].Visible = true;
+                    diseaseCubes[currentCity.name][1].Visible = true;
                 }
-                else if (map.diseaseLevel(map.allCities.ElementAt(i), map.allCities.ElementAt(i).color) == 3)
+                else if (map.diseaseLevel(currentCity, currentCity.color) == 3)
                 {
-                    diseaseCubes[map.allCities.ElementAt(i)][2].Visible = true;
+                    diseaseCubes[currentCity.name][2].Visible = true;
                 }
 
-
-                //research station position
-                if (map.hasStation(map.allCities.ElementAt(i)))
+                if (map.hasStation(currentCity))
                 {
-                    diseaseCubes[map.allCities.ElementAt(i)][3].Visible = true;
+                    diseaseCubes[currentCity.name][3].Visible = true;
                 }
             }
-
-            
+     
             
             //player postion
             
