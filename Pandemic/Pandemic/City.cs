@@ -11,11 +11,14 @@ namespace Pandemic
         public string name;
         public DiseaseColor color;
         public List<City> adjacent;
-        public City(string name, DiseaseColor color)
+        public float relativeX, relativeY;
+        public City(string name, DiseaseColor color, float x = 0, float y = 0)
         {
             this.name = name;
             this.color = color;
             adjacent = new List<City>();
+            relativeX = x;
+            relativeY = y;
         }
 
         private void addAdjacent(City adj)

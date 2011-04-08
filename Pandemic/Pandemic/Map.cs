@@ -153,9 +153,9 @@ namespace Pandemic
             return cities[city].disease(color);
         }
 
-        public City addCity(String name, DiseaseColor color)
+        public City addCity(String name, DiseaseColor color, float x = 0f, float y = 0f)
         {
-            City city = new City(name, color);
+            City city = new City(name, color, x, y);
             cities[city] = new CityData();
             cityNames.Add(city.name, city);
             return city;

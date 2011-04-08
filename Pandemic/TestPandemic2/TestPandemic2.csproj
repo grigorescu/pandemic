@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="CityTest.cs" />
     <Compile Include="DeckTest.cs" />
-    <Compile Include="GameBoardTest.cs" />
     <Compile Include="GameStateTest.cs" />
     <Compile Include="MapTest.cs" />
     <Compile Include="ActionTests.cs" />

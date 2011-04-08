@@ -7,24 +7,23 @@ namespace Pandemic
 {
     public class GameEngine
     {
-        Map map;
-        GameState gs;
+        public GameState gs;
         City atlanta;
 
         public GameEngine()
         {
            
             //initialize infection and player decks
-            this.map = initializeCities();
-            Deck<City> id = initializeInfectionDeck();
-            gs = new GameState(atlanta, this.map, id);
+            Map map = initializeCities();
+            Deck<City> ideck = initializeInfectionDeck(map);
+            gs = new GameState(atlanta, map, 2, 4, ideck);
 
             //initialize board (before first turn)
         }
 
         public void runGame()
         {
-            while (gs.curesFound != 4 || map.outbreakCount !=9) //or all cubes gone or all player deck has been drawn
+            while (gs.curesFound != 4 || gs.map.outbreakCount !=9) //or all cubes gone or all player deck has been drawn
             {
 
 
@@ -35,7 +34,7 @@ namespace Pandemic
             {
                 //YOU WON OMG
             }
-            else if (map.outbreakCount == 9)
+            else if (gs.map.outbreakCount == 9)
             {
                 //YOU LOST!!!
             }
@@ -46,8 +45,8 @@ namespace Pandemic
             //north america 
             //TODO rename CanadaCity to whatever. Add San Fran
             Map m = new Map();
-            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE);
-            City newYork = m.addCity("NewYork", DiseaseColor.BLUE);
+            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.25f, 0.25f);
+            City newYork = m.addCity("NewYork", DiseaseColor.BLUE,0.5f,0.5f);
             City chicago = m.addCity("Chicago", DiseaseColor.BLUE);
             City washington = m.addCity("Washington", DiseaseColor.BLUE);
             City canadaCity = m.addCity("CanadaCity", DiseaseColor.YELLOW);
@@ -69,7 +68,7 @@ namespace Pandemic
             return m;
         }
 
-        private Deck<City> initializeInfectionDeck()
+        private Deck<City> initializeInfectionDeck(Map map)
         {
             List<City> cities = new List<City>();
             cities.AddRange(map.allCities);

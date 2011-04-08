@@ -52,7 +52,7 @@ namespace Pandemic
             advanceMove();
         }
 
-        public GameState(City startCity, Map map, Deck<City> infectDeck, int num_players = 1, int num_moves = 4)
+        public GameState(City startCity, Map map, int num_players = 1, int num_moves = 4, Deck<City> infectDeck = null)
         {
             players = new Player[num_players];
             for (int i = 0; i < num_players; i++)
