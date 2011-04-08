@@ -91,34 +91,37 @@ namespace TestPandemic2
         [TestMethod()]
         public void drawFromBottomTest()
         {
-            List<City> cities = deck.drawFromBottom();
+            Deck<City> newDeck = deck.drawFromBottom();
+            List<City> cities = newDeck.discardDeck;
             Assert.AreEqual(1, cities.Count);
             Assert.AreEqual(miami, cities[0]);
-            Assert.AreEqual(1, deck.discardDeck.Count);
-            Assert.AreEqual(miami, deck.discardDeck[0]);
+            Assert.AreEqual(1, newDeck.discardDeck.Count);
+            Assert.AreEqual(miami, newDeck.discardDeck[0]);
         }
 
         [TestMethod()]
         public void drawTest()
         {
-            List<City> cities = deck.draw();
+            Deck<City> newDeck = deck.draw();
+            List<City> cities = newDeck.discardDeck;
 
             Assert.AreEqual(1, cities.Count);
             Assert.AreEqual(newYork, cities[0]);
-            Assert.AreEqual(1, deck.discardDeck.Count);
-            Assert.AreEqual(newYork, deck.discardDeck[0]);
+            Assert.AreEqual(1, newDeck.discardDeck.Count);
+            Assert.AreEqual(newYork, newDeck.discardDeck[0]);
             
         }
 
         [TestMethod()]
         public void discardPileToDraw()
         {
-            List<City> citites = deck.draw(2);
-            deck.returnShuffledDiscard();
+            Deck<City> newDeck = deck.draw(2);
+            List<City> citites = deck.discardDeck;
+            Deck<City> reshuffed = newDeck.returnShuffledDiscard();
 
-            Assert.AreEqual(0, deck.discardDeck.Count);
-            Assert.AreEqual(5, deck.drawDeck.Count);
-            Assert.AreEqual(newYork, deck.drawDeck[0]);
+            Assert.AreEqual(0, reshuffed.discardDeck.Count);
+            Assert.AreEqual(5, reshuffed.drawDeck.Count);
+            Assert.AreEqual(newYork, reshuffed.drawDeck[0]);
         }
     }
 }

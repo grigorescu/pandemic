@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Pandemic
 {
-    public enum DiseaseColor { BLUE, YELLOW, BLACK, ORANGE }
-    
+
     public class GameState
     {
         public Map map;
@@ -19,6 +19,15 @@ namespace Pandemic
         public int curesFound = 0; //TODO
         public int diseasesEradicated = 0; //TODO
         public Deck<City> infectionDeck;
+        public Action turnAction;
+        public int turnCounter =0;
+
+        public GameState setTurnAction(Action action)
+        {
+            GameState newGS = new GameState(this);
+            newGS.turnAction = action;
+            return newGS;
+        }
 
         private GameState(GameState gs)
         {
@@ -28,6 +37,8 @@ namespace Pandemic
             numPlayers = gs.numPlayers;
             numMoves = gs.numMoves;
             cpMovesUsed = gs.cpMovesUsed;
+            infectionDeck = gs.infectionDeck;
+            turnAction = gs.turnAction;
             
         }
 
@@ -63,16 +74,17 @@ namespace Pandemic
             this.numPlayers = num_players;
             this.numMoves = num_moves;
             this.infectionDeck = infectDeck;
+            this.turnAction = new TurnAction();
         }
 
         private void advanceMove()
         {
             cpMovesUsed++;
-            if (cpMovesUsed == numMoves)
-            {
-                currentPlayerNum = (currentPlayerNum + 1) % numPlayers;
-                cpMovesUsed = 0;
-            }
+            //if (cpMovesUsed == numMoves)
+            //{
+            //    currentPlayerNum = (currentPlayerNum + 1) % numPlayers;
+            //    cpMovesUsed = 0;
+            //}
         }
 
         public Player currentPlayer()
@@ -83,41 +95,57 @@ namespace Pandemic
         public List<Action> availableActions()
         {
             List<Action> actions = new List<Action>();
-            Player current = currentPlayer();
-            actions.AddRange(map.getMoveActionsFor(current));
-            actions.AddRange(map.getCureActionsFor(current));
-            actions.AddRange(MoveToCardAction.actionsForPlayer(currentPlayer()));
-            foreach (Action a in actions)
+            if (cpMovesUsed < numMoves)
             {
-                a.debug_gs = this;
+                Player current = currentPlayer();
+                actions.AddRange(map.getMoveActionsFor(current));
+                actions.AddRange(map.getCureActionsFor(current));
+                actions.AddRange(MoveToCardAction.actionsForPlayer(currentPlayer()));
+
+                foreach (Action a in actions)
+                {
+                    a.debug_gs = this;
+                }
             }
+            else
+            {
+                actions.Add(turnAction);
+            }
+            
             return actions;
         }
 
-        public Map drawInfectionCards(int drawNum)
+        public void advancePlayer()
         {
-            Map m = map;
-            List<City> drawnCard;
-            drawnCard = infectionDeck.draw(drawNum);
+            this.cpMovesUsed = 0;
+            this.currentPlayerNum = (currentPlayerNum + 1) % numPlayers;
+        }
 
-            foreach (City current in drawnCard)
+        public GameState drawInfectionCards(int drawNum)
+        {
+            GameState newGS = new GameState(this);
+            newGS.infectionDeck = infectionDeck.draw(drawNum);
+            Map m = map; 
+
+            foreach (City current in newGS.infectionDeck.mostRecent(drawNum))
             {
                 m = m.addDisease(current, 1);
             }
+            newGS.map = m;
 
-            return m;
+            return newGS;
         }
 
         public Map epidemicCard()
         {
             Map m = map;
-            m.infectionRate++;
+            /* m.infectionRate++;
 
             List<City> drawnCard;
             drawnCard = infectionDeck.draw(3);
             m = m.addDisease(drawnCard[0], 3);
             m = m.addDisease(drawnCard[1], 3);
-            m = m.addDisease(drawnCard[2], 3);
+            m = m.addDisease(drawnCard[2], 3);*/
 
             return m;
         }

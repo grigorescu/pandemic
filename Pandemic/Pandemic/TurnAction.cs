@@ -5,15 +5,14 @@ using System.Text;
 
 namespace Pandemic
 {
-    public class TurnAction
+    public class TurnAction : Action
     {
-        GameState gs;
-        public TurnAction(GameState gamestate)
+
+        public TurnAction()
         {
-            gs = gamestate;
         }
 
-        public GameState doTurnStuff()
+        public override GameState execute(GameState gs)
         {
             //does stuff that happens between two turns (after actions)
             Map m=gs.map;
@@ -29,7 +28,7 @@ namespace Pandemic
             }
 
             //draw x infection cards
-            if(m.infectionRate>0 && m.infectionRate<3)
+            if(m.infectionRate>=0 && m.infectionRate<3)
             {
                 numInfectionCardsToDraw = 2;
             }
@@ -42,9 +41,11 @@ namespace Pandemic
                 numInfectionCardsToDraw = 4;
             }
 
-            m = gs.drawInfectionCards(numInfectionCardsToDraw);
+            gs = gs.drawInfectionCards(numInfectionCardsToDraw);
+            gs.advancePlayer();
+            
 
-            return new GameState(gs, m);
+            return gs;
         }
     }
 }

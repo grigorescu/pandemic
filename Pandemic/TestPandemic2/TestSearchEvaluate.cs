@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pandemic;
 
+
 namespace TestPandemic2
 {
     [TestClass]
@@ -27,33 +28,7 @@ namespace TestPandemic2
             }
         }
 
-        public class HatesDisease : SearchEvaluate
-        {
-            int diseaseMax;
-            public HatesDisease(int diseaseMax)
-            {
-                this.diseaseMax = diseaseMax;
-            }
-
-            public static int getTotalDisease(GameState gs)
-            {
-                int totalDisease = 0;
-                foreach (City c in gs.map.allCities)
-                {
-                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLACK);
-                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLUE);
-                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.YELLOW);
-                    totalDisease += gs.map.diseaseLevel(c, DiseaseColor.ORANGE);
-                }
-                return totalDisease;
-            }
-
-            public override float evaluate(GameState gs)
-            {
-                return 1 - (float)getTotalDisease(gs) / diseaseMax;
-
-            }
-        }
+       
 
         City newyork, newark;
         Map map;
@@ -87,17 +62,17 @@ namespace TestPandemic2
             City atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
             City.makeAdjacent(newyork, atlanta);
             map = map.addDisease(newyork);
-            gs = new GameState(newyork, map);
-            SearchEvaluate cleaner = new HatesDisease(1);
-            Assert.AreEqual(1, HatesDisease.getTotalDisease(gs));
+            gs = new GameState(newyork, map, 1, 100);
+            SearchEvaluate cleaner = new Pandemic.HatesDisease(1);
+            Assert.AreEqual(1, Pandemic.HatesDisease.getTotalDisease(gs));
             Action action = cleaner.bfs_findbest(gs, 1);
             gs = action.execute(gs);
-            Assert.AreEqual(0, HatesDisease.getTotalDisease(gs));
+            Assert.AreEqual(0, Pandemic.HatesDisease.getTotalDisease(gs));
             gs = new GameState(gs, gs.map.addDisease(newark));
-            Assert.AreEqual(1, HatesDisease.getTotalDisease(gs));
+            Assert.AreEqual(1, Pandemic.HatesDisease.getTotalDisease(gs));
             gs = cleaner.bfs_findbest(gs, 2).execute(gs);
             gs = cleaner.bfs_findbest(gs, 2).execute(gs);
-            Assert.AreEqual(0, HatesDisease.getTotalDisease(gs));
+            Assert.AreEqual(0, Pandemic.HatesDisease.getTotalDisease(gs));
         }
 
         [TestMethod]
@@ -130,8 +105,9 @@ namespace TestPandemic2
             map = map.addDisease(newark);
             map = map.addDisease(atlanta);
             gs = new GameState(newyork, map, 2, 2);
+            gs = gs.setTurnAction(new DoNothingTurnAction());
             SearchEvaluate hatesDisease = new HatesDisease(2);
-            GameState newGS = doSteps(gs, hatesDisease, 4, 4);
+            GameState newGS = doSteps(gs, hatesDisease, 5, 5);
             Assert.AreEqual(0,HatesDisease.getTotalDisease(newGS));
         }
 
@@ -179,6 +155,22 @@ namespace TestPandemic2
             Assert.AreEqual(rio, newGS.currentPlayer().position);
             Assert.AreEqual(0, newGS.currentPlayer().cards.Count);
 
+        }
+
+        [TestMethod]
+        public void TestTurnAction()
+        {
+            Deck<City> infect = new Deck<City>(map.allCities, false);
+            gs = new GameState(newyork, map, 1, 1, infect);
+            GameState gs2 = gs.availableActions()[0].execute(gs);
+            Assert.AreEqual(1, gs2.availableActions().Count);
+            GameState gs3 = gs2.availableActions()[0].execute(gs2);
+            Assert.AreEqual(2, infect.drawDeck.Count);
+            Assert.AreEqual(0, infect.discardDeck.Count);
+            Assert.AreEqual(0, gs3.infectionDeck.drawDeck.Count);
+            Assert.AreEqual(2, gs3.infectionDeck.discardDeck.Count);
+            Assert.AreEqual(1, gs3.map.diseaseLevel(newark, DiseaseColor.BLUE));
+            Assert.AreEqual(1, gs3.map.diseaseLevel(newyork, DiseaseColor.BLUE));
         }
     }
 }

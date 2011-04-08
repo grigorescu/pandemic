@@ -11,7 +11,7 @@ namespace Pandemic
         public List<Card> discardDeck;
         public Random random;
 
-        public Deck(List<Card> cards, Boolean isRandom = true)
+        public Deck(IEnumerable<Card> cards, Boolean isRandom = true)
         {
             drawDeck = new List<Card>();
             drawDeck.AddRange(cards);
@@ -24,25 +24,48 @@ namespace Pandemic
             shuffle(drawDeck);
         }
 
-        public List<Card> draw(int drawNum = 1)
+        private Deck(Deck<Card> old)
+        {
+            drawDeck = new List<Card>();
+            drawDeck.AddRange(old.drawDeck);
+            discardDeck = new List<Card>();
+            discardDeck.AddRange(old.discardDeck);
+            random = old.random;
+        }
+
+        public Deck<Card> draw(int drawnum = 1)
+        {
+            Deck<Card> result = new Deck<Card>(this);
+            result.draw_m(drawnum);
+            return result;
+        }
+
+        private void draw_m(int drawNum)
         {
             List<Card> justDrew = new List<Card>();
             justDrew.AddRange(drawDeck.GetRange(0, drawNum));
             discardDeck.AddRange(drawDeck.GetRange(0, drawNum));
             drawDeck.RemoveRange(0, drawNum);
-
-            return justDrew;
         }
 
-        public List<Card> drawFromBottom()
+        public Deck<Card> drawFromBottom()
+        {
+            Deck<Card> result = new Deck<Card>(this);
+            result.drawFromBottom_m();
+            return result;
+        }
+
+        private void drawFromBottom_m()
         {
             List<Card> justDrew = new List<Card>();
             justDrew.AddRange(drawDeck.GetRange(drawDeck.Count-1, 1));
             discardDeck.AddRange(drawDeck.GetRange(drawDeck.Count - 1, 1));
             drawDeck.RemoveRange(drawDeck.Count - 1, 1);
+        }
 
-            return justDrew;
-
+        public List<Card> mostRecent(int n)
+        {
+            return discardDeck.GetRange(discardDeck.Count - n, n);
         }
 
         public void shuffle(List<Card> deck)
@@ -64,7 +87,15 @@ namespace Pandemic
             }
         }
 
-        public void returnShuffledDiscard()
+
+        public Deck<Card> returnShuffledDiscard()
+        {
+            Deck<Card> result = new Deck<Card>(this);
+            result.returnShuffledDiscard_m();
+            return result;
+        }
+
+        private void returnShuffledDiscard_m()
         {
             shuffle(discardDeck);
             drawDeck.InsertRange(0, discardDeck);

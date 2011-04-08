@@ -99,27 +99,45 @@ namespace TestPandemic2
         {
             //3 players
             gs = new GameState(atlanta, map, 3, 1);
+            gs = gs.setTurnAction(new DoNothingTurnAction());
+
             Player startPlayer = gs.currentPlayer();
             Action someAction = gs.availableActions()[0];
             GameState newGS = someAction.execute(gs);
-            Assert.AreNotEqual(startPlayer.playernum, newGS.currentPlayer().playernum);
+            Assert.AreEqual(1, newGS.availableActions().Count);
             someAction = newGS.availableActions()[0];
             newGS = someAction.execute(newGS);
             Assert.AreNotEqual(startPlayer.playernum, newGS.currentPlayer().playernum);
+            someAction = newGS.availableActions()[0];
+            newGS = someAction.execute(newGS);
+            Assert.AreEqual(1, newGS.availableActions().Count);
+            someAction = newGS.availableActions()[0];
+            newGS = someAction.execute(newGS);
+
+            Assert.AreNotEqual(startPlayer.playernum, newGS.currentPlayer().playernum);
+            someAction = newGS.availableActions()[0];
+            newGS = someAction.execute(newGS);
+            Assert.AreEqual(1, newGS.availableActions().Count);
             someAction = newGS.availableActions()[0];
             newGS = someAction.execute(newGS);
             Assert.AreEqual(startPlayer.playernum, newGS.currentPlayer().playernum);
 
             //2 moves per player
             gs = new GameState(atlanta, map, 2, 2);
+            gs = gs.setTurnAction(new DoNothingTurnAction());
             startPlayer = gs.currentPlayer();
             someAction = gs.availableActions()[0];
             newGS = someAction.execute(gs);
             Assert.AreEqual(startPlayer.playernum, newGS.currentPlayer().playernum);
             someAction = newGS.availableActions()[0];
             newGS = someAction.execute(newGS);
+            Assert.AreEqual(1, newGS.availableActions().Count);
+            someAction = newGS.availableActions()[0];
+            newGS = someAction.execute(newGS);
             Assert.AreNotEqual(startPlayer.playernum, newGS.currentPlayer().playernum);
 
         }
+
+
     }
 }

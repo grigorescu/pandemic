@@ -63,5 +63,9 @@ namespace Pandemic
             return newPlayer;
         }
 
+        public override String ToString()
+        {
+            return (playernum + 1).ToString();
+        }
     }
 }

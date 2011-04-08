@@ -50,6 +50,7 @@
     <Compile Include="City.cs" />
     <Compile Include="CureAction.cs" />
     <Compile Include="Deck.cs" />
+    <Compile Include="DoNothingTurnAction.cs" />
     <Compile Include="GameBoard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +59,7 @@
     </Compile>
     <Compile Include="GameEngine.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="HatesDisease.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MoveAction.cs" />
     <Compile Include="MoveToCardAction.cs" />
