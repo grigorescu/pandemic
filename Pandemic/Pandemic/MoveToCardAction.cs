@@ -33,5 +33,10 @@ namespace Pandemic
             }
             return results;
         }
+
+        public override string ToString()
+        {
+            return "Move to (card) " + card.name;
+        }
     }
 }

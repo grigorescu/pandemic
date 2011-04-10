@@ -10,6 +10,7 @@ namespace Pandemic
         public GameState gs;
         City atlanta;
         SearchEvaluate ev;
+        public Action lastAction;
 
         public GameEngine()
         {
@@ -26,6 +27,7 @@ namespace Pandemic
         {
 
             Action a = ev.bfs_findbest(gs, 8);
+            lastAction = a;
             gs = a.execute(gs);
 
             //throw up some GUI
@@ -46,15 +48,15 @@ namespace Pandemic
             //north america 
             //TODO rename CanadaCity to whatever. Add San Fran
             Map m = new Map();
-            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.165f, 0.417f);
-            City newYork = m.addCity("NewYork", DiseaseColor.BLUE,0.266f,0.348f);
-            City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.123f, 0.352f);
-            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.244f, 0.423f);
-            City canadaCity = m.addCity("Toronto", DiseaseColor.BLUE, 0.196f, 0.352f);
-            City sanFran = m.addCity("San Fransisco", DiseaseColor.BLUE, 0.042f, 0.394f);
-            City losAngeles = m.addCity("Los Angeles", DiseaseColor.YELLOW, 0.055f, 0.471f);
-            City miami = m.addCity("Miami", DiseaseColor.YELLOW, 0.221f, 0.486f);
-            City mexicoCity = m.addCity("MexicoCity", DiseaseColor.YELLOW, 0.127f, 0.507f);
+            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.115f, 0.415f);
+            City newYork = m.addCity("NewYork", DiseaseColor.BLUE,0.191f,0.334f);
+            City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.088f, 0.341f); 
+            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.175f, 0.413f);
+            City canadaCity = m.addCity("Toronto", DiseaseColor.BLUE, 0.139f, 0.342f);
+            City sanFran = m.addCity("San Fransisco", DiseaseColor.BLUE, 0.025f, 0.383f);
+            City losAngeles = m.addCity("Los Angeles", DiseaseColor.YELLOW, 0.034f, 0.459f);
+            City miami = m.addCity("Miami", DiseaseColor.YELLOW, 0.154f, 0.482f);
+            City mexicoCity = m.addCity("MexicoCity", DiseaseColor.YELLOW, 0.083f, 0.495f);
 
             City.makeAdjacent(newYork, washington);
             City.makeAdjacent(newYork, canadaCity);

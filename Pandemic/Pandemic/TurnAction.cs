@@ -47,5 +47,10 @@ namespace Pandemic
 
             return gs;
         }
+
+        public override string ToString()
+        {
+            return "End of turn card draw";
+        }
     }
 }

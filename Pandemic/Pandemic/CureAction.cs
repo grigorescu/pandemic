@@ -24,5 +24,10 @@ namespace Pandemic
             Map newMap = current.map.removeDisease(position, color);
             return new GameState(current, newMap);
         }
+
+        public override string ToString()
+        {
+            return "Curing " + position.name;
+        }
     }
 }

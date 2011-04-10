@@ -25,5 +25,10 @@ namespace Pandemic
             GameState result = new GameState(gs, movedPlayer);
             return result;
         }
+
+        public override string ToString()
+        {
+            return "Move to " + dest.name;
+        }
     }
 }
