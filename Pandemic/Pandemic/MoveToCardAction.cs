@@ -21,7 +21,9 @@ namespace Pandemic
         {
             Player newPlayer = new Player(card, player);
             newPlayer = newPlayer.removeCard(card);
-            return new GameState(current, newPlayer);
+            GameState g = current.adjustPlayer(newPlayer);
+            g.advanceMove();
+            return g;
         }
 
         public static List<MoveToCardAction> actionsForPlayer(Player p)

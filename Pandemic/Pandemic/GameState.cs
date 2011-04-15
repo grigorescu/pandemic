@@ -42,18 +42,17 @@ namespace Pandemic
             
         }
 
-        public GameState(GameState gs, Player player)
-            : this(gs)
+        public GameState adjustPlayer(Player p)
         {
-            map = gs.map;
-            players = new Player[numPlayers];
+            GameState result = new GameState(this);
+            result.players = new Player[numPlayers];
             for (int i = 0; i < numPlayers; i++)
             {
-                players[i] = gs.players[i];
+                result.players[i] = players[i];
             }
-            Debug.Assert(player.playernum < numPlayers);
-            players[player.playernum] = player;
-            advanceMove();
+            Debug.Assert(p.playernum < numPlayers);
+            result.players[p.playernum] = p;
+            return result;
         }
 
         public GameState(GameState gs, Map map)
@@ -77,7 +76,7 @@ namespace Pandemic
             this.turnAction = new TurnAction();
         }
 
-        private void advanceMove()
+        public void advanceMove()
         {
             cpMovesUsed++;
             //if (cpMovesUsed == numMoves)
@@ -101,7 +100,7 @@ namespace Pandemic
                 actions.AddRange(map.getMoveActionsFor(current));
                 actions.AddRange(map.getCureActionsFor(current));
                 actions.AddRange(MoveToCardAction.actionsForPlayer(currentPlayer()));
-
+                actions.AddRange(TradeAction.getTrades(this));
                 foreach (Action a in actions)
                 {
                     a.debug_gs = this;

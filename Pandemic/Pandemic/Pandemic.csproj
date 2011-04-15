@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="City.cs" />
+    <Compile Include="TradeAction.cs" />
     <Compile Include="CureAction.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="DoNothingTurnAction.cs" />

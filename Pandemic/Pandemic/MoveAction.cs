@@ -22,7 +22,8 @@ namespace Pandemic
         {
             Debug.Assert(debug_gs == null || debug_gs == gs, "Action used on an unintended gamestate");
             Player movedPlayer = new Player(dest, player);
-            GameState result = new GameState(gs, movedPlayer);
+            GameState result = gs.adjustPlayer(movedPlayer);
+            result.advanceMove();
             return result;
         }
 
