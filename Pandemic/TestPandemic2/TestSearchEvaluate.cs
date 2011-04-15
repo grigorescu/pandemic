@@ -284,6 +284,27 @@ namespace TestPandemic2
         }
 
         [TestMethod]
+        public void TestScientist()
+        {
+            Player p = gs.currentPlayer();
+            
+            p = p.addCard(gs.map.addCity("Blue1", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue2", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue3", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue4", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue5", DiseaseColor.BLUE));
+            p.type = Player.Type.SCIENTIST;
+            gs = gs.adjustPlayer(p);
+            gs = new GameState(gs, gs.map.addStation(newyork));
+            SearchEvaluate eval = new LovesCures();
+            Action action = eval.bfs_findbest(gs, 1);
+            GameState newGS = action.execute(gs);
+            Assert.AreEqual(1, newGS.numCures());
+            Assert.AreEqual(1, newGS.currentPlayer().cards.Count);
+        }
+
+
+        [TestMethod]
         public void TestMakeStationAction()
         {
             gs = new GameState(newyork, map, 2, 1);

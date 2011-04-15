@@ -10,6 +10,8 @@ namespace Pandemic
         private City _position;
         public readonly int playernum;
         public Boolean isAI = true;
+        public enum Type {MEDIC, DISPATCHER, RESEARCHER, SCIENTIST, OPERATIONS, NOBODY};
+        public Type type;
 
         public List<City> cards;
 
@@ -27,6 +29,7 @@ namespace Pandemic
             playernum = p.playernum;
             cards = p.cards;
             isAI = p.isAI;
+            type = p.type;
         }
 
         public Player(City newPosition, Player player)
@@ -35,12 +38,13 @@ namespace Pandemic
             _position = newPosition;
         }
 
-        public Player(City position, int playernum, Boolean isAI = true)
+        public Player(City position, int playernum, Boolean isAI = true, Type type = Type.NOBODY)
         {
             _position = position;
             this.playernum = playernum;
             this.isAI = isAI;
             this.cards = new List<City>();
+            this.type = type;
         }
 
         public List<Action> getActions()
@@ -70,13 +74,15 @@ namespace Pandemic
         {
             List<DiseaseColor> result = new List<DiseaseColor>();
             int[] counts = {0,0,0,0};
+            int cardLevel = type == Type.SCIENTIST ? 4 : 5;
+
             foreach(City c in cards)
             {
                 counts[(int) c.color]++;
             }
             for(int i = 0; i < 4; i++)
             {
-                if(counts[i] > 4) result.Add((DiseaseColor) i);
+                if(counts[i] >= cardLevel) result.Add((DiseaseColor) i);
             }
             return result;
         }

@@ -37,11 +37,7 @@ namespace Pandemic
         public void runAction()
         {
 
-<<<<<<< .mine
-            Action a = ev.bfs_findbest(gs,4);
-=======
             Action a = ev.bfs_findbest(gs, 4);
->>>>>>> .r21
             lastAction = a;
             gs = a.execute(gs);
 

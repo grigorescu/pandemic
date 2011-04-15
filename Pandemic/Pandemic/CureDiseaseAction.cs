@@ -20,7 +20,7 @@ namespace Pandemic
 
             foreach (City card in player.cards)
             {
-                if (cardsRemoved == 5) break;
+                if (cardsRemoved == 5 || (cardsRemoved == 4 && gs.currentPlayer().type == Player.Type.SCIENTIST)) break;
                 if (color == card.color)
                 {
                     player = player.removeCard(card);
