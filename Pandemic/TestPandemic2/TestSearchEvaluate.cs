@@ -103,7 +103,6 @@ namespace TestPandemic2
         {
             City rio = map.addCity("Rio", DiseaseColor.YELLOW);
             
-
             SearchEvaluate likesRio = new LikesCity(rio);
 
             Action action = likesRio.bfs_findbest(gs, 1);
