@@ -42,9 +42,10 @@ namespace Pandemic
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.currPlayerInfo = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.board)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,26 +125,9 @@ namespace Pandemic
             this.rectangleShape2,
             this.rectangleShape1,
             this.lineShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(1445, 786);
+            this.shapeContainer1.Size = new System.Drawing.Size(1284, 784);
             this.shapeContainer1.TabIndex = 7;
             this.shapeContainer1.TabStop = false;
-            // 
-            // lineShape1
-            // 
-            this.lineShape1.Name = "lineShape1";
-            this.lineShape1.X1 = 1085;
-            this.lineShape1.X2 = 1439;
-            this.lineShape1.Y1 = 309;
-            this.lineShape1.Y2 = 309;
-            // 
-            // rectangleShape1
-            // 
-            this.rectangleShape1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.rectangleShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
-            this.rectangleShape1.Location = new System.Drawing.Point(1078, 5);
-            this.rectangleShape1.Name = "rectangleShape1";
-            this.rectangleShape1.Size = new System.Drawing.Size(360, 387);
-            this.rectangleShape1.Click += new System.EventHandler(this.rectangleShape1_Click);
             // 
             // rectangleShape2
             // 
@@ -154,11 +138,37 @@ namespace Pandemic
             this.rectangleShape2.Size = new System.Drawing.Size(359, 389);
             this.rectangleShape2.Click += new System.EventHandler(this.rectangleShape2_Click);
             // 
+            // rectangleShape1
+            // 
+            this.rectangleShape1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.rectangleShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectangleShape1.Location = new System.Drawing.Point(1043, 6);
+            this.rectangleShape1.Name = "rectangleShape1";
+            this.rectangleShape1.Size = new System.Drawing.Size(240, 387);
+            this.rectangleShape1.Click += new System.EventHandler(this.rectangleShape1_Click);
+            // 
+            // lineShape1
+            // 
+            this.lineShape1.Name = "lineShape1";
+            this.lineShape1.X1 = 1085;
+            this.lineShape1.X2 = 1439;
+            this.lineShape1.Y1 = 309;
+            this.lineShape1.Y2 = 309;
+            // 
+            // currPlayerInfo
+            // 
+            this.currPlayerInfo.Location = new System.Drawing.Point(1082, 139);
+            this.currPlayerInfo.Name = "currPlayerInfo";
+            this.currPlayerInfo.Size = new System.Drawing.Size(193, 161);
+            this.currPlayerInfo.TabIndex = 8;
+            this.currPlayerInfo.Text = "";
+            // 
             // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1445, 786);
+            this.ClientSize = new System.Drawing.Size(1284, 784);
+            this.Controls.Add(this.currPlayerInfo);
             this.Controls.Add(this.nextActButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -184,6 +194,7 @@ namespace Pandemic
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+        private System.Windows.Forms.RichTextBox currPlayerInfo;
 
         
         

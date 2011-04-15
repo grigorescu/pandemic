@@ -42,6 +42,7 @@ namespace Pandemic
             }
 
             gs = gs.drawInfectionCards(numInfectionCardsToDraw);
+            gs = gs.drawPlayerCards(gs.currentPlayer());
             gs.advancePlayer();
             
 

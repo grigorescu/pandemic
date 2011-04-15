@@ -15,12 +15,21 @@ namespace Pandemic
         public GameEngine()
         {
            
-            //initialize infection and player decks
+            //initialize infection and player decks and map
             Map map = initializeCities();
             Deck<City> ideck = initializeInfectionDeck(map);
-            gs = new GameState(atlanta, map, 4, 4, ideck);
+            //initialize player deck
+            Deck<City> pDeck = initializePlayerDeck(map);
+           
+            gs = new GameState(atlanta, map, 4, 4, ideck, pDeck);
+            
+            foreach (Player p in gs.players)
+            {
+                gs = gs.drawPlayerCards(p);
+            }
+            
             ev = new HatesDisease(100);
-            //initialize board (before first turn)
+            
         }
 
         public void runAction()
@@ -89,6 +98,15 @@ namespace Pandemic
 
             Deck<City> infectionDeck = new Deck<City>(cities, true);
             return infectionDeck;
+        }
+
+        private Deck<City> initializePlayerDeck(Map map)
+        {
+            List<City> cities = new List<City>();
+            cities.AddRange(map.allCities);
+
+            Deck<City> playerDeck = new Deck<City>(cities, true);
+            return playerDeck;
         }
     }
 }

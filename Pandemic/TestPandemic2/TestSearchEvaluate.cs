@@ -43,7 +43,7 @@ namespace TestPandemic2
             }
         }
 
-        City newyork, newark;
+        City newyork, newark, newark1, newark2, newark3, newark4, newark5, newark6, newark7, newark8, newark9, newark10;
         Map map;
         GameState gs;
 
@@ -64,6 +64,16 @@ namespace TestPandemic2
             map = new Map();
             newyork = map.addCity("NewYork", DiseaseColor.BLUE);
             newark = map.addCity("Newark", DiseaseColor.BLUE);
+            newark1 = map.addCity("Newark1", DiseaseColor.BLUE);
+            newark2 = map.addCity("Newark2", DiseaseColor.BLUE);
+            newark3 = map.addCity("Newark3", DiseaseColor.BLUE);
+            newark4 = map.addCity("Newark4", DiseaseColor.BLUE);
+            newark5 = map.addCity("Newark5", DiseaseColor.BLUE);
+            newark6 = map.addCity("Newark6", DiseaseColor.BLUE);
+            newark7 = map.addCity("Newark7", DiseaseColor.BLUE);
+            newark8 = map.addCity("Newark8", DiseaseColor.BLUE);
+            newark9 = map.addCity("Newark9", DiseaseColor.BLUE);
+            newark10 = map.addCity("Newark10", DiseaseColor.BLUE);
             City.makeAdjacent(newyork, newark);
             gs = new GameState(newyork, map);
 
@@ -174,13 +184,14 @@ namespace TestPandemic2
         public void TestTurnAction()
         {
             Deck<City> infect = new Deck<City>(map.allCities, false);
-            gs = new GameState(newyork, map, 1, 1, infect);
+            Deck<City> playerDeck = new Deck<City>(map.allCities, false);
+            gs = new GameState(newyork, map, 1, 1, infect, playerDeck);
             GameState gs2 = gs.availableActions()[0].execute(gs);
             Assert.AreEqual(1, gs2.availableActions().Count);
             GameState gs3 = gs2.availableActions()[0].execute(gs2);
-            Assert.AreEqual(2, infect.drawDeck.Count);
+            Assert.AreEqual(12, infect.drawDeck.Count);
             Assert.AreEqual(0, infect.discardDeck.Count);
-            Assert.AreEqual(0, gs3.infectionDeck.drawDeck.Count);
+            Assert.AreEqual(10, gs3.infectionDeck.drawDeck.Count);
             Assert.AreEqual(2, gs3.infectionDeck.discardDeck.Count);
             Assert.AreEqual(1, gs3.map.diseaseLevel(newark, DiseaseColor.BLUE));
             Assert.AreEqual(1, gs3.map.diseaseLevel(newyork, DiseaseColor.BLUE));

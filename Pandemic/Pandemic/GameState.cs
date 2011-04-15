@@ -19,6 +19,7 @@ namespace Pandemic
         public int curesFound = 0; //TODO
         public int diseasesEradicated = 0; //TODO
         public Deck<City> infectionDeck;
+        public Deck<City> playerDeck;
         public Action turnAction;
         public int turnCounter =0;
 
@@ -38,6 +39,7 @@ namespace Pandemic
             numMoves = gs.numMoves;
             cpMovesUsed = gs.cpMovesUsed;
             infectionDeck = gs.infectionDeck;
+            playerDeck = gs.playerDeck;
             turnAction = gs.turnAction;
             
         }
@@ -62,7 +64,7 @@ namespace Pandemic
             advanceMove();
         }
 
-        public GameState(City startCity, Map map, int num_players = 1, int num_moves = 4, Deck<City> infectDeck = null)
+        public GameState(City startCity, Map map, int num_players = 1, int num_moves = 4, Deck<City> infectDeck = null, Deck<City> playerDeck = null)
         {
             players = new Player[num_players];
             for (int i = 0; i < num_players; i++)
@@ -73,6 +75,7 @@ namespace Pandemic
             this.numPlayers = num_players;
             this.numMoves = num_moves;
             this.infectionDeck = infectDeck;
+            this.playerDeck = playerDeck;
             this.turnAction = new TurnAction();
         }
 
@@ -131,6 +134,38 @@ namespace Pandemic
                 m = m.addDisease(current, 1);
             }
             newGS.map = m;
+
+            return newGS;
+        }
+
+        public GameState drawPlayerCards(Player cp, int num=2)
+        {
+            //draw 2
+            GameState newGS = new GameState(this);
+            newGS.playerDeck = playerDeck.draw(num);
+          
+
+            //CHECK IF player deck is done
+
+            foreach (City c in newGS.playerDeck.mostRecent(num))
+            {
+                cp = cp.addCard(c);
+            }
+
+            while (cp.cards.Count > 7)
+            {
+                if (cp.isAI)
+                {
+                    //may want to plug some AI in here
+                    cp.removeCard(cp.cards[cp.cards.Count - 1]);
+                }
+                else
+                {
+                    //ask the player which card to remove
+                }
+            }
+
+            newGS.players[cp.playernum] = cp;
 
             return newGS;
         }

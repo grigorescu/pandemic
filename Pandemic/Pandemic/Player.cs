@@ -9,6 +9,7 @@ namespace Pandemic
     {
         private City _position;
         public readonly int playernum;
+        public Boolean isAI = true;
 
         public List<City> cards;
 
@@ -25,18 +26,20 @@ namespace Pandemic
             _position = p._position;
             playernum = p.playernum;
             cards = p.cards;
+            isAI = p.isAI;
         }
 
         public Player(City newPosition, Player player)
-           : this(player)
+            : this(player)
         {
             _position = newPosition;
         }
 
-        public Player(City position, int playernum)
+        public Player(City position, int playernum, Boolean isAI = true)
         {
             _position = position;
             this.playernum = playernum;
+            this.isAI = isAI;
             this.cards = new List<City>();
         }
 
@@ -63,6 +66,26 @@ namespace Pandemic
             return newPlayer;
         }
 
+        public String ToLongDescr()
+        {
+            String s;
+            s = "Player " + (playernum + 1).ToString() + " ";
+            if (isAI)
+            {
+                s += " AI player ";
+            }
+            else s += " Human player ";
+
+            s += " Current pos" + position;
+
+            s += " Cards in hand ";
+            foreach (City c in cards)
+            {
+                s += c.ToString() + " ";
+            }
+
+            return s;
+        }
         public override String ToString()
         {
             return (playernum + 1).ToString();
