@@ -9,9 +9,12 @@ namespace Pandemic
     {
         public List<Card> drawDeck;
         public List<Card> discardDeck;
+        public List<int> eCards;
+        public int cardWeAreOn = 0;
         public Random random;
+        Boolean isPlayerDeck;
 
-        public Deck(IEnumerable<Card> cards, Boolean isRandom = true)
+        public Deck(IEnumerable<Card> cards, Boolean isRandom = true, Boolean isPlayerDeck = false)
         {
             drawDeck = new List<Card>();
             drawDeck.AddRange(cards);
@@ -20,6 +23,8 @@ namespace Pandemic
             {
                 random = new Random();
             }
+
+            this.isPlayerDeck = isPlayerDeck;
 
             shuffle(drawDeck);
         }
@@ -31,6 +36,22 @@ namespace Pandemic
             discardDeck = new List<Card>();
             discardDeck.AddRange(old.discardDeck);
             random = old.random;
+        }
+
+        public Boolean isNextCardEpidemic()
+        {
+            if (isPlayerDeck)
+            {
+                foreach (int i in eCards)
+                {
+                    if (i == cardWeAreOn + 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public Deck<Card> draw(int drawnum = 1)
@@ -46,6 +67,7 @@ namespace Pandemic
             justDrew.AddRange(drawDeck.GetRange(0, drawNum));
             discardDeck.AddRange(drawDeck.GetRange(0, drawNum));
             drawDeck.RemoveRange(0, drawNum);
+            cardWeAreOn += drawNum;
         }
 
         public Deck<Card> drawFromBottom()
@@ -58,7 +80,7 @@ namespace Pandemic
         private void drawFromBottom_m()
         {
             List<Card> justDrew = new List<Card>();
-            justDrew.AddRange(drawDeck.GetRange(drawDeck.Count-1, 1));
+            justDrew.AddRange(drawDeck.GetRange(drawDeck.Count - 1, 1));
             discardDeck.AddRange(drawDeck.GetRange(drawDeck.Count - 1, 1));
             drawDeck.RemoveRange(drawDeck.Count - 1, 1);
         }
@@ -72,7 +94,7 @@ namespace Pandemic
         {
             if (random == null)
                 return;
-            
+
             Card temp1;
             Card temp2;
             int index;
@@ -80,7 +102,7 @@ namespace Pandemic
             for (int i = 0; i < deck.Count - 1; i++)
             {
                 temp1 = deck[i];
-                index = random.Next(deck.Count - i)+i;
+                index = random.Next(deck.Count - i) + i;
                 temp2 = deck[index];
                 deck[i] = temp2;
                 deck[index] = temp1;

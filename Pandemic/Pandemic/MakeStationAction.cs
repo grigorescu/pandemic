@@ -10,6 +10,7 @@ namespace Pandemic
     {
         City position;
         Player player;
+        static int numberAllowed = 10;
 
         public MakeStationAction(Player p, City position)
         {
@@ -34,7 +35,7 @@ namespace Pandemic
             List<MakeStationAction> results = new List<MakeStationAction>();
             foreach (City c in p.cards)
             {
-                if (p.position == c && m.hasStation(c) == false)
+                if (p.position == c && m.hasStation(c) == false && m.numStations != numberAllowed)
                 {
                     results.Add(new MakeStationAction(p, c));
                 }

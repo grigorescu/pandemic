@@ -172,6 +172,13 @@ namespace Pandemic
         {
             //draw 2
             GameState newGS = new GameState(this);
+
+            if (playerDeck.isNextCardEpidemic())
+            {
+                epidemicCard();
+                playerDeck.cardWeAreOn++;
+            }
+
             newGS.playerDeck = playerDeck.draw(num);
           
 

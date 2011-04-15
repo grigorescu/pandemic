@@ -65,6 +65,7 @@ namespace Pandemic
         private Dictionary<City, CityData> cities;
         public Dictionary<String, City> cityNames;
         private int _outbreakCount = 0;
+        public int numStations = 0;
         public int infectionRate = 0; //spot on board not num cards to draw
         //dont modify the station list
         public List<City> stations; 
