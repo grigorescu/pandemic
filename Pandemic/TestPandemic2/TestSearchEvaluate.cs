@@ -225,5 +225,35 @@ namespace TestPandemic2
             Assert.AreEqual(1, newGS.players[1].cards.Count);
 
         }
+
+        [TestMethod]
+        public void TestMakeStationAction()
+        {
+            gs = new GameState(newyork, map, 2, 1);
+            Player p1 = gs.currentPlayer();
+            Player p1wCard = p1.addCard(newyork);
+            gs = gs.adjustPlayer(p1wCard);
+            gs = gs.setTurnAction(new DoNothingTurnAction());
+            SearchEvaluate likesCards = new LikesCards(1);
+            List<Action> foo = gs.availableActions();
+            Action action = likesCards.bfs_findbest(gs, 1);
+            GameState newGS = action.execute(gs);
+            Assert.AreEqual(0, newGS.players[0].cards.Count);
+            Assert.AreEqual(1, newGS.players[1].cards.Count);
+
+            gs = new GameState(newyork, map, 2, 1);
+            p1 = gs.currentPlayer();
+            p1wCard = p1.addCard(newark);
+            gs = gs.adjustPlayer(p1wCard);
+            gs = gs.setTurnAction(new DoNothingTurnAction());
+            action = likesCards.bfs_findbest(gs, 5);
+            newGS = action.execute(gs);
+            Assert.AreEqual(1, newGS.players[0].cards.Count);
+            Assert.AreEqual(0, newGS.players[1].cards.Count);
+            newGS = doSteps(newGS, likesCards, 4, 5);
+            Assert.AreEqual(0, newGS.players[0].cards.Count);
+            Assert.AreEqual(1, newGS.players[1].cards.Count);
+
+        }
     }
 }
