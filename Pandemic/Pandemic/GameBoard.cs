@@ -181,21 +181,21 @@ namespace Pandemic
             Console.WriteLine(pName);
             if (pName == "1")
             {
-                p1.Image = ((System.Drawing.Image)(Image.FromFile("C:\\Users\\Hayley\\Documents\\Visual Studio 2010\\Projects\\Pandemic\\Pandemic\\pics\\bplayer.png")));
+                p1.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\bplayer.png")));
             }else if(pName == "2")
             {
-                p1.Image = ((System.Drawing.Image)(Image.FromFile("C:\\Users\\Hayley\\Documents\\Visual Studio 2010\\Projects\\Pandemic\\Pandemic\\pics\\gplayer.png")));
+                p1.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\gplayer.png")));
             }else if(pName == "3")
             {
-                p1.Image = ((System.Drawing.Image)(Image.FromFile("C:\\Users\\Hayley\\Documents\\Visual Studio 2010\\Projects\\Pandemic\\Pandemic\\pics\\yplayer.png")));
+                p1.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\yplayer.png")));
 
             }else if(pName == "4")
             {
-                p1.Image = ((System.Drawing.Image)(Image.FromFile("C:\\Users\\Hayley\\Documents\\Visual Studio 2010\\Projects\\Pandemic\\Pandemic\\pics\\wplayer.png")));
+                p1.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\wplayer.png")));
             }
             else if (pName == "0")
             {
-                p1.Image = ((System.Drawing.Image)(Image.FromFile("C:\\Users\\Hayley\\Documents\\Visual Studio 2010\\Projects\\Pandemic\\Pandemic\\pics\\blplayer.png")));
+                p1.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\blplayer.png")));
             }
 
             p1.Location = new System.Drawing.Point((int)(x * Width) + offsetX * 15, (int)(y * Height) + offsetY * 15);

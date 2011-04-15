@@ -81,6 +81,27 @@ namespace Pandemic
             return result;
         }
 
+        public String ToLongDescr()
+        {
+            String s;
+            s = "Player " + (playernum + 1).ToString() + " ";
+            if (isAI)
+            {
+                s += " AI player ";
+            }
+            else s += " Human player ";
+
+            s += " Current pos" + position;
+
+            s += " Cards in hand ";
+            foreach (City c in cards)
+            {
+                s += c.ToString() + " ";
+            }
+
+            return s;
+        }
+
         public override String ToString()
         {
             return (playernum + 1).ToString();
