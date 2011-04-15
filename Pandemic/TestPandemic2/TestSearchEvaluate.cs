@@ -43,6 +43,17 @@ namespace TestPandemic2
             }
         }
 
+
+
+        public class LovesCures : SearchEvaluate
+        {
+            public override float evaluate(GameState gs)
+            {
+                return (float)gs.numCures() / 4;
+            }
+        }
+
+
         public class LikesStations : SearchEvaluate
         {
             int playerNum;
@@ -68,6 +79,10 @@ namespace TestPandemic2
         }
 
         City newyork, newark, newark1, newark2, newark3, newark4, newark5, newark6, newark7, newark8, newark9, newark10;
+
+
+
+
         Map map;
         GameState gs;
 
@@ -248,6 +263,24 @@ namespace TestPandemic2
             Assert.AreEqual(0, newGS.players[0].cards.Count);
             Assert.AreEqual(0, newGS.players[1].cards.Count);
 
+        }
+
+        [TestMethod]
+        public void TestCureDisease()
+        {
+            Player p = gs.currentPlayer();
+            p = p.addCard(gs.map.addCity("Blue1", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue2", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue3", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue4", DiseaseColor.BLUE));
+            p = p.addCard(gs.map.addCity("Blue5", DiseaseColor.BLUE));
+            gs = gs.adjustPlayer(p);
+            gs = new GameState(gs, gs.map.addStation(newyork));
+            SearchEvaluate eval = new LovesCures();
+            Action action = eval.bfs_findbest(gs, 1);
+            GameState newGS = action.execute(gs);
+            Assert.AreEqual(1, newGS.numCures());
+            Assert.AreEqual(0, newGS.currentPlayer().cards.Count);
         }
 
         [TestMethod]

@@ -193,15 +193,15 @@ namespace Pandemic
             return moves;
         }
 
-        public List<CureAction> getCureActionsFor(Player player)
+        public List<CureCityAction> getCureActionsFor(Player player)
         {
-            List<CureAction> cures = new List<CureAction>();
+            List<CureCityAction> cures = new List<CureCityAction>();
             for(int i = 0; i < 4; i++)
             {
                 DiseaseColor color = (DiseaseColor)i;
                 if (diseaseLevel(player.position, color) > 0)
                 {
-                    cures.Add(new CureAction(player.position,color));
+                    cures.Add(new CureCityAction(player.position,color));
                 }
             }
             return cures;

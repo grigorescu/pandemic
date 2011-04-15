@@ -50,9 +50,13 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="City.cs" />
+<<<<<<< .mine
+    <Compile Include="CureDiseaseAction.cs" />
+=======
     <Compile Include="MakeStationAction.cs" />
+>>>>>>> .r19
     <Compile Include="TradeAction.cs" />
-    <Compile Include="CureAction.cs" />
+    <Compile Include="CureCityAction.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="DoNothingTurnAction.cs" />
     <Compile Include="GameBoard.cs">

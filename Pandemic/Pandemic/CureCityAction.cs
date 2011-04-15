@@ -6,13 +6,13 @@ using System.Diagnostics;
 
 namespace Pandemic
 {
-    public class CureAction : Action
+    public class CureCityAction : Action
     {
 
         City position;
         DiseaseColor color;
 
-        public CureAction(City position, DiseaseColor color)
+        public CureCityAction(City position, DiseaseColor color)
         {
             this.position = position;
             this.color = color;

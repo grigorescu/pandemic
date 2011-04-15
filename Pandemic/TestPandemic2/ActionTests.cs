@@ -90,7 +90,7 @@ namespace TestPandemic2
             City.makeAdjacent(atlanta, newyork);
             map = map.addDisease(atlanta);
             GameState gs = new GameState(atlanta, map);
-            CureAction action = new CureAction(atlanta, DiseaseColor.BLUE);
+            CureCityAction action = new CureCityAction(atlanta, DiseaseColor.BLUE);
             GameState newGs = action.execute(gs);
             Assert.AreEqual(1, gs.map.diseaseLevel(atlanta, DiseaseColor.BLUE));
             Assert.AreEqual(atlanta, newGs.currentPlayer().position);

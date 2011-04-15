@@ -40,7 +40,7 @@ namespace Pandemic
             gs = a.execute(gs);
 
             //throw up some GUI
-            if (gs.curesFound == 4)
+            if (gs.numCures() == 4)
             {
                 //YOU WON OMG
             }

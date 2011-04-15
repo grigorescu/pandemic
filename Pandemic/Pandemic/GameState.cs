@@ -16,8 +16,8 @@ namespace Pandemic
         public int numPlayers;
         public int numMoves;
         public int cpMovesUsed = 0;
-        public int curesFound = 0; //TODO
-        public int diseasesEradicated = 0; //TODO
+        public bool[] curesFound;
+        //public int diseasesEradicated = 0; //TODO
         public Deck<City> infectionDeck;
         public Deck<City> playerDeck;
         public Action turnAction;
@@ -41,7 +41,7 @@ namespace Pandemic
             infectionDeck = gs.infectionDeck;
             playerDeck = gs.playerDeck;
             turnAction = gs.turnAction;
-            
+            curesFound = gs.curesFound;
         }
 
         public GameState adjustPlayer(Player p)
@@ -77,6 +77,21 @@ namespace Pandemic
             this.infectionDeck = infectDeck;
             this.playerDeck = playerDeck;
             this.turnAction = new TurnAction();
+            this.curesFound = new bool[4];
+            for (int i = 0; i < 4; i++)
+            {
+                this.curesFound[i] = false;
+            }
+        }
+
+        public int numCures()
+        {
+            int result = 0;
+            foreach (bool b in curesFound)
+            {
+                if (b) result++;
+            }
+            return result;
         }
 
         public void advanceMove()
@@ -94,6 +109,18 @@ namespace Pandemic
             return players[currentPlayerNum];
         }
 
+        public GameState cureDisease(DiseaseColor color)
+        {
+            GameState result = new GameState(this);
+            result.curesFound = new bool[4];
+            for (int i = 0; i < 4; i++)
+            {
+                result.curesFound[i] = curesFound[i];
+            }
+            result.curesFound[(int) color] = true;
+            return result;
+        }
+
         public List<Action> availableActions()
         {
             List<Action> actions = new List<Action>();
@@ -106,6 +133,7 @@ namespace Pandemic
                 actions.AddRange(MoveToCardAction.actionsForPlayer(currentPlayer()));
                 actions.AddRange(MakeStationAction.actionsForPlayer(currentPlayer(), this.map));
                 actions.AddRange(TradeAction.getTrades(this));
+                actions.AddRange(CureDiseaseAction.getCureActions(this));
                 foreach (Action a in actions)
                 {
                     a.debug_gs = this;

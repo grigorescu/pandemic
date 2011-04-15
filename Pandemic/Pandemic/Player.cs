@@ -66,26 +66,21 @@ namespace Pandemic
             return newPlayer;
         }
 
-        public String ToLongDescr()
+        public List<DiseaseColor> hasCardsToCure()
         {
-            String s;
-            s = "Player " + (playernum + 1).ToString() + " ";
-            if (isAI)
+            List<DiseaseColor> result = new List<DiseaseColor>();
+            int[] counts = {0,0,0,0};
+            foreach(City c in cards)
             {
-                s += " AI player ";
+                counts[(int) c.color]++;
             }
-            else s += " Human player ";
-
-            s += " Current pos" + position;
-
-            s += " Cards in hand ";
-            foreach (City c in cards)
+            for(int i = 0; i < 4; i++)
             {
-                s += c.ToString() + " ";
+                if(counts[i] > 4) result.Add((DiseaseColor) i);
             }
-
-            return s;
+            return result;
         }
+
         public override String ToString()
         {
             return (playernum + 1).ToString();
