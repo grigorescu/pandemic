@@ -29,12 +29,12 @@ namespace Pandemic
             return g;
         }
 
-        public static List<MakeStationAction> actionsForPlayer(Player p)
+        public static List<MakeStationAction> actionsForPlayer(Player p, Map m)
         {
             List<MakeStationAction> results = new List<MakeStationAction>();
             foreach (City c in p.cards)
             {
-                if (p.position == c)
+                if (p.position == c && m.hasStation(c) == false)
                 {
                     results.Add(new MakeStationAction(p, c));
                 }

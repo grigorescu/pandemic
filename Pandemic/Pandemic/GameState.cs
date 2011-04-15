@@ -101,8 +101,10 @@ namespace Pandemic
             {
                 Player current = currentPlayer();
                 actions.AddRange(map.getMoveActionsFor(current));
+                
                 actions.AddRange(map.getCureActionsFor(current));
                 actions.AddRange(MoveToCardAction.actionsForPlayer(currentPlayer()));
+                actions.AddRange(MakeStationAction.actionsForPlayer(currentPlayer(), this.map));
                 actions.AddRange(TradeAction.getTrades(this));
                 foreach (Action a in actions)
                 {

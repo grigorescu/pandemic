@@ -43,6 +43,30 @@ namespace TestPandemic2
             }
         }
 
+        public class LikesStations : SearchEvaluate
+        {
+            int playerNum;
+
+            public LikesStations(int playerNum)
+            {
+                this.playerNum = playerNum;
+            }
+
+            public override float evaluate(GameState gs)
+            {
+                float f = 0;
+                foreach(City c in gs.map.allCities)
+                {
+                    if(gs.map.hasStation(c))
+                    {
+                        f++;
+                    }
+                }
+                
+                return f/ 100;
+            }
+        }
+
         City newyork, newark, newark1, newark2, newark3, newark4, newark5, newark6, newark7, newark8, newark9, newark10;
         Map map;
         GameState gs;
@@ -222,7 +246,7 @@ namespace TestPandemic2
             Assert.AreEqual(0, newGS.players[1].cards.Count);
             newGS = doSteps(newGS, likesCards, 4, 5);
             Assert.AreEqual(0, newGS.players[0].cards.Count);
-            Assert.AreEqual(1, newGS.players[1].cards.Count);
+            Assert.AreEqual(0, newGS.players[1].cards.Count);
 
         }
 
@@ -234,26 +258,13 @@ namespace TestPandemic2
             Player p1wCard = p1.addCard(newyork);
             gs = gs.adjustPlayer(p1wCard);
             gs = gs.setTurnAction(new DoNothingTurnAction());
-            SearchEvaluate likesCards = new LikesCards(1);
+            SearchEvaluate likesStations = new LikesStations(1);
             List<Action> foo = gs.availableActions();
-            Action action = likesCards.bfs_findbest(gs, 1);
+            Action action = likesStations.bfs_findbest(gs, 1);
             GameState newGS = action.execute(gs);
-            Assert.AreEqual(0, newGS.players[0].cards.Count);
-            Assert.AreEqual(1, newGS.players[1].cards.Count);
-
-            gs = new GameState(newyork, map, 2, 1);
-            p1 = gs.currentPlayer();
-            p1wCard = p1.addCard(newark);
-            gs = gs.adjustPlayer(p1wCard);
-            gs = gs.setTurnAction(new DoNothingTurnAction());
-            action = likesCards.bfs_findbest(gs, 5);
-            newGS = action.execute(gs);
-            Assert.AreEqual(1, newGS.players[0].cards.Count);
             Assert.AreEqual(0, newGS.players[1].cards.Count);
-            newGS = doSteps(newGS, likesCards, 4, 5);
-            Assert.AreEqual(0, newGS.players[0].cards.Count);
-            Assert.AreEqual(1, newGS.players[1].cards.Count);
-
+           // Assert.AreEqual(0, newGS.players[1].cards.Count);
+            Assert.AreEqual(true, newGS.map.hasStation(newyork));        
         }
     }
 }
