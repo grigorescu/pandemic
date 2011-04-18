@@ -75,15 +75,15 @@ namespace Pandemic
             //north america 
             //TODO rename CanadaCity to whatever. Add San Fran
             Map m = new Map();
-            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.115f, 0.415f);
-            City newYork = m.addCity("NewYork", DiseaseColor.BLUE, 0.191f, 0.334f);
-            City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.088f, 0.341f);
-            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.175f, 0.413f);
-            City canadaCity = m.addCity("Toronto", DiseaseColor.BLUE, 0.139f, 0.342f);
-            City sanFran = m.addCity("San Fransisco", DiseaseColor.BLUE, 0.025f, 0.383f);
-            City losAngeles = m.addCity("Los Angeles", DiseaseColor.YELLOW, 0.034f, 0.459f);
-            City miami = m.addCity("Miami", DiseaseColor.YELLOW, 0.154f, 0.482f);
-            City mexicoCity = m.addCity("MexicoCity", DiseaseColor.YELLOW, 0.083f, 0.495f);
+            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.1187f, 0.4107f);
+            City newYork = m.addCity("NewYork", DiseaseColor.BLUE, 0.211838f, 0.3392857f);
+            City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.09345794f, 0.3341837f);
+            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.1869159f, 0.4170918f);
+            City canadaCity = m.addCity("Toronto", DiseaseColor.BLUE, 0.1565421f, 0.3367347f);
+            City sanFran = m.addCity("San Fransisco", DiseaseColor.BLUE, 0.01557632f, 0.3877551f);
+            City losAngeles = m.addCity("Los Angeles", DiseaseColor.YELLOW, 0.027833f, 0.4690382f);
+            City miami = m.addCity("Miami", DiseaseColor.YELLOW, 0.1705607f, 0.4910714f);
+            City mexicoCity = m.addCity("MexicoCity", DiseaseColor.YELLOW, 0.08644859f, 0.5127551f);
 
             City.makeAdjacent(newYork, washington);
             City.makeAdjacent(newYork, canadaCity);

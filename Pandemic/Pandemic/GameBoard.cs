@@ -145,7 +145,7 @@ namespace Pandemic
         {
             Label label2 = new Label();
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point((int)(city.relativeX * Width) + offsetX*15, (int)(city.relativeY * Height) + offsetY*15);
+            label2.Location = new System.Drawing.Point((int)(city.relativeX * board.Width) + offsetX*15, (int)(city.relativeY * board.Height) + offsetY*15);
             label2.Size = new System.Drawing.Size(35, 13);
             label2.Text = label;
             label2.ForeColor = f;
@@ -166,7 +166,7 @@ namespace Pandemic
 
             alabel.Size = new System.Drawing.Size(35, 13);
             alabel.AutoSize = true;
-            alabel.Location = new Point((int)(x * Width), (int)(y * Height));
+            alabel.Location = new Point((int)(x * board.Width), (int)(y * board.Height));
             alabel.Text = label;
             alabel.ForeColor = f;
             alabel.BackColor = b;
@@ -198,7 +198,7 @@ namespace Pandemic
                 p1.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\blplayer.png")));
             }
 
-            p1.Location = new System.Drawing.Point((int)(x * Width) + offsetX * 15, (int)(y * Height) + offsetY * 15);
+            p1.Location = new System.Drawing.Point((int)(x * board.Width) + offsetX * 15, (int)(y * board.Height) + offsetY * 15);
             p1.Name = pName;
             p1.Size = new Size(18, 21);
             if (sizeMulti != 1)
@@ -224,7 +224,7 @@ namespace Pandemic
         {
             System.Windows.Forms.MouseEventArgs me = (System.Windows.Forms.MouseEventArgs) e;
 
-            Console.WriteLine("RX " + (float) me.X/Width + " RH " + (float) me.Y/Height);
+            Console.WriteLine("RX " + (float) me.X/board.Width + " RH " + (float) me.Y/board.Height);
         }
 
         private void nextActButton_Click(object sender, EventArgs e)
@@ -245,6 +245,11 @@ namespace Pandemic
             System.Windows.Forms.MouseEventArgs me = (System.Windows.Forms.MouseEventArgs)e;
 
             Console.WriteLine("RX " + (float)me.X / Width + " RH " + (float)me.Y / Height);
+        }
+
+        private void GameBoard_Resize(object sender, EventArgs e)
+        {
+            update(ge.gs);
         }
 
        

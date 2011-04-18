@@ -51,22 +51,26 @@ namespace Pandemic
             // 
             // board
             // 
+            this.board.Dock = System.Windows.Forms.DockStyle.Fill;
             this.board.Image = ((System.Drawing.Image)(resources.GetObject("board.Image")));
             this.board.Location = new System.Drawing.Point(0, 0);
             this.board.Name = "board";
-            this.board.Size = new System.Drawing.Size(1076, 785);
+            this.board.Padding = new System.Windows.Forms.Padding(0, 0, 210, 0);
+            this.board.Size = new System.Drawing.Size(1284, 784);
+            this.board.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.board.TabIndex = 0;
             this.board.TabStop = false;
             this.board.Click += new System.EventHandler(this.board_Click);
             // 
             // nextActButton
             // 
+            this.nextActButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.nextActButton.BackColor = System.Drawing.Color.DarkSlateGray;
             this.nextActButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.nextActButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.nextActButton.Location = new System.Drawing.Point(1080, 721);
+            this.nextActButton.Location = new System.Drawing.Point(1075, 719);
             this.nextActButton.Name = "nextActButton";
-            this.nextActButton.Size = new System.Drawing.Size(357, 62);
+            this.nextActButton.Size = new System.Drawing.Size(206, 62);
             this.nextActButton.TabIndex = 6;
             this.nextActButton.Text = "NEXT ACTION";
             this.nextActButton.UseVisualStyleBackColor = false;
@@ -74,6 +78,7 @@ namespace Pandemic
             // 
             // lastAction
             // 
+            this.lastAction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lastAction.BackColor = System.Drawing.SystemColors.Control;
             this.lastAction.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lastAction.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -85,6 +90,7 @@ namespace Pandemic
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -96,9 +102,10 @@ namespace Pandemic
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Font = new System.Drawing.Font("Pericles", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(1079, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(351, 40);
@@ -107,6 +114,7 @@ namespace Pandemic
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -131,6 +139,7 @@ namespace Pandemic
             // 
             // rectangleShape2
             // 
+            this.rectangleShape2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rectangleShape2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.rectangleShape2.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
             this.rectangleShape2.Location = new System.Drawing.Point(1079, 395);
@@ -140,6 +149,7 @@ namespace Pandemic
             // 
             // rectangleShape1
             // 
+            this.rectangleShape1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rectangleShape1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.rectangleShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
             this.rectangleShape1.Location = new System.Drawing.Point(1043, 6);
@@ -157,6 +167,7 @@ namespace Pandemic
             // 
             // currPlayerInfo
             // 
+            this.currPlayerInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.currPlayerInfo.Location = new System.Drawing.Point(1082, 139);
             this.currPlayerInfo.Name = "currPlayerInfo";
             this.currPlayerInfo.Size = new System.Drawing.Size(193, 161);
@@ -178,6 +189,7 @@ namespace Pandemic
             this.Controls.Add(this.shapeContainer1);
             this.Name = "GameBoard";
             this.Text = "Pandemic!";
+            this.Resize += new System.EventHandler(this.GameBoard_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.board)).EndInit();
             this.ResumeLayout(false);
 
