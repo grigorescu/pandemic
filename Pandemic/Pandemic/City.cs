@@ -64,7 +64,7 @@ namespace Pandemic
         {
             if (one.isAdjacent(two))
             {
-                throw new Exception("Already adjacent");
+                throw new Exception(one.name + " and " + two.name +"Already adjacent");
             }
             
             one.addAdjacent(two);

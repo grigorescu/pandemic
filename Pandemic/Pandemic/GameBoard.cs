@@ -13,7 +13,7 @@ namespace Pandemic
 {
     public partial class GameBoard : Form
     {
-
+        Boolean debug = false; //turn to false for demo ps it doesn't work real well
         GameEngine ge;
         ArrayList toRemove = new ArrayList();
 
@@ -66,14 +66,35 @@ namespace Pandemic
             }
             
             //current player + last action HUD info
-            makePlayer(gs.currentPlayer().ToString(), .800f, .540f, 0, 0, 2);
+            makePlayer(gs.currentPlayer().ToString(), .869f, .565f, 0, 0, 2);
             if (ge.lastAction != null)
             {
                 //String lastAct = gs.currentPlayer().ToString() + ge.lastAction.ToString();
-                makeLabel(("Player " + gs.currentPlayer().ToString() + ": " + ge.lastAction.ToString()), .800f, .650f, Color.Green, Color.DarkGray, 14);
+                makeLabel(("Player " + gs.currentPlayer().ToString() + ": " + ge.lastAction.ToString()), .843f, .694f, Color.Green, Color.DarkGray, 11);
+            }
+
+            //debug
+            if (debug)
+            {
+                foreach (City a in map.allCities)
+                {
+                    foreach (City b in a.adjacent)
+                    {
+                        Microsoft.VisualBasic.PowerPacks.LineShape connection = new Microsoft.VisualBasic.PowerPacks.LineShape();
+                        connection.Name = "connection";
+                        connection.BorderColor = Color.HotPink;
+                        connection.X1 = (int)a.relativeX*Width;
+                        connection.X2 = (int)b.relativeX * Width;
+                        connection.Y1 = (int)a.relativeY * Height;
+                        connection.Y2 = (int)b.relativeY * Height;
+                        //this.Controls.Add(connection);
+                        //toRemove.Add(connection);
+                    }
+                }
             }
 
             this.currPlayerInfo.Text = gs.currentPlayer().ToLongDescr();
+
 
             //outbreak counter
 

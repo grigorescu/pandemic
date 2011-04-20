@@ -44,8 +44,8 @@ namespace Pandemic
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.currPlayerInfo = new System.Windows.Forms.RichTextBox();
+            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             ((System.ComponentModel.ISupportInitialize)(this.board)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,8 +131,7 @@ namespace Pandemic
             this.shapeContainer1.Name = "shapeContainer1";
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape2,
-            this.rectangleShape1,
-            this.lineShape1});
+            this.rectangleShape1});
             this.shapeContainer1.Size = new System.Drawing.Size(1284, 784);
             this.shapeContainer1.TabIndex = 7;
             this.shapeContainer1.TabStop = false;
@@ -156,14 +155,7 @@ namespace Pandemic
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(240, 387);
             this.rectangleShape1.Click += new System.EventHandler(this.rectangleShape1_Click);
-            // 
-            // lineShape1
-            // 
-            this.lineShape1.Name = "lineShape1";
-            this.lineShape1.X1 = 1085;
-            this.lineShape1.X2 = 1439;
-            this.lineShape1.Y1 = 309;
-            this.lineShape1.Y2 = 309;
+           
             // 
             // currPlayerInfo
             // 
@@ -205,7 +197,6 @@ namespace Pandemic
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
         private System.Windows.Forms.RichTextBox currPlayerInfo;
 
         
