@@ -76,14 +76,14 @@ namespace Pandemic
             Map m = new Map();
 
             atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.115f, 0.415f);
-            City newYork = m.addCity("New York", DiseaseColor.BLUE,0.191f,0.334f);
+            City newYork = m.addCity("New York", DiseaseColor.BLUE,0.219f,0.356f);
             City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.088f, 0.341f); 
-            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.175f, 0.413f);
-            City toronto = m.addCity("Toronto", DiseaseColor.BLUE, 0.139f, 0.342f);
+            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.201f, 0.431f);
+            City toronto = m.addCity("Toronto", DiseaseColor.BLUE, 0.159f, 0.361f);
             City sanFran = m.addCity("San Fransisco", DiseaseColor.BLUE, 0.025f, 0.383f);
-            City losAngeles = m.addCity("Los Angeles", DiseaseColor.YELLOW, 0.034f, 0.459f);
-            City miami = m.addCity("Miami", DiseaseColor.YELLOW, 0.154f, 0.482f);
-            City mexicoCity = m.addCity("Mexico City", DiseaseColor.YELLOW, 0.083f, 0.495f);
+            City losAngeles = m.addCity("Los Angeles", DiseaseColor.YELLOW, 0.037f, 0.485f);
+            City miami = m.addCity("Miami", DiseaseColor.YELLOW, 0.178f, 0.510f);
+            City mexicoCity = m.addCity("Mexico City", DiseaseColor.YELLOW, 0.096f, 0.527f);
 
             City.makeAdjacent(newYork, washington);
             City.makeAdjacent(newYork, toronto);
@@ -102,53 +102,53 @@ namespace Pandemic
 
 
             //South America
-            City bogota = m.addCity("Bogota", DiseaseColor.YELLOW, 0.153f, 0.561f);
-            City lima = m.addCity("Lima", DiseaseColor.YELLOW, 0.116f, 0.668f);
-            City buenosAires = m.addCity("Buenos Aires", DiseaseColor.YELLOW, 0.191f, 0.766f);
-            City santiago = m.addCity("Santiago", DiseaseColor.YELLOW, 0.136f, 0.777f);
-            City saopaulo = m.addCity("Sau Paulo", DiseaseColor.YELLOW, 0.221f, 0.692f);
+            City bogota = m.addCity("Bogota", DiseaseColor.YELLOW, 0.167f, 0.597f);
+            City lima = m.addCity("Lima", DiseaseColor.YELLOW, 0.133f, 0.699f);
+            City buenosAires = m.addCity("Buenos Aires", DiseaseColor.YELLOW, 0.216f, 0.802f);
+            City santiago = m.addCity("Santiago", DiseaseColor.YELLOW, 0.155f, 0.818f);
+            City saopaulo = m.addCity("Sau Paulo", DiseaseColor.YELLOW, 0.252f, 0.724f);
 
             //Africa
-            City lagos = m.addCity("Lagos", DiseaseColor.YELLOW, 0.327f, 0.554f);
-            City kinshasa = m.addCity("Kinshasa", DiseaseColor.YELLOW, 0.358f, 0.635f);
-            City johannesburg = m.addCity("Johannesburg", DiseaseColor.YELLOW, 0.389f, 0.721f);
-            City khartoum = m.addCity("Khartoum", DiseaseColor.YELLOW, 0.404f, 0.547f);
+            City lagos = m.addCity("Lagos", DiseaseColor.YELLOW, 0.372f, 0.578f);
+            City kinshasa = m.addCity("Kinshasa", DiseaseColor.YELLOW, 0.410f, 0.660f);
+            City johannesburg = m.addCity("Johannesburg", DiseaseColor.YELLOW, 0.438f, 0.756f);
+            City khartoum = m.addCity("Khartoum", DiseaseColor.YELLOW, 0.458f, 0.578f);
             
             //Europe
-            City madrid = m.addCity("Madrid", DiseaseColor.BLUE, 0.279f, 0.387f);
-            City london = m.addCity("London", DiseaseColor.BLUE, 0.284f, 0.272f);
-            City paris = m.addCity("Paris", DiseaseColor.BLUE, 0.330f, 0.330f);
-            City essen = m.addCity("Essen", DiseaseColor.BLUE, 0.346f, 0.246f);
-            City stpetersburg = m.addCity("St. Petersburg", DiseaseColor.BLUE, 0.405f, 0.231f);
-            City milan = m.addCity("Milan", DiseaseColor.BLUE, 0.374f, 0.317f); //TODO get the xy for this
+            City madrid = m.addCity("Madrid", DiseaseColor.BLUE, 0.319f, 0.399f);
+            City london = m.addCity("London", DiseaseColor.BLUE, 0.325f, 0.289f);
+            City paris = m.addCity("Paris", DiseaseColor.BLUE, 0.379f, 0.346f);
+            City essen = m.addCity("Essen", DiseaseColor.BLUE, 0.391f, 0.258f);
+            City stpetersburg = m.addCity("St. Petersburg", DiseaseColor.BLUE, 0.460f, 0.246f);
+            City milan = m.addCity("Milan", DiseaseColor.BLUE, 0.428f, 0.333f); 
 
             //Middle East/India/Moscow
-            City moscow = m.addCity("Moscow", DiseaseColor.BLACK, 0.443f, 0.285f);
-            City istanbul = m.addCity("Istanbul", DiseaseColor.BLACK, 0.396f, 0.374f);
-            City algiers = m.addCity("Algiers", DiseaseColor.BLACK, 0.332f, 0.440f);
-            City cairo = m.addCity("Cairo", DiseaseColor.BLACK, 0.381f, 0.470f);
-            City baghdad = m.addCity("Baghdad", DiseaseColor.BLACK, 0.433f, 0.416f);
-            City riyadh = m.addCity("Riyadh", DiseaseColor.BLACK, 0.442f, 0.507f);
-            City karachi = m.addCity("Karachi", DiseaseColor.BLACK, 0.478f, 0.439f);
-            City mumbai = m.addCity("Mumbai", DiseaseColor.BLACK, 0.489f, 0.536f);
-            City dehli = m.addCity("Dehli", DiseaseColor.BLACK, 0.528f, 0.400f);
-            City kolkata = m.addCity("Kolkata", DiseaseColor.BLACK, 0.575f, 0.448f);
-            City tehran = m.addCity("Tehran", DiseaseColor.BLACK, 0.478f, 0.345f);
-            City chennai = m.addCity("Chennai", DiseaseColor.BLACK, 0.536f, 0.590f);
+            City moscow = m.addCity("Moscow", DiseaseColor.BLACK, 0.505f, 0.300f);
+            City istanbul = m.addCity("Istanbul", DiseaseColor.BLACK, 0.449f, 0.392f);
+            City algiers = m.addCity("Algiers", DiseaseColor.BLACK, 0.380f, 0.455f);
+            City cairo = m.addCity("Cairo", DiseaseColor.BLACK, 0.437f, 0.491f);
+            City baghdad = m.addCity("Baghdad", DiseaseColor.BLACK, 0.499f, 0.436f);
+            City riyadh = m.addCity("Riyadh", DiseaseColor.BLACK, 0.508f, 0.534f);
+            City karachi = m.addCity("Karachi", DiseaseColor.BLACK, 0.549f, 0.464f);
+            City mumbai = m.addCity("Mumbai", DiseaseColor.BLACK, 0.561f, 0.569f);
+            City dehli = m.addCity("Dehli", DiseaseColor.BLACK, 0.606f, 0.430f);
+            City kolkata = m.addCity("Kolkata", DiseaseColor.BLACK, 0.655f, 0.469f);
+            City tehran = m.addCity("Tehran", DiseaseColor.BLACK, 0.546f, 0.371f);
+            City chennai = m.addCity("Chennai", DiseaseColor.BLACK, 0.617f, 0.621f);
 
             //Asia
-            City bangkok = m.addCity("Bangkok", DiseaseColor.ORANGE, 0.578f, 0.535f);
-            City hongkong = m.addCity("Hong Kong", DiseaseColor.ORANGE, 0.613f, 0.481f);
-            City jakarta = m.addCity("Jakarta", DiseaseColor.ORANGE, 0.584f, 0.643f);
-            City sydney = m.addCity("Sydney", DiseaseColor.ORANGE, 0.719f, 0.762f);
-            City hochi = m.addCity("Ho Chi Minh City", DiseaseColor.ORANGE, 0.624f, 0.582f);
-            City manila = m.addCity("Manila", DiseaseColor.ORANGE, 0.676f, 0.576f);
-            City shanghai = m.addCity("Shanghai", DiseaseColor.ORANGE, 0.613f, 0.408f);
-            City taipei = m.addCity("Taipei", DiseaseColor.ORANGE, 0.671f, 0.485f);
-            City osaka = m.addCity("Osaka", DiseaseColor.ORANGE, 0.697f, 0.436f);
-            City tokyo = m.addCity("Tokyo", DiseaseColor.ORANGE, 0.693f, 0.369f);
-            City seoul = m.addCity("Seoul", DiseaseColor.ORANGE, 0.661f, 0.315f);
-            City beijing = m.addCity("Beijing", DiseaseColor.ORANGE, 0.600f, 0.324f);
+            City bangkok = m.addCity("Bangkok", DiseaseColor.ORANGE, 0.661f, 0.570f);
+            City hongkong = m.addCity("Hong Kong", DiseaseColor.ORANGE, 0.704f, 0.511f);
+            City jakarta = m.addCity("Jakarta", DiseaseColor.ORANGE, 0.668f, 0.679f);
+            City sydney = m.addCity("Sydney", DiseaseColor.ORANGE, 0.820f, 0.801f);
+            City hochi = m.addCity("Ho Chi Minh City", DiseaseColor.ORANGE, 0.715f, 0.612f);
+            City manila = m.addCity("Manila", DiseaseColor.ORANGE, 0.771f, 0.610f);
+            City shanghai = m.addCity("Shanghai", DiseaseColor.ORANGE, 0.695f, 0.429f);
+            City taipei = m.addCity("Taipei", DiseaseColor.ORANGE, 0.766f, 0.509f);
+            City osaka = m.addCity("Osaka", DiseaseColor.ORANGE, 0.798f, 0.467f);
+            City tokyo = m.addCity("Tokyo", DiseaseColor.ORANGE, 0.794f, 0.388f);
+            City seoul = m.addCity("Seoul", DiseaseColor.ORANGE, 0.757f, 0.344f);
+            City beijing = m.addCity("Beijing", DiseaseColor.ORANGE, 0.688f, 0.340f);
 
             City.makeAdjacent(bogota, miami);
             City.makeAdjacent(bogota, mexicoCity);
@@ -238,10 +238,10 @@ namespace Pandemic
             //north america 
             //TODO rename CanadaCity to whatever. Add San Fran
             Map m = new Map();
-            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.115f, 0.415f);
+            atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.219f, 0.357f);
             City newYork = m.addCity("NewYork", DiseaseColor.BLUE, 0.191f, 0.334f);
             City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.088f, 0.341f);
-            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.175f, 0.413f);
+            City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.201f, 0.431f);
             City canadaCity = m.addCity("Toronto", DiseaseColor.BLUE, 0.139f, 0.342f);
             City sanFran = m.addCity("San Fransisco", DiseaseColor.BLUE, 0.025f, 0.383f);
             City losAngeles = m.addCity("Los Angeles", DiseaseColor.YELLOW, 0.034f, 0.459f);
