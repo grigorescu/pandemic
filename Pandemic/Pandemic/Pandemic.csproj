@@ -52,6 +52,12 @@
     <Compile Include="City.cs" />
     <Compile Include="CureDiseaseAction.cs" />
     <Compile Include="MakeStationAction.cs" />
+    <Compile Include="StartScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartScreen.Designer.cs">
+      <DependentUpon>StartScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="TradeAction.cs" />
     <Compile Include="CureCityAction.cs" />
     <Compile Include="Deck.cs" />
@@ -85,6 +91,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StartScreen.resx">
+      <DependentUpon>StartScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,10 +105,24 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pics\blackCure.png" />
     <Content Include="pics\blplayer.png" />
+    <Content Include="pics\blueCure.png" />
     <Content Include="pics\bplayer.png" />
+    <Content Include="pics\dispatcher.png" />
+    <Content Include="pics\epidemicCard.png" />
+    <Content Include="pics\epidemicPiece.png" />
     <Content Include="pics\gplayer.png" />
+    <Content Include="pics\infectionCardBack.png" />
+    <Content Include="pics\infectionRate.png" />
+    <Content Include="pics\medic.png" />
+    <Content Include="pics\operationsExpert.png" />
+    <Content Include="pics\playerCardBack.png" />
+    <Content Include="pics\redCure.png" />
+    <Content Include="pics\researcher.png" />
+    <Content Include="pics\scientist.png" />
     <Content Include="pics\wplayer.png" />
+    <Content Include="pics\yellowCure.png" />
     <Content Include="pics\yplayer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,7 +21,7 @@ namespace Pandemic
         public Deck<City> infectionDeck;
         public Deck<City> playerDeck;
         public Action turnAction;
-        public int turnCounter =0;
+        public int turnCounter = 0;
 
         public GameState setTurnAction(Action action)
         {
@@ -117,7 +117,7 @@ namespace Pandemic
             {
                 result.curesFound[i] = curesFound[i];
             }
-            result.curesFound[(int) color] = true;
+            result.curesFound[(int)color] = true;
             return result;
         }
 
@@ -128,7 +128,7 @@ namespace Pandemic
             {
                 Player current = currentPlayer();
                 actions.AddRange(map.getMoveActionsFor(current));
-                
+
                 actions.AddRange(map.getCureActionsFor(current));
                 actions.AddRange(MoveToCardAction.actionsForPlayer(currentPlayer()));
                 actions.AddRange(MakeStationAction.actionsForPlayer(currentPlayer(), this.map));
@@ -143,7 +143,7 @@ namespace Pandemic
             {
                 actions.Add(turnAction);
             }
-            
+
             return actions;
         }
 
@@ -157,7 +157,7 @@ namespace Pandemic
         {
             GameState newGS = new GameState(this);
             newGS.infectionDeck = infectionDeck.draw(drawNum);
-            Map m = map; 
+            Map m = map;
 
             foreach (City current in newGS.infectionDeck.mostRecent(drawNum))
             {
@@ -168,7 +168,7 @@ namespace Pandemic
             return newGS;
         }
 
-        public GameState drawPlayerCards(Player cp, int num=2)
+        public GameState drawPlayerCards(Player cp, int num = 2)
         {
             //draw 2
             GameState newGS = new GameState(this);
@@ -180,7 +180,7 @@ namespace Pandemic
             }
 
             newGS.playerDeck = playerDeck.draw(num);
-          
+
 
             //CHECK IF player deck is done
 
@@ -210,13 +210,16 @@ namespace Pandemic
         public Map epidemicCard()
         {
             Map m = map;
-            /* m.infectionRate++;
 
-            List<City> drawnCard;
-            drawnCard = infectionDeck.draw(3);
-            m = m.addDisease(drawnCard[0], 3);
-            m = m.addDisease(drawnCard[1], 3);
-            m = m.addDisease(drawnCard[2], 3);*/
+            m.infectionRate++;
+            this.infectionDeck.returnShuffledDiscard();
+
+            Deck<City> drawnCard;
+            drawnCard = this.infectionDeck.draw(3);
+
+            //m = m.addDisease(infectionDeck.mostRecent(1), 3);
+            //m = m.addDisease(drawnCard[1], 3);
+            //m = m.addDisease(drawnCard[2], 3);
 
             return m;
         }

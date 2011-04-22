@@ -16,16 +16,14 @@ namespace Pandemic
         {
             //does stuff that happens between two turns (after actions)
             Map m=gs.map;
+            GameState newGS = gs;
             int numInfectionCardsToDraw=0;
 
             //draw x player cards
+            newGS.drawPlayerCards(gs.currentPlayer());
+
             //check epidemic cards - do epidemic
-            if (false) //check if you picked up an epidemic
-            {
-                m = gs.epidemicCard();
-                m.infectionRate++;
-                gs.infectionDeck.returnShuffledDiscard();
-            }
+            
 
             //draw x infection cards
             if(m.infectionRate>=0 && m.infectionRate<3)
@@ -41,12 +39,12 @@ namespace Pandemic
                 numInfectionCardsToDraw = 4;
             }
 
-            gs = gs.drawInfectionCards(numInfectionCardsToDraw);
-            gs = gs.drawPlayerCards(gs.currentPlayer());
-            gs.advancePlayer();
-            
+            newGS = newGS.drawInfectionCards(numInfectionCardsToDraw);
+            newGS = newGS.drawPlayerCards(gs.currentPlayer());
+            newGS.advancePlayer();
 
-            return gs;
+
+            return newGS;
         }
 
         public override string ToString()

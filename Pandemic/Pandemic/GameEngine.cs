@@ -28,7 +28,7 @@ namespace Pandemic
             {
                 gs = gs.drawPlayerCards(p);
             }
-            gs.playerDeck.eCards = makeEpidemicCards(pDeck.drawDeck.Count);
+            gs.playerDeck.epidemicCards = makeEpidemicCards(pDeck.drawDeck.Count);
 
             ev = new HatesDisease(100);
 

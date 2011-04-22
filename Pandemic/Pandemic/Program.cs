@@ -15,6 +15,9 @@ namespace Pandemic
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+             
+            
+
             GameEngine ge = new GameEngine();
             GameBoard gb = new GameBoard(false, ge);
             

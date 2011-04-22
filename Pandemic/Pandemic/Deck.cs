@@ -9,7 +9,7 @@ namespace Pandemic
     {
         public List<Card> drawDeck;
         public List<Card> discardDeck;
-        public List<int> eCards;
+        public List<int> epidemicCards;
         public int cardWeAreOn = 0;
         public Random random;
         Boolean isPlayerDeck;
@@ -42,7 +42,7 @@ namespace Pandemic
         {
             if (isPlayerDeck)
             {
-                foreach (int i in eCards)
+                foreach (int i in epidemicCards)
                 {
                     if (i == cardWeAreOn + 1)
                     {
