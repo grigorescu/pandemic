@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.playerType = new System.Windows.Forms.PictureBox();
+            this.startGame = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.playerType)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,6 @@
             this.easyButton.TabStop = true;
             this.easyButton.Text = "Easy Game";
             this.easyButton.UseVisualStyleBackColor = true;
-            
             // 
             // mediumButton
             // 
@@ -62,7 +62,6 @@
             this.mediumButton.TabStop = true;
             this.mediumButton.Text = "Medium Game";
             this.mediumButton.UseVisualStyleBackColor = true;
-           
             // 
             // hardButton
             // 
@@ -111,18 +110,30 @@
             // 
             // playerType
             // 
-            this.playerType.Location = new System.Drawing.Point(31, 277);
+            this.playerType.Location = new System.Drawing.Point(31, 275);
             this.playerType.Name = "playerType";
             this.playerType.Size = new System.Drawing.Size(163, 171);
+            this.playerType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.playerType.TabIndex = 6;
             this.playerType.TabStop = false;
+            // 
+            // startGame
+            // 
+            this.startGame.Location = new System.Drawing.Point(389, 275);
+            this.startGame.Name = "startGame";
+            this.startGame.Size = new System.Drawing.Size(116, 51);
+            this.startGame.TabIndex = 7;
+            this.startGame.Text = "Start Game";
+            this.startGame.UseVisualStyleBackColor = true;
+            this.startGame.Click += new System.EventHandler(this.startGame_Click);
             // 
             // StartScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
-            this.ClientSize = new System.Drawing.Size(529, 518);
+            this.ClientSize = new System.Drawing.Size(529, 703);
+            this.Controls.Add(this.startGame);
             this.Controls.Add(this.playerType);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -147,5 +158,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox playerType;
+        private System.Windows.Forms.Button startGame;
     }
 }

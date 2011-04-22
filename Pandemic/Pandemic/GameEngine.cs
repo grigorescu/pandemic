@@ -12,9 +12,9 @@ namespace Pandemic
         SearchEvaluate ev;
         public Action lastAction;
         public Random rand = new Random();
+        Player human;
 
-
-        public GameEngine()
+        public GameEngine(Player.Type hType, int difficultyLevel)
         {
 
             //initialize infection and player decks and map
