@@ -13,6 +13,7 @@ namespace Pandemic
         public int cardWeAreOn = 0;
         public Random random;
         Boolean isPlayerDeck;
+        public Boolean isOverdrawn;
 
         public Deck(IEnumerable<Card> cards, Boolean isRandom = true, Boolean isPlayerDeck = false)
         {
@@ -31,6 +32,7 @@ namespace Pandemic
                 epidemicCards = new List<int>();
             }
             shuffle(drawDeck);
+            isOverdrawn = false;
         }
 
         private Deck(Deck<Card> old)
@@ -43,6 +45,7 @@ namespace Pandemic
             isPlayerDeck = old.isPlayerDeck;
             epidemicCards = old.epidemicCards;
             cardWeAreOn = old.cardWeAreOn;
+            isOverdrawn = old.isOverdrawn;
         }
 
         public Boolean isNextCardEpidemic()
@@ -71,6 +74,12 @@ namespace Pandemic
         private void draw_m(int drawNum)
         {
             List<Card> justDrew = new List<Card>();
+            if (drawNum > drawDeck.Count)
+            {
+                isOverdrawn = true;
+                discardDeck = null;
+                return;
+            }
             justDrew.AddRange(drawDeck.GetRange(0, drawNum));
             discardDeck.AddRange(drawDeck.GetRange(0, drawNum));
             drawDeck.RemoveRange(0, drawNum);
@@ -87,6 +96,12 @@ namespace Pandemic
         private void drawFromBottom_m()
         {
             List<Card> justDrew = new List<Card>();
+            if (drawDeck.Count == 0)
+            {
+                isOverdrawn = true;
+                discardDeck = null;
+                return;
+            }
             justDrew.AddRange(drawDeck.GetRange(drawDeck.Count - 1, 1));
             discardDeck.AddRange(drawDeck.GetRange(drawDeck.Count - 1, 1));
             drawDeck.RemoveRange(drawDeck.Count - 1, 1);

@@ -91,6 +91,49 @@ namespace TestPandemic2
             Assert.AreEqual(newyork, newGs.currentPlayer().position);
         }
 
+        [TestMethod()]
+        public void TestWin()
+        {
+            gs = gs.cureDisease(DiseaseColor.BLUE);
+            gs = gs.cureDisease(DiseaseColor.YELLOW);
+            gs = gs.cureDisease(DiseaseColor.ORANGE);
+            Assert.IsFalse(gs.hasWon());
+            gs = gs.cureDisease(DiseaseColor.BLACK);
+            Assert.IsTrue(gs.hasWon());
+
+        }
+
+        [TestMethod()]
+        public void TestLoseOutbreak()
+        {
+            map = new Map();
+            atlanta = map.addCity("Atlanta", DiseaseColor.BLUE);
+            gs = new GameState(atlanta, map, 1, 4, new Deck<City>(map.allCities), new Deck<City>(map.allCities));
+            gs = new GameState(gs, gs.map.addDisease(atlanta, 3));
+            Assert.AreEqual(0, gs.map.outbreakCount);
+            gs = new GameState(gs, gs.map.addDisease(atlanta, 1));
+            Assert.AreEqual(1, gs.map.outbreakCount);
+            Assert.IsFalse(gs.hasLost());
+            for (int i = 0; i < 7; i++)
+            {
+                gs = new GameState(gs, gs.map.addDisease(atlanta, 1));
+            }
+            Assert.AreEqual(8, gs.map.outbreakCount);
+            Assert.IsFalse(gs.hasLost());
+            gs = new GameState(gs, gs.map.addDisease(atlanta, 1));
+            Assert.AreEqual(9, gs.map.outbreakCount);
+            Assert.IsTrue(gs.hasLost());
+        }
+
+        [TestMethod()]
+        public void TestLoseNoCards()
+        {
+            gs = new GameState(atlanta, map, 1, 4, null, new Deck<City>(map.allCities, true, false));
+            gs = gs.drawPlayerCards(gs.currentPlayer(), 1);
+            Assert.IsFalse(gs.hasLost());
+            gs = gs.drawPlayerCards(gs.currentPlayer(), 2);
+            Assert.IsTrue(gs.hasLost());
+        }
         /// <summary>
         ///Check player changing;
         ///</summary>

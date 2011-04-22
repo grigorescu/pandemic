@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+
 
 namespace Pandemic
 {
@@ -46,19 +48,23 @@ namespace Pandemic
         public void runAction()
         {
 
-            Action a = ev.bfs_findbest(gs, 10);
+            Action a = ev.bfs_findbest(gs, 4);
 
             lastAction = a;
             gs = a.execute(gs);
 
+            
             //throw up some GUI
-            if (gs.numCures() == 4)
+            if (gs.hasLost())
             {
-                //YOU WON OMG
+                MessageBox.Show("You Lost");
+                Application.Exit();
             }
-            else if (gs.map.outbreakCount == 9)
+            
+            if (gs.hasWon())
             {
-                //YOU LOST!!!
+                MessageBox.Show("You Won");
+                Application.Exit();
             }
 
 

@@ -94,6 +94,16 @@ namespace Pandemic
             return result;
         }
 
+        public bool hasWon()
+        {
+            return numCures() == 4;
+        }
+
+        public bool hasLost()
+        {
+            return (map.outbreakCount >= 9 || playerDeck.isOverdrawn);
+        }
+
         public void advanceMove()
         {
             cpMovesUsed++;
@@ -182,6 +192,11 @@ namespace Pandemic
                 else
                 {
                     newGS.playerDeck = newGS.playerDeck.draw(1);
+                    if (newGS.playerDeck.isOverdrawn)
+                    {
+                        //we just lost
+                        return newGS;
+                    }
                     newGS = newGS.adjustPlayer(cp.addCard(newGS.playerDeck.mostRecent(1)[0]));
                 }
             }
