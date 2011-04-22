@@ -24,7 +24,7 @@ namespace Pandemic
 
             foreach (Action a in gs.availableActions())
             {
-                float currentEvaluation = bfs_bestConsequence(gs, depth - 1);
+                float currentEvaluation = bfs_bestConsequence(a.execute(gs), depth - 1);
                 if (bestEvaluation < currentEvaluation)
                 {
                     bestEvaluation = currentEvaluation;
@@ -36,7 +36,7 @@ namespace Pandemic
 
             return bestAction;
         }
-
+        
         private float bfs_bestConsequence(GameState gs, int depth)
         {
             if (depth == 0)
@@ -48,7 +48,7 @@ namespace Pandemic
                 foreach (Action a in actions)
                 {
                     GameState actionResult;
-                    if (a.isTurnAction())
+                    if (false)//a.isTurnAction())
                     {
                         actionResult = turnAction().execute(gs);
                     } else {
@@ -63,7 +63,6 @@ namespace Pandemic
             }
 
         }
-
         
     }
 }
