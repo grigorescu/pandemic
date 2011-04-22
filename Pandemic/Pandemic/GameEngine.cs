@@ -21,8 +21,10 @@ namespace Pandemic
             Map map = initializeCities();
             Deck<City> ideck = initializeInfectionDeck(map);
             //initialize player deck
-            Deck<City> pDeck = initializePlayerDeck(map); 
+            Deck<City> pDeck = initializePlayerDeck(map);
+            
             gs = new GameState(atlanta, map, 4, 4, ideck, pDeck);
+            gs.map = initializeBoard(map);
 
             foreach (Player p in gs.players)
             {
@@ -77,8 +79,8 @@ namespace Pandemic
             Map m = new Map();
 
             atlanta = m.addCity("Atlanta", DiseaseColor.BLUE, 0.115f, 0.415f);
-            City newYork = m.addCity("New York", DiseaseColor.BLUE,0.219f,0.356f);
-            City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.088f, 0.341f); 
+            City newYork = m.addCity("New York", DiseaseColor.BLUE, 0.219f, 0.356f);
+            City chicago = m.addCity("Chicago", DiseaseColor.BLUE, 0.088f, 0.341f);
             City washington = m.addCity("Washington", DiseaseColor.BLUE, 0.201f, 0.431f);
             City toronto = m.addCity("Toronto", DiseaseColor.BLUE, 0.159f, 0.361f);
             City sanFran = m.addCity("San Fransisco", DiseaseColor.BLUE, 0.025f, 0.383f);
@@ -97,7 +99,7 @@ namespace Pandemic
             City.makeAdjacent(chicago, mexicoCity);
             City.makeAdjacent(chicago, atlanta);
             City.makeAdjacent(sanFran, losAngeles);
-            City.makeAdjacent(mexicoCity, losAngeles);           
+            City.makeAdjacent(mexicoCity, losAngeles);
             City.makeAdjacent(atlanta, miami);
             City.makeAdjacent(mexicoCity, miami);
 
@@ -114,14 +116,14 @@ namespace Pandemic
             City kinshasa = m.addCity("Kinshasa", DiseaseColor.YELLOW, 0.410f, 0.660f);
             City johannesburg = m.addCity("Johannesburg", DiseaseColor.YELLOW, 0.438f, 0.756f);
             City khartoum = m.addCity("Khartoum", DiseaseColor.YELLOW, 0.458f, 0.578f);
-            
+
             //Europe
             City madrid = m.addCity("Madrid", DiseaseColor.BLUE, 0.319f, 0.399f);
             City london = m.addCity("London", DiseaseColor.BLUE, 0.325f, 0.289f);
             City paris = m.addCity("Paris", DiseaseColor.BLUE, 0.379f, 0.346f);
             City essen = m.addCity("Essen", DiseaseColor.BLUE, 0.391f, 0.258f);
             City stpetersburg = m.addCity("St. Petersburg", DiseaseColor.BLUE, 0.460f, 0.246f);
-            City milan = m.addCity("Milan", DiseaseColor.BLUE, 0.428f, 0.333f); 
+            City milan = m.addCity("Milan", DiseaseColor.BLUE, 0.428f, 0.333f);
 
             //Middle East/India/Moscow
             City moscow = m.addCity("Moscow", DiseaseColor.BLACK, 0.505f, 0.300f);
@@ -229,8 +231,8 @@ namespace Pandemic
             City.makeAdjacent(osaka, tokyo);
             City.makeAdjacent(tokyo, seoul);
             City.makeAdjacent(tokyo, sanFran);
-            City.makeAdjacent(seoul, beijing);
-
+            City.makeAdjacent(seoul, beijing); 
+            
             return m;
         }
 
@@ -270,6 +272,36 @@ namespace Pandemic
             m = m.addDisease(chicago, 1);
             m = m.addStation(atlanta);
             m = m.addStation(newYork);
+
+            return m;
+        }
+
+        private Map initializeBoard(Map m)
+        {
+            //initialize cities to have diseases
+            // 9 cards add 3 with 3 cubes, 3 with 3, 3 with 1
+            gs.infectionDeck = gs.infectionDeck.draw(9);
+
+            List<City> cities = gs.infectionDeck.mostRecent(9);
+            for (int i = 0; i < 9; i++)
+            {
+                if (i < 3)
+                {
+                    m = m.addDisease(cities.ElementAt(i), 3);
+                    Console.WriteLine(cities.ElementAt(i));
+                }
+                else if (i < 6)
+                {
+                    m = m.addDisease(cities.ElementAt(i), 2);
+                    Console.WriteLine(cities.ElementAt(i));
+                }
+                else
+                {
+                    m = m.addDisease(cities.ElementAt(i), 1);
+                    Console.WriteLine(cities.ElementAt(i));
+                }
+            }
+
 
             return m;
         }

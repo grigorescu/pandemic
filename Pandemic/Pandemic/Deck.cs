@@ -109,7 +109,6 @@ namespace Pandemic
             }
         }
 
-
         public Deck<Card> returnShuffledDiscard()
         {
             Deck<Card> result = new Deck<Card>(this);
