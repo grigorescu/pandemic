@@ -8,6 +8,12 @@ namespace Pandemic
     public class DoNothingTurnAction : Action
     {
 
+        public override bool isTurnAction()
+        {
+            return true;
+        }
+
+
         public override GameState execute(GameState gs)
         {
             

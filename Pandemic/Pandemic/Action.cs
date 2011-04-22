@@ -11,5 +11,7 @@ namespace Pandemic
         public GameState debug_gs;
 
         public abstract GameState execute(GameState current);
+
+        public virtual bool isTurnAction() { return false; }
     }
 }

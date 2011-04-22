@@ -8,6 +8,11 @@ namespace Pandemic
     public class TurnAction : Action
     {
 
+        public override bool isTurnAction()
+        {
+            return true;
+        }
+
         public TurnAction()
         {
         }

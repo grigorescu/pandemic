@@ -52,6 +52,7 @@
     <Compile Include="City.cs" />
     <Compile Include="CureDiseaseAction.cs" />
     <Compile Include="MakeStationAction.cs" />
+    <Compile Include="medSmartAI.cs" />
     <Compile Include="StartScreen.cs">
       <SubType>Form</SubType>
     </Compile>

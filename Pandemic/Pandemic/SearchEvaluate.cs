@@ -11,9 +11,9 @@ namespace Pandemic
         public abstract float evaluate(GameState gs);
         
         //intended to be overridden
-        public virtual GameState adjustGameState(GameState gs)
+        public virtual Action turnAction()
         {
-            return gs;
+            return new DoNothingTurnAction();
         }
 
         public Action bfs_findbest(GameState gs, int depth )
@@ -21,11 +21,10 @@ namespace Pandemic
             Debug.Assert(depth > 0);
             float bestEvaluation = -1;
             Action bestAction = null;
-            //GameState adjustedGS = adjustGameState(gs);
+
             foreach (Action a in gs.availableActions())
             {
-                GameState actionResult = adjustGameState(a.execute(gs));
-                float currentEvaluation = bfs_bestConsequence(actionResult, depth - 1);
+                float currentEvaluation = bfs_bestConsequence(gs, depth - 1);
                 if (bestEvaluation < currentEvaluation)
                 {
                     bestEvaluation = currentEvaluation;
@@ -33,6 +32,8 @@ namespace Pandemic
                 }
 
             }
+
+
             return bestAction;
         }
 
@@ -43,9 +44,17 @@ namespace Pandemic
             else
             {
                 float bestEvaluation = -1;
-                foreach (Action a in gs.availableActions())
+                List<Action> actions = gs.availableActions();
+                foreach (Action a in actions)
                 {
-                    GameState actionResult = a.execute(gs);
+                    GameState actionResult;
+                    if (a.isTurnAction())
+                    {
+                        actionResult = turnAction().execute(gs);
+                    } else {
+                        actionResult = a.execute(gs);
+                    }
+
                     float currentEvaluation = bfs_bestConsequence(actionResult, depth - 1);
                     if (bestEvaluation < currentEvaluation)
                         bestEvaluation = currentEvaluation;

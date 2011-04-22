@@ -9,11 +9,6 @@ namespace Pandemic
     {
         int diseaseMax;
 
-        public override GameState adjustGameState(GameState gs)
-        {
-            return gs.setTurnAction(new DoNothingTurnAction());
-        }
-
         public HatesDisease(int diseaseMax)
         {
             this.diseaseMax = diseaseMax;
