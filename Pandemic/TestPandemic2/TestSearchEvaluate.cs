@@ -344,15 +344,15 @@ namespace TestPandemic2
             Player p1 = gs.currentPlayer();
             gs = gs.adjustPlayer(p1);
             gs = gs.setTurnAction(new DoNothingTurnAction());
-            SearchEvaluate noOutbreaks = new medSmartAI(true);
+            SearchEvaluate noOutbreaks = new outbreakHater(true);
 
             List<Action> foo = new List<Action>();
             Action q = new CureCityAction(newyork, newyork.color);
             GameState cured = q.execute(gs);
-            float eval = medSmartAI.evalGame(cured);
+            float eval = outbreakHater.evalGame(cured);
             Action action = noOutbreaks.bfs_findbest(gs,1);
             GameState newGS = action.execute(gs);
-            float eval2 = medSmartAI.evalGame(newGS);
+            float eval2 = outbreakHater.evalGame(newGS);
             Assert.AreEqual(2, newGS.map.diseaseLevel(newyork, newyork.color));
             //Assert.AreEqual(1, gs.map.aboutToOutbreak.Count());
 

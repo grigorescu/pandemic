@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Pandemic
 {
-    public class medSmartAI: SearchEvaluate
+    public class outbreakHater: SearchEvaluate
     {
 
        private bool priority; //true = treat cities
 
-        public medSmartAI(bool priority)
+        public outbreakHater(bool priority)
         {
             //treat cities
             //help cure disease

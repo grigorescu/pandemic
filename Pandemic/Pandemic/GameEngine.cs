@@ -41,7 +41,7 @@ namespace Pandemic
 
             gs.playerDeck.epidemicCards = cardLocations;
             //ev = new HatesDisease(100);
-            ev = new medSmartAI(true);
+            ev = new outbreakHater(true);
 
         }
 
