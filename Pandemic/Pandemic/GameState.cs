@@ -170,58 +170,36 @@ namespace Pandemic
 
         public GameState drawPlayerCards(Player cp, int num = 2)
         {
-            //draw 2
             GameState newGS = new GameState(this);
-
-            if (playerDeck.isNextCardEpidemic())
+            for (int i = 0; i < num; i++)
             {
-                epidemicCard();
-                playerDeck.cardWeAreOn++;
-            }
-
-            newGS.playerDeck = playerDeck.draw(num);
-
-
-            //CHECK IF player deck is done
-
-            foreach (City c in newGS.playerDeck.mostRecent(num))
-            {
-                cp = cp.addCard(c);
-            }
-
-            while (cp.cards.Count > 7)
-            {
-                if (cp.isAI)
+                if (newGS.playerDeck.isNextCardEpidemic())
                 {
-                    //may want to plug some AI in here
-                    cp.removeCard(cp.cards[cp.cards.Count - 1]);
+                    
+                    newGS.epidemicCard();
+                    newGS.playerDeck.cardWeAreOn++;
                 }
                 else
                 {
-                    //ask the player which card to remove
+                    newGS.playerDeck = newGS.playerDeck.draw(1);
+                    newGS = newGS.adjustPlayer(cp.addCard(newGS.playerDeck.mostRecent(1)[0]));
                 }
             }
-
-            newGS.players[cp.playernum] = cp;
 
             return newGS;
         }
 
-        public Map epidemicCard()
+        public void epidemicCard()
         {
-            Map m = map;
+            infectionDeck = infectionDeck.drawFromBottom();
+            City c = infectionDeck.mostRecent(1)[0];
+            map = map.addDisease(c, 1);
+            map = map.addDisease(c, 1);
+            map = map.addDisease(c, 1);
+            
+            map.infectionRate++;
+            infectionDeck = infectionDeck.returnShuffledDiscard();
 
-            m.infectionRate++;
-            this.infectionDeck.returnShuffledDiscard();
-
-            Deck<City> drawnCard;
-            drawnCard = this.infectionDeck.draw(3);
-
-            //m = m.addDisease(infectionDeck.mostRecent(1), 3);
-            //m = m.addDisease(drawnCard[1], 3);
-            //m = m.addDisease(drawnCard[2], 3);
-
-            return m;
         }
     }
 }

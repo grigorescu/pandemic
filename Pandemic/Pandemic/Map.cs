@@ -88,6 +88,8 @@ namespace Pandemic
             cityNames = new Dictionary<string, City>(oldMap.cityNames);
             _outbreakCount = oldMap.outbreakCount;
             stations = oldMap.stations;
+            numStations = oldMap.numStations;
+            infectionRate = oldMap.infectionRate;
         }
 
         //dangerous...modifies the Map

@@ -26,6 +26,10 @@ namespace Pandemic
 
             this.isPlayerDeck = isPlayerDeck;
 
+            if (isPlayerDeck)
+            {
+                epidemicCards = new List<int>();
+            }
             shuffle(drawDeck);
         }
 
