@@ -38,6 +38,7 @@ namespace Pandemic
         {
 
             Action a = ev.bfs_findbest(gs, 4);
+
             lastAction = a;
             gs = a.execute(gs);
 

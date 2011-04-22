@@ -49,7 +49,7 @@
             this.easyButton.TabStop = true;
             this.easyButton.Text = "Easy Game";
             this.easyButton.UseVisualStyleBackColor = true;
-            this.easyButton.CheckedChanged += new System.EventHandler(this.easyButton_CheckedChanged);
+            
             // 
             // mediumButton
             // 
@@ -62,7 +62,7 @@
             this.mediumButton.TabStop = true;
             this.mediumButton.Text = "Medium Game";
             this.mediumButton.UseVisualStyleBackColor = true;
-            this.mediumButton.CheckedChanged += new System.EventHandler(this.mediumButton_CheckedChanged);
+           
             // 
             // hardButton
             // 
