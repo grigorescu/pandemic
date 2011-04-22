@@ -361,7 +361,7 @@ namespace TestPandemic2
             //testing adding + removin disease from about to outbreak list
             newGS.map = newGS.map.addDisease(chicago, 3);
 
-            Assert.AreEqual(2, gs.map.aboutToOutbreak.Count());
+            Assert.AreEqual(1, gs.map.aboutToOutbreak.Count());
 
             newGS.map = newGS.map.removeDisease(chicago, chicago.color);
 

@@ -30,7 +30,9 @@ namespace Pandemic
             foreach (Player p in gs.players)
             {
                 gs = gs.drawPlayerCards(p,5);
-                p.cards.AddRange(gs.playerDeck.mostRecent(5));
+                List<City> drawn = gs.playerDeck.mostRecent(5);
+                p.cards.AddRange(drawn);
+                gs = gs.adjustPlayer(p);
             }
             List<int> cardLocations = makeEpidemicCards(gs.playerDeck.drawDeck.Count, difficultyLevel);
             
