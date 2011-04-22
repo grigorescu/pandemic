@@ -27,7 +27,8 @@ namespace Pandemic
 
             foreach (Player p in gs.players)
             {
-                gs = gs.drawPlayerCards(p);
+                gs = gs.drawPlayerCards(p,5);
+                p.cards.AddRange(gs.playerDeck.mostRecent(5));
             }
             List<int> cardLocations = makeEpidemicCards(gs.playerDeck.drawDeck.Count, difficultyLevel);
             
@@ -37,14 +38,15 @@ namespace Pandemic
             }
 
             gs.playerDeck.epidemicCards = cardLocations;
-            ev = new HatesDisease(100);
+            //ev = new HatesDisease(100);
+            ev = new medSmartAI(true);
 
         }
 
         public void runAction()
         {
 
-            Action a = ev.bfs_findbest(gs, 5);
+            Action a = ev.bfs_findbest(gs, 10);
 
             lastAction = a;
             gs = a.execute(gs);
@@ -293,14 +295,17 @@ namespace Pandemic
                 if (i < 3)
                 {
                     m = m.addDisease(cities.ElementAt(i), 3);
+                    //Console.WriteLine(cities.ElementAt(i));
                 }
                 else if (i < 6)
                 {
                     m = m.addDisease(cities.ElementAt(i), 2);
+                    //Console.WriteLine(cities.ElementAt(i));
                 }
                 else
                 {
                     m = m.addDisease(cities.ElementAt(i), 1);
+                    //Console.WriteLine(cities.ElementAt(i));
                 }
             }
 

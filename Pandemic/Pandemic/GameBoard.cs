@@ -199,6 +199,7 @@ namespace Pandemic
         private void makePlayer(String pName, float x, float y, int offsetX, int offsetY, int sizeMulti = 1)
         {
             PictureBox p1 = new PictureBox();
+            //Console.WriteLine(pName);
             if (pName == "1")
             {
                 p1.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\bplayer.png")));

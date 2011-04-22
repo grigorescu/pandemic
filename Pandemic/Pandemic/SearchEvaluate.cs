@@ -43,7 +43,7 @@ namespace Pandemic
 
             }
 
-
+            Console.WriteLine("My best action was: " + bestAction.ToString() + " with a score of " + bestEvaluation);
             return bestAction;
         }
         
