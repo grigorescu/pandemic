@@ -21,17 +21,22 @@ namespace Pandemic
             Map map = initializeCities();
             Deck<City> ideck = initializeInfectionDeck(map);
             //initialize player deck
-            Deck<City> pDeck = initializePlayerDeck(map);
             
-            gs = new GameState(atlanta, map, 4, 4, ideck, pDeck);
+            gs = new GameState(atlanta, map, 4, 4, ideck, initializePlayerDeck(map));
             gs.map = initializeBoard(map);
 
             foreach (Player p in gs.players)
             {
                 gs = gs.drawPlayerCards(p);
             }
-            gs.playerDeck.epidemicCards = makeEpidemicCards(pDeck.drawDeck.Count);
+            List<int> cardLocations = makeEpidemicCards(gs.playerDeck.drawDeck.Count, difficultyLevel);
+            
+            for (int i = 0; i < cardLocations.Count; i++)
+            {
+                cardLocations[i] = cardLocations[i] + gs.playerDeck.cardWeAreOn + 1;
+            }
 
+            gs.playerDeck.epidemicCards = cardLocations;
             ev = new HatesDisease(100);
 
         }
@@ -288,17 +293,14 @@ namespace Pandemic
                 if (i < 3)
                 {
                     m = m.addDisease(cities.ElementAt(i), 3);
-                    Console.WriteLine(cities.ElementAt(i));
                 }
                 else if (i < 6)
                 {
                     m = m.addDisease(cities.ElementAt(i), 2);
-                    Console.WriteLine(cities.ElementAt(i));
                 }
                 else
                 {
                     m = m.addDisease(cities.ElementAt(i), 1);
-                    Console.WriteLine(cities.ElementAt(i));
                 }
             }
 
@@ -320,7 +322,7 @@ namespace Pandemic
             List<City> cities = new List<City>();
             cities.AddRange(map.allCities);
 
-            Deck<City> playerDeck = new Deck<City>(cities, true);
+            Deck<City> playerDeck = new Deck<City>(cities, true, true);
             return playerDeck;
         }
     }

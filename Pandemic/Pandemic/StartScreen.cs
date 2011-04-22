@@ -54,15 +54,15 @@ namespace Pandemic
             {
                 if (this.easyButton.Checked)
                 {
-                    numHardness = 0;
+                    numHardness = 4;
                 }
                 else if (this.mediumButton.Checked)
                 {
-                    numHardness = 1;
+                    numHardness = 5;
                 }
                 else //hard
                 {
-                    numHardness = 2;
+                    numHardness = 6;
                 }
                 GameEngine ge = new GameEngine(humanPlayerType, numHardness);
                 GameBoard gb = new GameBoard(false, ge);

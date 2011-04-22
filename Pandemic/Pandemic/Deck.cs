@@ -40,6 +40,9 @@ namespace Pandemic
             discardDeck = new List<Card>();
             discardDeck.AddRange(old.discardDeck);
             random = old.random;
+            isPlayerDeck = old.isPlayerDeck;
+            epidemicCards = old.epidemicCards;
+            cardWeAreOn = old.cardWeAreOn;
         }
 
         public Boolean isNextCardEpidemic()

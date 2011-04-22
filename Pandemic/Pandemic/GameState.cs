@@ -193,6 +193,7 @@ namespace Pandemic
         {
             infectionDeck = infectionDeck.drawFromBottom();
             City c = infectionDeck.mostRecent(1)[0];
+            Console.WriteLine("Epidemic in " + c);
             map = map.addDisease(c, 1);
             map = map.addDisease(c, 1);
             map = map.addDisease(c, 1);
