@@ -48,7 +48,7 @@ namespace Pandemic
                 foreach (Action a in actions)
                 {
                     GameState actionResult;
-                    if (false)//a.isTurnAction())
+                    if (a.isTurnAction())
                     {
                         actionResult = turnAction().execute(gs);
                     } else {
