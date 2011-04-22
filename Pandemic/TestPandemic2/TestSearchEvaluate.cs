@@ -320,5 +320,56 @@ namespace TestPandemic2
            // Assert.AreEqual(0, newGS.players[1].cards.Count);
             Assert.AreEqual(true, newGS.map.hasStation(newyork));        
         }
+
+
+        [TestMethod]
+        public void TestmedSmartAi()
+        {
+            City newyork = map.addCity("ny", DiseaseColor.BLUE);
+            City atl = map.addCity("atl", DiseaseColor.BLUE);
+            City washington = map.addCity("washington", DiseaseColor.BLUE);
+            City chicago = map.addCity("chicago", DiseaseColor.BLUE);
+
+
+            City.makeAdjacent(newyork, atl);
+            City.makeAdjacent(atl, washington);
+            City.makeAdjacent(washington, chicago);
+            //ny-->atl-->washington-->chicago
+
+            map = map.addDisease(newyork, 3);
+
+
+            gs = new GameState(newyork, map, 2);
+
+            Player p1 = gs.currentPlayer();
+            gs = gs.adjustPlayer(p1);
+            gs = gs.setTurnAction(new DoNothingTurnAction());
+            SearchEvaluate noOutbreaks = new medSmartAI(true);
+
+            List<Action> foo = new List<Action>();
+            Action q = new CureCityAction(newyork, newyork.color);
+            GameState cured = q.execute(gs);
+            float eval = medSmartAI.evalGame(cured);
+            Action action = noOutbreaks.bfs_findbest(gs,1);
+            GameState newGS = action.execute(gs);
+            float eval2 = medSmartAI.evalGame(newGS);
+            Assert.AreEqual(2, newGS.map.diseaseLevel(newyork, newyork.color));
+            //Assert.AreEqual(1, gs.map.aboutToOutbreak.Count());
+
+            
+
+            //testing adding + removin disease from about to outbreak list
+            newGS.map = newGS.map.addDisease(chicago, 3);
+
+            Assert.AreEqual(2, gs.map.aboutToOutbreak.Count());
+
+            newGS.map = newGS.map.removeDisease(chicago, chicago.color);
+
+            Assert.AreEqual(1, gs.map.aboutToOutbreak.Count());
+
+            newGS.map = newGS.map.removeDisease(chicago, chicago.color);
+            Assert.AreEqual(1, gs.map.aboutToOutbreak.Count());
+            Assert.AreEqual(0, gs.map.diseaseLevel(chicago, chicago.color));
+        }
     }
 }

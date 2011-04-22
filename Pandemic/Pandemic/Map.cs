@@ -8,7 +8,7 @@ namespace Pandemic
 {
     public class Map
     {
-        
+
         private class CityData
         {
             private int[] diseases;
@@ -16,11 +16,11 @@ namespace Pandemic
 
             public CityData()
             {
-                diseases =  new int[4];
-                diseases[(int) DiseaseColor.BLACK] = 0;
-                diseases[(int) DiseaseColor.BLUE] = 0;
-                diseases[(int) DiseaseColor.YELLOW] = 0;
-                diseases[(int) DiseaseColor.ORANGE] = 0;
+                diseases = new int[4];
+                diseases[(int)DiseaseColor.BLACK] = 0;
+                diseases[(int)DiseaseColor.BLUE] = 0;
+                diseases[(int)DiseaseColor.YELLOW] = 0;
+                diseases[(int)DiseaseColor.ORANGE] = 0;
             }
 
             public CityData(CityData other)
@@ -35,7 +35,7 @@ namespace Pandemic
 
             public int disease(DiseaseColor color)
             {
-                return diseases[(int) color];
+                return diseases[(int)color];
             }
 
             public bool hasStation()
@@ -69,7 +69,7 @@ namespace Pandemic
         public int numStations = 0;
         public int infectionRate = 0; //spot on board not num cards to draw
         //dont modify the station list
-        public List<City> stations; 
+        public List<City> stations;
 
         public int outbreakCount
         {
@@ -96,7 +96,7 @@ namespace Pandemic
         }
 
         //dangerous...modifies the Map
-        public Map addDisease(City c, int num=1)
+        public Map addDisease(City c, int num = 1)
         {
             Map result = new Map(this);
             DiseaseColor color = c.color;
@@ -107,10 +107,11 @@ namespace Pandemic
                 if (result.cities[c].disease(color) < 3)
                 {
                     result.cities[c] = result.cities[c].adjustDisease(color, 1);
-                    
+
                     if (result.diseaseLevel(c, color) == 3)
                     {
-                        aboutToOutbreak.Add(c);
+                        result.aboutToOutbreak = new List<City>(result.aboutToOutbreak);
+                        result.aboutToOutbreak.Add(c);
                     }
                 }
                 else
@@ -129,7 +130,6 @@ namespace Pandemic
                         if (result.cities[current].disease(color) < 3)
                         {
                             result.cities[current] = result.cities[current].adjustDisease(color, 1);
-
                         }
                         else
                         {
@@ -139,7 +139,8 @@ namespace Pandemic
 
                         if (result.diseaseLevel(current, color) == 3)
                         {
-                            aboutToOutbreak.Add(current);
+                            result.aboutToOutbreak = new List<City>(result.aboutToOutbreak);
+                            result.aboutToOutbreak.Add(current);
                         }
                     }
                     result._outbreakCount += outbreaks.Count;
@@ -152,10 +153,11 @@ namespace Pandemic
         {
             Map result = new Map(this);
             result.cities[city] = result.cities[city].adjustDisease(color, -1);
-            
-            if (aboutToOutbreak.Contains(city) && result.diseaseLevel(city, city.color) !=3)
+
+            if (result.aboutToOutbreak.Contains(city) && result.diseaseLevel(city, city.color) != 3)
             {
-                aboutToOutbreak.Remove(city);
+                result.aboutToOutbreak = new List<City>(result.aboutToOutbreak);
+                result.aboutToOutbreak.Remove(city);
             }
 
             return result;
@@ -217,12 +219,12 @@ namespace Pandemic
         public List<CureCityAction> getCureActionsFor(Player player)
         {
             List<CureCityAction> cures = new List<CureCityAction>();
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 DiseaseColor color = (DiseaseColor)i;
                 if (diseaseLevel(player.position, color) > 0)
                 {
-                    cures.Add(new CureCityAction(player.position,color));
+                    cures.Add(new CureCityAction(player.position, color));
                 }
             }
             return cures;

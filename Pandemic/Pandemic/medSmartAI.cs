@@ -18,24 +18,37 @@ namespace Pandemic
             this.priority = priority;      
         }
 
-        public float evalGame(GameState gs)
+        public static float evalGame(GameState gs)
         {
             //check the number of nearly outbroken cities
-            float onverge = 0;
+            float onverge = gs.map.aboutToOutbreak.Count(); 
             float score = 0;
             float cures = gs.numCures();
+            //int totalDisease = 0;
 
-            foreach (City c in gs.map.aboutToOutbreak)
-            {
-                onverge++;
-            }
+            //if (onverge == 3)
+            //{
+            //    foreach (City c in gs.map.allCities)
+            //    {
+            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLACK);
+            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLUE);
+            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.YELLOW);
+            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.ORANGE);
+            //    }
+            //    score = 1 - (float)totalDisease / 100;
+            //}
+            //else
+            //{
+            //    score = 0.5f - (onverge / 20) + (cures / 8);
+            //}
 
-            
+            score = 0.5f - (onverge / 20) + (cures / 8);
 
-            score = 0.5f-(onverge/40)+(cures/8);
-            
-            //higher numbers = better game state
-            //want num between 0-1
+            //if (score == 0.5f)
+            //{
+            //    throw new Exception("Score is .5 something is amiss");
+            //}
+
             return score;
         }
 
