@@ -16,6 +16,16 @@ namespace Pandemic
             return new DoNothingTurnAction();
         }
 
+        public GameState executeOrDoNothing(Action action, GameState gs)
+        {
+            if (action.isTurnAction())
+            {
+                return turnAction().execute(gs);
+            } else {
+                return a.execute(gs);
+            }
+        }
+
         public Action bfs_findbest(GameState gs, int depth )
         {
             Debug.Assert(depth > 0);
@@ -24,7 +34,7 @@ namespace Pandemic
 
             foreach (Action a in gs.availableActions())
             {
-                float currentEvaluation = bfs_bestConsequence(a.execute(gs), depth - 1);
+                float currentEvaluation = bfs_bestConsequence(executeOrDoNothing(a,gs), depth - 1);
                 if (bestEvaluation < currentEvaluation)
                 {
                     bestEvaluation = currentEvaluation;
@@ -47,15 +57,7 @@ namespace Pandemic
                 List<Action> actions = gs.availableActions();
                 foreach (Action a in actions)
                 {
-                    GameState actionResult;
-                    if (a.isTurnAction())
-                    {
-                        actionResult = turnAction().execute(gs);
-                    } else {
-                        actionResult = a.execute(gs);
-                    }
-
-                    float currentEvaluation = bfs_bestConsequence(actionResult, depth - 1);
+                    float currentEvaluation = bfs_bestConsequence(executeOrDoNothing(a, gs), depth - 1);
                     if (bestEvaluation < currentEvaluation)
                         bestEvaluation = currentEvaluation;
                 }
