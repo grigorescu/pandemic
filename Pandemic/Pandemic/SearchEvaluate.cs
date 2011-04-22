@@ -22,7 +22,7 @@ namespace Pandemic
             {
                 return turnAction().execute(gs);
             } else {
-                return a.execute(gs);
+                return action.execute(gs);
             }
         }
 
