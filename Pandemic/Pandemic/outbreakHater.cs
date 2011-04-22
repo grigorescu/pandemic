@@ -21,35 +21,13 @@ namespace Pandemic
         public static float evalGame(GameState gs)
         {
             //check the number of nearly outbroken cities
-            float onverge = gs.map.aboutToOutbreak.Count(); 
-            float score = 0;
+            float onverge = gs.map.aboutToOutbreak.Count();
             float cures = gs.numCures();
-            //int totalDisease = 0;
+            float score = 0;
+            int totalDisease = gs.map.numInfectionsInCities;
 
-            //if (onverge == 3)
-            //{
-            //    foreach (City c in gs.map.allCities)
-            //    {
-            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLACK);
-            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.BLUE);
-            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.YELLOW);
-            //        totalDisease += gs.map.diseaseLevel(c, DiseaseColor.ORANGE);
-            //    }
-            //    score = 1 - (float)totalDisease / 100;
-            //}
-            //else
-            //{
-            //    score = 0.5f - (onverge / 20) + (cures / 8);
-            //}
 
-            score = 0.5f - (onverge / 20) + (cures / 8);
-
-            //if (score == 0.5f)
-            //{
-            //    throw new Exception("Score is .5 something is amiss");
-            //}
-
-            return score;
+            return 0.5f - (onverge / 20) + (cures / 8) + (float)totalDisease/100;
         }
 
         public override float evaluate(GameState gs)

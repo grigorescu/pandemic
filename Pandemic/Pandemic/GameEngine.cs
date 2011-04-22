@@ -246,8 +246,10 @@ namespace Pandemic
             City.makeAdjacent(osaka, tokyo);
             City.makeAdjacent(tokyo, seoul);
             City.makeAdjacent(tokyo, sanFran);
-            City.makeAdjacent(seoul, beijing); 
-            
+            City.makeAdjacent(seoul, beijing);
+
+            m=m.addStation(atlanta);
+
             return m;
         }
 

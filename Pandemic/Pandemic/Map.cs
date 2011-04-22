@@ -65,6 +65,7 @@ namespace Pandemic
         private Dictionary<City, CityData> cities;
         public Dictionary<String, City> cityNames;
         public List<City> aboutToOutbreak;
+        public int numInfectionsInCities = 0;
         private int _outbreakCount = 0;
         public int numStations = 0;
         public int infectionRate = 0; //spot on board not num cards to draw
@@ -93,6 +94,7 @@ namespace Pandemic
             aboutToOutbreak = oldMap.aboutToOutbreak;
             numStations = oldMap.numStations;
             infectionRate = oldMap.infectionRate;
+            numInfectionsInCities = oldMap.numInfectionsInCities;
         }
 
         //dangerous...modifies the Map
@@ -113,6 +115,8 @@ namespace Pandemic
                         result.aboutToOutbreak = new List<City>(result.aboutToOutbreak);
                         result.aboutToOutbreak.Add(c);
                     }
+
+                    result.numInfectionsInCities ++;
                 }
                 else
                 {
@@ -137,6 +141,8 @@ namespace Pandemic
                             outbreaks.Add(current);
                         }
 
+                        result.numInfectionsInCities++;
+
                         if (result.diseaseLevel(current, color) == 3)
                         {
                             result.aboutToOutbreak = new List<City>(result.aboutToOutbreak);
@@ -153,6 +159,8 @@ namespace Pandemic
         {
             Map result = new Map(this);
             result.cities[city] = result.cities[city].adjustDisease(color, -1);
+
+            result.numInfectionsInCities --;
 
             if (result.aboutToOutbreak.Contains(city) && result.diseaseLevel(city, city.color) != 3)
             {

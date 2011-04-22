@@ -321,6 +321,31 @@ namespace TestPandemic2
             Assert.AreEqual(true, newGS.map.hasStation(newyork));        
         }
 
+        [TestMethod]
+        public void TestMapInfectionCounter()
+        {
+            City newyork = map.addCity("ny", DiseaseColor.BLUE);
+            City atl = map.addCity("atl", DiseaseColor.BLUE);
+            City washington = map.addCity("washington", DiseaseColor.BLUE);
+            City chicago = map.addCity("chicago", DiseaseColor.BLUE);
+
+
+            City.makeAdjacent(newyork, atl);
+            City.makeAdjacent(atl, washington);
+            City.makeAdjacent(washington, chicago);
+
+            map = map.addDisease(atl, 2);
+            map = map.addDisease(chicago, 1);
+            map = map.addDisease(newyork, 3); 
+
+            GameState gs = new GameState(newyork, map);
+            Assert.AreEqual(6, gs.map.numInfectionsInCities);
+
+            Map newMap = map.removeDisease(atl, DiseaseColor.BLUE);
+
+            GameState newgs = new GameState(gs, newMap);
+            Assert.AreEqual(5, newgs.map.numInfectionsInCities);
+        }
 
         [TestMethod]
         public void TestmedSmartAi()
@@ -371,5 +396,7 @@ namespace TestPandemic2
             Assert.AreEqual(1, gs.map.aboutToOutbreak.Count());
             Assert.AreEqual(0, gs.map.diseaseLevel(chicago, chicago.color));
         }
+
+
     }
 }
