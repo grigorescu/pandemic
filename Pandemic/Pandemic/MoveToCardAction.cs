@@ -23,8 +23,11 @@ namespace Pandemic
             newPlayer = newPlayer.removeCard(card);
             GameState g = current.adjustPlayer(newPlayer);
             g.advanceMove();
+            g = g.recalcBestCardHolder(g, newPlayer, card.color);
             return g;
         }
+
+        
 
         public static List<MoveToCardAction> actionsForPlayer(Player p)
         {

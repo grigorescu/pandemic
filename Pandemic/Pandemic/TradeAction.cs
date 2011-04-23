@@ -24,7 +24,10 @@ namespace Pandemic
             Player newFrom = from.removeCard(card);
             Player newTo = to.addCard(card);
             gs = gs.adjustPlayer(newFrom);
+            gs = gs.recalcBestCardHolder(gs, newFrom, card.color);
             gs = gs.adjustPlayer(newTo);
+            gs = gs.recalcForAddCard(newTo, card);
+  
             gs.advanceMove();
             return gs;
         }

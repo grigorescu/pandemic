@@ -12,7 +12,7 @@ namespace Pandemic
         public Boolean isAI = true;
         public enum Type {MEDIC, DISPATCHER, RESEARCHER, SCIENTIST, OPERATIONS, NOBODY};
         public Type type;
-
+        
         public List<City> cards;
 
         public City position

@@ -39,7 +39,7 @@ namespace TestPandemic2
 
             public override float evaluate(GameState gs)
             {
-                return (float) gs.players[playerNum].cards.Count/100;
+                return (float)gs.players[playerNum].cards.Count / 100;
             }
         }
 
@@ -66,15 +66,15 @@ namespace TestPandemic2
             public override float evaluate(GameState gs)
             {
                 float f = 0;
-                foreach(City c in gs.map.allCities)
+                foreach (City c in gs.map.allCities)
                 {
-                    if(gs.map.hasStation(c))
+                    if (gs.map.hasStation(c))
                     {
                         f++;
                     }
                 }
-                
-                return f/ 100;
+
+                return f / 100;
             }
         }
 
@@ -141,7 +141,7 @@ namespace TestPandemic2
         public void TestStationMove()
         {
             City rio = map.addCity("Rio", DiseaseColor.YELLOW);
-            
+
             SearchEvaluate likesRio = new LikesCity(rio);
 
             Action action = likesRio.bfs_findbest(gs, 1);
@@ -169,7 +169,7 @@ namespace TestPandemic2
             gs = gs.setTurnAction(new DoNothingTurnAction());
             SearchEvaluate hatesDisease = new HatesDisease(2);
             GameState newGS = doSteps(gs, hatesDisease, 5, 5);
-            Assert.AreEqual(0,HatesDisease.getTotalDisease(newGS));
+            Assert.AreEqual(0, HatesDisease.getTotalDisease(newGS));
         }
 
         [TestMethod]
@@ -182,7 +182,7 @@ namespace TestPandemic2
             City.makeAdjacent(atlanta, newyork);
             City.makeAdjacent(newyork, chicago);
             GameState gs = new GameState(atlanta, map);
-            
+
 
             SearchEvaluate likesNY = new LikesCity(newyork);
             SearchEvaluate likesChicago = new LikesCity(chicago);
@@ -210,7 +210,7 @@ namespace TestPandemic2
             SearchEvaluate likesRio = new LikesCity(rio);
             Player pWithCard = gs.currentPlayer().addCard(rio);
             gs = gs.adjustPlayer(pWithCard);
-            Action action = likesRio.bfs_findbest(gs,1);
+            Action action = likesRio.bfs_findbest(gs, 1);
             GameState newGS = action.execute(gs);
             Assert.AreEqual(1, pWithCard.cards.Count);
             Assert.AreEqual(rio, newGS.currentPlayer().position);
@@ -287,7 +287,7 @@ namespace TestPandemic2
         public void TestScientist()
         {
             Player p = gs.currentPlayer();
-            
+
             p = p.addCard(gs.map.addCity("Blue1", DiseaseColor.BLUE));
             p = p.addCard(gs.map.addCity("Blue2", DiseaseColor.BLUE));
             p = p.addCard(gs.map.addCity("Blue3", DiseaseColor.BLUE));
@@ -317,8 +317,8 @@ namespace TestPandemic2
             Action action = likesStations.bfs_findbest(gs, 1);
             GameState newGS = action.execute(gs);
             Assert.AreEqual(0, newGS.players[1].cards.Count);
-           // Assert.AreEqual(0, newGS.players[1].cards.Count);
-            Assert.AreEqual(true, newGS.map.hasStation(newyork));        
+            // Assert.AreEqual(0, newGS.players[1].cards.Count);
+            Assert.AreEqual(true, newGS.map.hasStation(newyork));
         }
 
         [TestMethod]
@@ -336,7 +336,7 @@ namespace TestPandemic2
 
             map = map.addDisease(atl, 2);
             map = map.addDisease(chicago, 1);
-            map = map.addDisease(newyork, 3); 
+            map = map.addDisease(newyork, 3);
 
             GameState gs = new GameState(newyork, map);
             Assert.AreEqual(6, gs.map.numInfectionsInCities);
@@ -345,6 +345,33 @@ namespace TestPandemic2
 
             GameState newgs = new GameState(gs, newMap);
             Assert.AreEqual(5, newgs.map.numInfectionsInCities);
+        }
+
+        [TestMethod]
+        public void testCardHolderUpdate()
+        {
+            City b1 = map.addCity("jhuihb", DiseaseColor.BLUE);
+            City o1 = map.addCity("hkjh", DiseaseColor.ORANGE);
+            City o2 = map.addCity("ionnj", DiseaseColor.ORANGE);
+            City o3 = map.addCity("k", DiseaseColor.ORANGE);
+            
+            gs = new GameState(newyork, map, 2, 1);
+
+
+            gs.players[0] = gs.players[0].addCard(o1);
+            gs.players[0] = gs.players[0].addCard(o2);
+            gs.players[1] = gs.players[1].addCard(o3);
+            gs.players[1] = gs.players[1].addCard(b1);
+
+            gs = gs.recalcForAddCard(gs.players[0], o1);
+            gs = gs.recalcForAddCard(gs.players[0], o2);
+            gs = gs.recalcForAddCard(gs.players[1], o3);
+            gs = gs.recalcForAddCard(gs.players[1], b1);
+
+            //Assert.AreEqual(orange, gs.bestOrangeCardHolder.Key);
+            Assert.AreEqual(2, gs.bestCardHolder[(int)DiseaseColor.ORANGE].Value);
+            //Assert.AreEqual(notOrange, gs.bestBlueCardHolder.Key);
+            Assert.AreEqual(1, gs.bestCardHolder[(int)DiseaseColor.BLUE].Value);
         }
 
         [TestMethod]
@@ -375,13 +402,13 @@ namespace TestPandemic2
             Action q = new CureCityAction(newyork, newyork.color);
             GameState cured = q.execute(gs);
             float eval = outbreakHater.evalGame(cured);
-            Action action = noOutbreaks.bfs_findbest(gs,1);
+            Action action = noOutbreaks.bfs_findbest(gs, 1);
             GameState newGS = action.execute(gs);
             float eval2 = outbreakHater.evalGame(newGS);
             Assert.AreEqual(2, newGS.map.diseaseLevel(newyork, newyork.color));
             //Assert.AreEqual(1, gs.map.aboutToOutbreak.Count());
 
-            
+
 
             //testing adding + removin disease from about to outbreak list
             newGS.map = newGS.map.addDisease(chicago, 3);

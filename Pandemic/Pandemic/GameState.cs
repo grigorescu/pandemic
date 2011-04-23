@@ -17,6 +17,8 @@ namespace Pandemic
         public int numMoves;
         public int cpMovesUsed = 0;
         public bool[] curesFound;
+        public KeyValuePair<int, int>[] bestCardHolder;
+
         //public int diseasesEradicated = 0; //TODO
         public Deck<City> infectionDeck;
         public Deck<City> playerDeck;
@@ -42,6 +44,7 @@ namespace Pandemic
             playerDeck = gs.playerDeck;
             turnAction = gs.turnAction;
             curesFound = gs.curesFound;
+            bestCardHolder  = gs.bestCardHolder;
         }
 
         public GameState adjustPlayer(Player p)
@@ -83,6 +86,11 @@ namespace Pandemic
             {
                 this.curesFound[i] = false;
             }
+            bestCardHolder = new KeyValuePair<int,int>[4];
+            bestCardHolder[(int)DiseaseColor.BLACK] = new KeyValuePair<int, int>(0, 0);
+            bestCardHolder[(int)DiseaseColor.BLUE] = new KeyValuePair<int, int>(0, 0);
+            bestCardHolder[(int)DiseaseColor.YELLOW] = new KeyValuePair<int, int>(0, 0);
+            bestCardHolder[(int)DiseaseColor.ORANGE] = new KeyValuePair<int, int>(0, 0);
         }
 
         public int numCures()
@@ -108,11 +116,6 @@ namespace Pandemic
         public void advanceMove()
         {
             cpMovesUsed++;
-            //if (cpMovesUsed == numMoves)
-            //{
-            //    currentPlayerNum = (currentPlayerNum + 1) % numPlayers;
-            //    cpMovesUsed = 0;
-            //}
         }
 
         public Player currentPlayer()
@@ -120,6 +123,138 @@ namespace Pandemic
             return players[currentPlayerNum];
         }
 
+        public GameState recalcForAddCard(Player playerWithCard, City card)
+        {
+            GameState gs = new GameState(this);
+
+            if (playerWithCard.playernum != gs.bestCardHolder[(int)card.color].Key)
+            {
+                int numCol = 0;
+                foreach (City c in playerWithCard.cards)
+                {
+                    if (c.color == card.color)
+                    {
+                        numCol++;
+                    }
+                }
+                if (numCol > gs.bestCardHolder[(int)card.color].Value)
+                {
+                    KeyValuePair<int, int>[] newbestCardHolder = new KeyValuePair<int, int>[4];
+                    for (int i = 0; i < 4; i++)
+                    {
+                        newbestCardHolder[i] = gs.bestCardHolder[i];
+                    }
+                    newbestCardHolder[(int)card.color] = new KeyValuePair<int, int>(playerWithCard.playernum, numCol);
+                    gs.bestCardHolder = newbestCardHolder;
+                }
+            }
+            else
+            {
+                KeyValuePair<int, int>[] newbestCardHolder = new KeyValuePair<int, int>[4];
+                for (int i = 0; i < 4; i++)
+                {
+                    newbestCardHolder[i] = gs.bestCardHolder[i];
+                }
+                newbestCardHolder[(int)card.color] = new KeyValuePair<int, int>(playerWithCard.playernum, gs.bestCardHolder[(int)card.color].Value + 1);
+                gs.bestCardHolder = newbestCardHolder;
+            }
+
+            return gs;
+        }
+
+        public GameState recalcBestCardHolder(GameState newGs, Player playerObj, DiseaseColor card)
+        {
+            int player = playerObj.playernum;
+            if (bestCardHolder[(int)card].Key != player)
+            {
+                return newGs;
+            }
+            
+
+            int bestColor = -1;
+            int bestPlayer = -1;
+            foreach (Player p in newGs.players)
+            {
+                int totalColor = 0;
+                
+                foreach (City c in p.cards)
+                {
+                    if(c.color == card) {
+                        totalColor++;
+                    }
+                    if (totalColor > bestColor)
+                    {
+                        bestColor = totalColor;
+                        bestPlayer = p.playernum;
+                    }
+                }
+            }
+
+            KeyValuePair<int, int>[] newbestCardHolder = new KeyValuePair<int, int>[4];
+            for (int i = 0; i < 4; i++)
+            {
+                newbestCardHolder[i] = newGs.bestCardHolder[i]; 
+            }
+            newbestCardHolder[(int)card] = new KeyValuePair<int, int>(bestPlayer, bestColor);
+            newGs.bestCardHolder = newbestCardHolder;
+            return newGs;
+        }
+        
+        /*
+        public void updateBestCardHolders()
+        {
+            //find the person with the largest run of each color 
+            //larger bonus for longer run
+            int curBlack = 0;
+            int curBlue = 0;
+            int curOrange = 0;
+            int curYellow = 0;
+            foreach (Player p in this.players)
+            {
+                curBlack = 0;
+                curBlue = 0;
+                curOrange = 0;
+                curYellow = 0;
+                foreach (City c in p.cards)
+                {
+                    if (c.color == DiseaseColor.BLACK)
+                    {
+                        curBlack++;
+                    }
+                    else if (c.color == DiseaseColor.BLUE)
+                    {
+                        curBlue++;
+                    }
+                    else if (c.color == DiseaseColor.ORANGE)
+                    {
+                        curOrange++;
+                    }
+                    else if (c.color == DiseaseColor.YELLOW)
+                    {
+                        curYellow++;
+                    }
+                }
+
+                if (curBlack >= bestBlackCardHolder.Value)
+                {
+                    bestBlackCardHolder = new KeyValuePair<Player,int>(p, curBlack);
+                }
+                if (curBlue >= bestBlueCardHolder.Value)
+                {
+                    bestBlueCardHolder = new KeyValuePair<Player, int>(p, curBlue);
+                }
+                if (curOrange >= bestOrangeCardHolder.Value)
+                {
+                    bestOrangeCardHolder = new KeyValuePair<Player, int>(p, curOrange);
+                }
+                if (curYellow >= bestYellowCardHolder.Value)
+                {
+                    bestYellowCardHolder = new KeyValuePair<Player, int>(p, curYellow);
+                }
+            }
+        }
+        */
+          
         public GameState cureDisease(DiseaseColor color)
         {
             GameState result = new GameState(this);
@@ -186,7 +321,7 @@ namespace Pandemic
             {
                 if (newGS.playerDeck.isNextCardEpidemic())
                 {
-                    
+
                     newGS.epidemicCard();
                     newGS.playerDeck.cardWeAreOn++;
                 }
@@ -199,9 +334,10 @@ namespace Pandemic
                         return newGS;
                     }
                     newGS = newGS.adjustPlayer(cp.addCard(newGS.playerDeck.mostRecent(1)[0]));
+                    newGS.recalcForAddCard(cp, newGS.playerDeck.mostRecent(1)[0]);
                 }
             }
-
+            
             return newGS;
         }
 
@@ -213,7 +349,7 @@ namespace Pandemic
             map = map.addDisease(c, 1);
             map = map.addDisease(c, 1);
             map = map.addDisease(c, 1);
-            
+
             map.infectionRate++;
             infectionDeck = infectionDeck.returnShuffledDiscard();
 

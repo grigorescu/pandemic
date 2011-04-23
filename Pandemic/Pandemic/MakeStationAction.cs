@@ -27,6 +27,7 @@ namespace Pandemic
             player = player.removeCard(position);
             g.players[g.currentPlayerNum] = player;
             g.advanceMove();
+            g = g.recalcBestCardHolder(g, player, position.color);
             return g;
         }
 

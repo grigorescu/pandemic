@@ -30,6 +30,7 @@ namespace Pandemic
             GameState result = gs.cureDisease(color);
             result = result.adjustPlayer(player);
             result.advanceMove();
+            result = result.recalcBestCardHolder(result, gs.currentPlayer(), color);
             return result;
 
         }

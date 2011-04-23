@@ -22,7 +22,7 @@ namespace Pandemic
             Map map = initializeCities();
             Deck<City> ideck = initializeInfectionDeck(map);
             //initialize player deck
-            
+
             gs = new GameState(atlanta, map, 4, 4, ideck, initializePlayerDeck(map));
             gs.map = initializeBoard(map);
             if (!allAI)
@@ -32,13 +32,15 @@ namespace Pandemic
 
             foreach (Player p in gs.players)
             {
-                gs = gs.drawPlayerCards(p,5);
+                gs = gs.drawPlayerCards(p, 5);
                 List<City> drawn = gs.playerDeck.mostRecent(5);
                 p.cards.AddRange(drawn);
                 gs = gs.adjustPlayer(p);
             }
+
+
             List<int> cardLocations = makeEpidemicCards(gs.playerDeck.drawDeck.Count, difficultyLevel);
-            
+
             for (int i = 0; i < cardLocations.Count; i++)
             {
                 cardLocations[i] = cardLocations[i] + gs.playerDeck.cardWeAreOn + 1;
@@ -66,14 +68,14 @@ namespace Pandemic
             lastAction = a;
             gs = a.execute(gs);
 
-            
+
             //throw up some GUI
             if (gs.hasLost())
             {
                 MessageBox.Show("You Lost");
                 Application.Exit();
             }
-            
+
             if (gs.hasWon())
             {
                 MessageBox.Show("You Won");
@@ -259,7 +261,7 @@ namespace Pandemic
             City.makeAdjacent(tokyo, sanFran);
             City.makeAdjacent(seoul, beijing);
 
-            m=m.addStation(atlanta);
+            m = m.addStation(atlanta);
 
             return m;
         }
