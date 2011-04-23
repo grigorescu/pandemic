@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
 namespace Pandemic
 {
     public class GameEngine
@@ -16,7 +15,7 @@ namespace Pandemic
         public Random rand = new Random();
         Player human;
 
-        public GameEngine(Player.Type hType, int difficultyLevel)
+        public GameEngine(Player.Type hType, int difficultyLevel, Boolean allAI)
         {
 
             //initialize infection and player decks and map
@@ -26,6 +25,10 @@ namespace Pandemic
             
             gs = new GameState(atlanta, map, 4, 4, ideck, initializePlayerDeck(map));
             gs.map = initializeBoard(map);
+            if (!allAI)
+            {
+                gs.players[0].isAI = false;
+            }
 
             foreach (Player p in gs.players)
             {
@@ -49,9 +52,17 @@ namespace Pandemic
 
         public void runAction()
         {
-
-            Action a = ev.bfs_findbest(gs, 5);
-
+            Action a;
+            if (gs.currentPlayer().isAI)
+            {
+                a = ev.bfs_findbest(gs, 5);
+            }
+            else
+            {
+                ActionChooser foo = new ActionChooser(gs.availableActions());
+                foo.ShowDialog();
+                a = foo.selection;
+            }
             lastAction = a;
             gs = a.execute(gs);
 

@@ -20,7 +20,6 @@ namespace Pandemic
 
             //GameEngine ge = new GameEngine();
             //GameBoard gb = new GameBoard(false, ge);
-            
 
             //gb.update(ge.gs);
             Application.Run(start);

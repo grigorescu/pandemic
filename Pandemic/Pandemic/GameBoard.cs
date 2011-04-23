@@ -273,6 +273,25 @@ namespace Pandemic
             update(ge.gs);
         }
 
+
+        
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+                timer1.Enabled = true;
+            else
+                timer1.Enabled = false;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            ge.runAction();
+            this.update(ge.gs);
+            if (checkBox1.Checked)
+                timer1.Enabled = true;
+        }
+
        
         
     }

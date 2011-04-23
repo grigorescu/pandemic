@@ -64,7 +64,8 @@ namespace Pandemic
                 {
                     numHardness = 6;
                 }
-                GameEngine ge = new GameEngine(humanPlayerType, numHardness);
+                Boolean allAI = checkBox1.Checked;
+                GameEngine ge = new GameEngine(humanPlayerType, numHardness, allAI);
                 GameBoard gb = new GameBoard(false, ge);
                 gb.Show();
                 this.Hide();

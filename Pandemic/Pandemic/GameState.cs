@@ -57,6 +57,7 @@ namespace Pandemic
             return result;
         }
 
+
         public GameState(GameState gs, Map map)
             : this(gs)
         {

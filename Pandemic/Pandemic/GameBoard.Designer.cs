@@ -34,6 +34,7 @@ namespace Pandemic
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameBoard));
             this.board = new System.Windows.Forms.PictureBox();
             this.nextActButton = new System.Windows.Forms.Button();
@@ -45,7 +46,8 @@ namespace Pandemic
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.currPlayerInfo = new System.Windows.Forms.RichTextBox();
-            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.board)).BeginInit();
             this.SuspendLayout();
             // 
@@ -155,7 +157,6 @@ namespace Pandemic
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(240, 387);
             this.rectangleShape1.Click += new System.EventHandler(this.rectangleShape1_Click);
-           
             // 
             // currPlayerInfo
             // 
@@ -166,11 +167,29 @@ namespace Pandemic
             this.currPlayerInfo.TabIndex = 8;
             this.currPlayerInfo.Text = "";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(1078, 687);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(87, 17);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "Keep playing";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1284, 784);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.currPlayerInfo);
             this.Controls.Add(this.nextActButton);
             this.Controls.Add(this.label3);
@@ -184,6 +203,7 @@ namespace Pandemic
             this.Resize += new System.EventHandler(this.GameBoard_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.board)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -198,6 +218,8 @@ namespace Pandemic
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
         private System.Windows.Forms.RichTextBox currPlayerInfo;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Timer timer1;
 
         
         

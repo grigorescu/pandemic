@@ -36,6 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.playerType = new System.Windows.Forms.PictureBox();
             this.startGame = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.playerType)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,12 +128,24 @@
             this.startGame.UseVisualStyleBackColor = true;
             this.startGame.Click += new System.EventHandler(this.startGame_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.checkBox1.Location = new System.Drawing.Point(389, 236);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(77, 17);
+            this.checkBox1.TabIndex = 8;
+            this.checkBox1.Text = "No Human";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // StartScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
             this.ClientSize = new System.Drawing.Size(529, 703);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.startGame);
             this.Controls.Add(this.playerType);
             this.Controls.Add(this.label3);
@@ -159,5 +172,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox playerType;
         private System.Windows.Forms.Button startGame;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
