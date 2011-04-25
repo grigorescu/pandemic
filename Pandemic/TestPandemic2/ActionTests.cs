@@ -70,8 +70,8 @@ namespace TestPandemic2
         [TestMethod()]
         public void moveExecuteTest()
         {
-            City atlanta = new City("Atlanta", DiseaseColor.BLUE);
-            City newyork = new City("NewYork", DiseaseColor.BLUE);
+            City atlanta = new City("Atlanta", DiseaseColor.BLUE, 0);
+            City newyork = new City("NewYork", DiseaseColor.BLUE, 1);
             City.makeAdjacent(atlanta, newyork);
             GameState gs = new GameState(atlanta, null);
             MoveAction action = new MoveAction(newyork);

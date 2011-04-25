@@ -11,7 +11,8 @@ namespace Pandemic
         public List<Card> discardDeck;
         public List<int> epidemicCards;
         public int cardWeAreOn = 0;
-        public Random random;
+        public Boolean  isRandom;
+        private static Random random = new Random();
         Boolean isPlayerDeck;
         public Boolean isOverdrawn;
 
@@ -20,10 +21,7 @@ namespace Pandemic
             drawDeck = new List<Card>();
             drawDeck.AddRange(cards);
             discardDeck = new List<Card>();
-            if (isRandom)
-            {
-                random = new Random();
-            }
+            this.isRandom = isRandom;
 
             this.isPlayerDeck = isPlayerDeck;
 
@@ -41,7 +39,6 @@ namespace Pandemic
             drawDeck.AddRange(old.drawDeck);
             discardDeck = new List<Card>();
             discardDeck.AddRange(old.discardDeck);
-            random = old.random;
             isPlayerDeck = old.isPlayerDeck;
             epidemicCards = old.epidemicCards;
             cardWeAreOn = old.cardWeAreOn;
@@ -114,7 +111,7 @@ namespace Pandemic
 
         public void shuffle(List<Card> deck)
         {
-            if (random == null)
+            if (!isRandom)
                 return;
 
             Card temp1;

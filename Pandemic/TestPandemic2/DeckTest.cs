@@ -24,11 +24,11 @@ namespace TestPandemic2
         [TestInitialize()]
         public void initialize()
         {
-            newYork = new City("New York", DiseaseColor.BLUE);
-            newark = new City("Newark", DiseaseColor.BLUE);
-            atlanta = new City("Atlanta", DiseaseColor.BLUE);
-            chicago = new City("Chicago", DiseaseColor.BLUE);
-            miami = new City("Miami", DiseaseColor.ORANGE);
+            newYork = new City("New York", DiseaseColor.BLUE,0);
+            newark = new City("Newark", DiseaseColor.BLUE, 1);
+            atlanta = new City("Atlanta", DiseaseColor.BLUE, 2);
+            chicago = new City("Chicago", DiseaseColor.BLUE, 3);
+            miami = new City("Miami", DiseaseColor.ORANGE, 4);
             List<City> cities = new List<City>();
             cities.Add(newYork);
             cities.Add(newark);

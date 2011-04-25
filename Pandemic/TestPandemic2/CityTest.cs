@@ -67,7 +67,7 @@ namespace TestPandemic2
         [TestInitialize()]
         public void initialize()
         {
-            newYork = new City("New York", DiseaseColor.BLUE);
+            newYork = new City("New York", DiseaseColor.BLUE, 0);
         }
         /// <summary>
         ///A test for City Constructor
@@ -77,7 +77,7 @@ namespace TestPandemic2
         {
             string name = "New York";
             DiseaseColor color = DiseaseColor.BLACK;
-            City target = new City(name, color);
+            City target = new City(name, color, 1);
             Assert.AreEqual(name, target.name);
             Assert.AreEqual(color, target.color);
         }
@@ -85,7 +85,7 @@ namespace TestPandemic2
         [TestMethod()]
         public void CityAddAdj()
         {
-            City newark = new City("Newark", DiseaseColor.BLUE);
+            City newark = new City("Newark", DiseaseColor.BLUE, 1);
             City.makeAdjacent(newark, newYork);
             Assert.IsTrue(newYork.isAdjacent(newark));
         }

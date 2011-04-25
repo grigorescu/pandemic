@@ -64,7 +64,7 @@ namespace Pandemic
 
         }
 
-        private Dictionary<City, CityData> cities;
+        private CityData[] cities;
         public List<City> aboutToOutbreak;
         public int numInfectionsInCities = 0;
         private int _outbreakCount = 0;
@@ -72,6 +72,8 @@ namespace Pandemic
         public int infectionRate = 0; //spot on board not num cards to draw
         //dont modify the station list
         public List<City> stations;
+        public List<City> allCities;
+        private int numCities;
 
         public int outbreakCount
         {
@@ -80,20 +82,27 @@ namespace Pandemic
 
         public Map()
         {
-            cities = new Dictionary<City, CityData>();
+            cities = new CityData[0];
             stations = new List<City>();
             aboutToOutbreak = new List<City>();
+            allCities = new List<City>();
         }
 
         public Map(Map oldMap)
         {
-            cities = new Dictionary<City, CityData>(oldMap.cities);
+            numCities = oldMap.numCities;
+            cities = new CityData[numCities];
+            for (int i = 0; i < numCities; i++)
+            {
+                cities[i] = oldMap.cities[i];
+            }
+            allCities = oldMap.allCities;
             _outbreakCount = oldMap.outbreakCount;
             stations = oldMap.stations;
             aboutToOutbreak = oldMap.aboutToOutbreak;
             numStations = oldMap.numStations;
             infectionRate = oldMap.infectionRate;
-            numInfectionsInCities = oldMap.numInfectionsInCities;
+            numInfectionsInCities = oldMap.numInfectionsInCities;            
         }
 
         //dangerous...modifies the Map
@@ -105,9 +114,9 @@ namespace Pandemic
             for (int i = 0; i < num; i++)
             {
 
-                if (result.cities[c].disease(color) < 3)
+                if (result.cities[c.cityNumber].disease(color) < 3)
                 {
-                    result.cities[c] = result.cities[c].adjustDisease(color, 1);
+                    result.cities[c.cityNumber] = result.cities[c.cityNumber].adjustDisease(color, 1);
 
                     if (result.diseaseLevel(c, color) == 3)
                     {
@@ -130,9 +139,9 @@ namespace Pandemic
                         toEvaluate.RemoveAt(0);
                         if (outbreaks.Contains(current))
                             continue;
-                        if (result.cities[current].disease(color) < 3)
+                        if (result.cities[current.cityNumber].disease(color) < 3)
                         {
-                            result.cities[current] = result.cities[current].adjustDisease(color, 1);
+                            result.cities[current.cityNumber] = result.cities[current.cityNumber].adjustDisease(color, 1);
                         }
                         else
                         {
@@ -157,7 +166,7 @@ namespace Pandemic
         public Map removeDisease(City city, DiseaseColor color)
         {
             Map result = new Map(this);
-            result.cities[city] = result.cities[city].adjustDisease(color, -1);
+            result.cities[city.cityNumber] = result.cities[city.cityNumber].adjustDisease(color, -1);
 
             result.numInfectionsInCities --;
 
@@ -174,44 +183,48 @@ namespace Pandemic
         {
             Map result = new Map(this);
             result.stations.Add(city);
-            result.cities[city] = cities[city].addStation();
-            result.cities[city].moveActions = null;
+            result.cities[city.cityNumber] = cities[city.cityNumber].addStation();
+            result.cities[city.cityNumber].moveActions = null;
             return result;
         }
 
         public int diseaseLevel(City city, DiseaseColor color)
         {
-            return cities[city].disease(color);
+            return cities[city.cityNumber].disease(color);
         }
 
         public City addCity(String name, DiseaseColor color, float x = 0f, float y = 0f)
-        {
-            City city = new City(name, color, x, y);
-            cities[city] = new CityData();
+        {            
+            City city = new City(name, color, numCities, x, y);
+            numCities++;
+
+            CityData[] newData = new CityData[numCities];
+            for (int i = 0; i < numCities - 1; i++)
+            {
+                newData[i] = cities[i];
+            }
+            cities = newData;
+            cities[city.cityNumber] = new CityData();
+            allCities.Add(city);
             return city;
         }
 
         public bool hasStation(City city)
         {
-            return cities[city].hasStation();
-        }
-
-        public ICollection<City> allCities
-        {
-            get { return cities.Keys; }
+            return cities[city.cityNumber].hasStation();
         }
 
 
         public List<MoveAction> getMoveActionsFor(Player player)
         {
-            if (cities[player.position].moveActions == null)
+            if (cities[player.position.cityNumber].moveActions == null)
             {
                 List<MoveAction> moves = new List<MoveAction>();
                 foreach (City c in player.position.adjacent)
                 {
                     moves.Add(new MoveAction(c));
                 }
-                if (cities[player.position].hasStation())
+                if (cities[player.position.cityNumber].hasStation())
                 {
                     foreach (City c in stations)
                     {
@@ -223,10 +236,10 @@ namespace Pandemic
                         moves.Add(new MoveAction(c));
                     }
                 }
-                cities[player.position].moveActions = moves;
+                cities[player.position.cityNumber].moveActions = moves;
 
             }
-            return cities[player.position].moveActions;
+            return cities[player.position.cityNumber].moveActions;
         }
 
         public List<CureCityAction> getCureActionsFor(Player player)
