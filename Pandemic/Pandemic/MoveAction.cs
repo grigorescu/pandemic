@@ -9,19 +9,17 @@ namespace Pandemic
     public class MoveAction : Action
     {
 
-        Player player;
         City dest;
 
-        public MoveAction(Player player, City dest)
+        public MoveAction(City dest)
         {
-            this.player = player;
             this.dest = dest;
         }
 
         public override GameState execute(GameState gs)
         {
-            Debug.Assert(debug_gs == null || debug_gs == gs, "Action used on an unintended gamestate");
-            Player movedPlayer = new Player(dest, player);
+            //Debug.Assert(debug_gs == null || debug_gs == gs, "Action used on an unintended gamestate");
+            Player movedPlayer = new Player(dest, gs.currentPlayer());
             GameState result = gs.adjustPlayer(movedPlayer);
             result.advanceMove();
             return result;

@@ -74,7 +74,7 @@ namespace TestPandemic2
             City newyork = new City("NewYork", DiseaseColor.BLUE);
             City.makeAdjacent(atlanta, newyork);
             GameState gs = new GameState(atlanta, null);
-            MoveAction action = new MoveAction(gs.currentPlayer(), newyork);
+            MoveAction action = new MoveAction(newyork);
             GameState newGs = action.execute(gs);
             Assert.AreEqual(newyork, newGs.currentPlayer().position);
             Assert.AreEqual(atlanta, gs.currentPlayer().position);

@@ -57,7 +57,7 @@ namespace Pandemic
             Action a;
             if (gs.currentPlayer().isAI)
             {
-                a = ev.bfs_findbest(gs, 5);
+                a = ev.bfs_findbest(gs, 8);
             }
             else
             {

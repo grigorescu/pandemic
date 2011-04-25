@@ -13,6 +13,7 @@ namespace Pandemic
         {
             private int[] diseases;
             private bool station = false;
+            public List<MoveAction> moveActions;
 
             public CityData()
             {
@@ -31,6 +32,7 @@ namespace Pandemic
                 diseases[(int)DiseaseColor.YELLOW] = other.diseases[(int)DiseaseColor.YELLOW];
                 diseases[(int)DiseaseColor.ORANGE] = other.diseases[(int)DiseaseColor.ORANGE];
                 station = other.station;
+                moveActions = other.moveActions;
             }
 
             public int disease(DiseaseColor color)
@@ -63,7 +65,6 @@ namespace Pandemic
         }
 
         private Dictionary<City, CityData> cities;
-        public Dictionary<String, City> cityNames;
         public List<City> aboutToOutbreak;
         public int numInfectionsInCities = 0;
         private int _outbreakCount = 0;
@@ -80,7 +81,6 @@ namespace Pandemic
         public Map()
         {
             cities = new Dictionary<City, CityData>();
-            cityNames = new Dictionary<string, City>();
             stations = new List<City>();
             aboutToOutbreak = new List<City>();
         }
@@ -88,7 +88,6 @@ namespace Pandemic
         public Map(Map oldMap)
         {
             cities = new Dictionary<City, CityData>(oldMap.cities);
-            cityNames = new Dictionary<string, City>(oldMap.cityNames);
             _outbreakCount = oldMap.outbreakCount;
             stations = oldMap.stations;
             aboutToOutbreak = oldMap.aboutToOutbreak;
@@ -176,6 +175,7 @@ namespace Pandemic
             Map result = new Map(this);
             result.stations.Add(city);
             result.cities[city] = cities[city].addStation();
+            result.cities[city].moveActions = null;
             return result;
         }
 
@@ -188,7 +188,6 @@ namespace Pandemic
         {
             City city = new City(name, color, x, y);
             cities[city] = new CityData();
-            cityNames.Add(city.name, city);
             return city;
         }
 
@@ -205,23 +204,29 @@ namespace Pandemic
 
         public List<MoveAction> getMoveActionsFor(Player player)
         {
-            List<MoveAction> moves = new List<MoveAction>();
-            foreach (City c in player.position.adjacent)
+            if (cities[player.position].moveActions == null)
             {
-                moves.Add(new MoveAction(player, c));
-            }
-            if (cities[player.position].hasStation())
-            {
-                foreach (City c in stations)
+                List<MoveAction> moves = new List<MoveAction>();
+                foreach (City c in player.position.adjacent)
                 {
-                    if (c == player.position)
-                        continue;
-                    if (player.position.isAdjacent(c))
-                        continue;
-                    moves.Add(new MoveAction(player, c));
+                    moves.Add(new MoveAction(c));
                 }
+                if (cities[player.position].hasStation())
+                {
+                    foreach (City c in stations)
+                    {
+                        if (c == player.position)
+                            continue;
+                        // this turns out to be slow
+                        if (player.position.isAdjacent(c))
+                            continue;
+                        moves.Add(new MoveAction(c));
+                    }
+                }
+                cities[player.position].moveActions = moves;
+
             }
-            return moves;
+            return cities[player.position].moveActions;
         }
 
         public List<CureCityAction> getCureActionsFor(Player player)
