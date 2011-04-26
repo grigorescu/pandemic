@@ -93,16 +93,16 @@ namespace Pandemic
             s = "Player " + (playernum + 1).ToString() + " ";
             if (isAI)
             {
-                s += " AI player ";
+                s += " AI player \n";
             }
-            else s += " Human player ";
+            else s += " Human player \n";
 
-            s += " Current pos" + position;
+            s += " Current city:" + position + "\n";
 
-            s += " Cards in hand ";
+            s += " Cards in hand: ";
             foreach (City c in cards)
             {
-                s += c.ToString() + " ";
+                s += c.ToString() + " \n";
             }
 
             return s;

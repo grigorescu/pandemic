@@ -20,6 +20,7 @@ namespace Pandemic
         public GameBoard(bool realGame, GameEngine ge)
         {
             InitializeComponent();
+
             if (realGame)
             {
                 initializeRealGame();
@@ -66,47 +67,95 @@ namespace Pandemic
             }
             
             //current player + last action HUD info
-            makePlayer(gs.currentPlayer().ToString(), .869f, .565f, 0, 0, 2);
+            makePlayer(gs.currentPlayer().ToString(), .952f, .107f, 0, 0, 2);
             if (ge.lastAction != null)
             {
                 //String lastAct = gs.currentPlayer().ToString() + ge.lastAction.ToString();
-                makeLabel(("Player " + gs.currentPlayer().ToString() + ": " + ge.lastAction.ToString()), .843f, .694f, Color.Green, Color.DarkGray, 11);
-            }
-
-            //debug
-            if (debug)
-            {
-                foreach (City a in map.allCities)
-                {
-                    foreach (City b in a.adjacent)
-                    {
-                        Microsoft.VisualBasic.PowerPacks.LineShape connection = new Microsoft.VisualBasic.PowerPacks.LineShape();
-                        connection.Name = "connection";
-                        connection.BorderColor = Color.HotPink;
-                        connection.X1 = (int)a.relativeX*Width;
-                        connection.X2 = (int)b.relativeX * Width;
-                        connection.Y1 = (int)a.relativeY * Height;
-                        connection.Y2 = (int)b.relativeY * Height;
-                        //this.Controls.Add(connection);
-                        //toRemove.Add(connection);
-                    }
-                }
+                makeLabel(("Player " + gs.currentPlayer().ToString() + ": " + ge.lastAction.ToString()), .848f, .450f, Color.Green, Color.LightGray, 9);
             }
 
             this.currPlayerInfo.Text = gs.currentPlayer().ToLongDescr();
 
+            //other players cards
+            String otherHandstxt = null;
+            int n = 0;
+            foreach (Player p in gs.players)
+            {
+                if (p.playernum != gs.currentPlayerNum)
+                {
+                    n = p.playernum + 1;
+                    otherHandstxt += "PLAYER " + n + " hand: \n";
+                    foreach (City c in p.cards)
+                    {
+                        otherHandstxt += c.name + "\n";
+                    }
+                }    
+            }
+            this.otherHands.Text = otherHandstxt;
 
             //outbreak counter
+            switch (gs.map.outbreakCount)
+            {
+                case 0:
+                    makeCounter(false, .023f, .564f);
+                    break;
+                case 1:
+                    makeCounter(false, .048f, .619f);
+                    break;
+                case 2:
+                    makeCounter(false, .019f, .658f);
+                    break;
+                case 3:
+                    makeCounter(false, .048f, .711f);
+                    break;
+                case 4:
+                    makeCounter(false, .022f, .760f);
+                    break;
+                case 5:
+                    makeCounter(false, .047f, .790f);
+                    break;
+                case 6:
+                    makeCounter(false, .019f, .850f);
+                    break;
+                case 7:
+                    makeCounter(false, .049f, .890f);
+                    break;
+                case 8:
+                    makeCounter(false, .020f, .931f);
+                    break;
+            }
 
             //infection counter
+            switch (gs.map.infectionRate)
+            {
+                case 0:
+                    makeCounter(true, .505f, .190f);
+                    break;
+                case 1:
+                    makeCounter(true, .542f, .200f);
+                    break;
+                case 2:
+                    makeCounter(true, .578f, .214f);
+                    break;
+                case 3:
+                    makeCounter(true, .616f, .224f);
+                    break;
+                case 4:
+                    makeCounter(true, .652f, .220f);
+                    break;
+                case 5:
+                    makeCounter(true, .686f, .210f);
+                    break;
+                case 6:
+                    makeCounter(true, .723f, .195f);
+                    break;
+            }
 
             //infection discard deck
+            this.discardInfection.Text = gs.infectionDeck.mostRecent(1)[0].name;
 
-            //num cubes left (per disease color)
-
-            //cards left (per deck type)
-
-            //disease cured
+            //cards left in the player deck
+            makeLabel((gs.playerDeck.drawDeck.Count.ToString()+ " cards left"), .537f, .737f, Color.White, Color.Navy);    
 
             //disease irradicated
 
@@ -239,6 +288,37 @@ namespace Pandemic
             toRemove.Add(p1);
         }
 
+        private void makeCounter(bool infection, float x, float y, int sizeMulti = 1)
+        {
+            PictureBox piece = new PictureBox();
+            //Console.WriteLine(pName);
+            if (infection)
+            {
+                piece.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\infectionRate.png")));
+            }
+            else
+            {
+                piece.Image = ((System.Drawing.Image)(Image.FromFile("..\\..\\pics\\epidemicPiece.png")));
+            }
+
+            piece.Location = new System.Drawing.Point((int)(x * board.Width), (int)(y * board.Height));
+            piece.Size = new Size(32, 43);
+            if (sizeMulti != 1)
+            {
+                piece.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                piece.Size = new Size(18 * sizeMulti, 21 * sizeMulti);
+            }
+            else
+            {
+                piece.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            }
+
+            piece.TabIndex = 7;
+            piece.TabStop = false;
+            this.Controls.Add(piece);
+            this.Controls.SetChildIndex(piece, 1);
+            toRemove.Add(piece);
+        }
 
         //Clicks:
         private void board_Click(object sender, EventArgs e)
@@ -291,8 +371,6 @@ namespace Pandemic
             if (checkBox1.Checked)
                 timer1.Enabled = true;
         }
-
-       
-        
+    
     }
 }

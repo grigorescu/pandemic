@@ -24,6 +24,8 @@ namespace Pandemic
         public Deck<City> playerDeck;
         public Action turnAction;
         public int turnCounter = 0;
+        public Boolean hasEpidemic = false;
+
 
         public GameState setTurnAction(Action action)
         {
@@ -45,6 +47,7 @@ namespace Pandemic
             turnAction = gs.turnAction;
             curesFound = gs.curesFound;
             bestCardHolder  = gs.bestCardHolder;
+            hasEpidemic = gs.hasEpidemic;
         }
 
         public GameState adjustPlayer(Player p)
@@ -199,61 +202,6 @@ namespace Pandemic
             newGs.bestCardHolder = newbestCardHolder;
             return newGs;
         }
-        
-        /*
-        public void updateBestCardHolders()
-        {
-            //find the person with the largest run of each color 
-            //larger bonus for longer run
-            int curBlack = 0;
-            int curBlue = 0;
-            int curOrange = 0;
-            int curYellow = 0;
-            foreach (Player p in this.players)
-            {
-                curBlack = 0;
-                curBlue = 0;
-                curOrange = 0;
-                curYellow = 0;
-                foreach (City c in p.cards)
-                {
-                    if (c.color == DiseaseColor.BLACK)
-                    {
-                        curBlack++;
-                    }
-                    else if (c.color == DiseaseColor.BLUE)
-                    {
-                        curBlue++;
-                    }
-                    else if (c.color == DiseaseColor.ORANGE)
-                    {
-                        curOrange++;
-                    }
-                    else if (c.color == DiseaseColor.YELLOW)
-                    {
-                        curYellow++;
-                    }
-                }
-
-                if (curBlack >= bestBlackCardHolder.Value)
-                {
-                    bestBlackCardHolder = new KeyValuePair<Player,int>(p, curBlack);
-                }
-                if (curBlue >= bestBlueCardHolder.Value)
-                {
-                    bestBlueCardHolder = new KeyValuePair<Player, int>(p, curBlue);
-                }
-                if (curOrange >= bestOrangeCardHolder.Value)
-                {
-                    bestOrangeCardHolder = new KeyValuePair<Player, int>(p, curOrange);
-                }
-                if (curYellow >= bestYellowCardHolder.Value)
-                {
-                    bestYellowCardHolder = new KeyValuePair<Player, int>(p, curYellow);
-                }
-            }
-        }
-        */
           
         public GameState cureDisease(DiseaseColor color)
         {
@@ -353,6 +301,7 @@ namespace Pandemic
             map.infectionRate++;
             infectionDeck = infectionDeck.returnShuffledDiscard();
 
+            hasEpidemic = true;
         }
     }
 }

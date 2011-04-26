@@ -27,7 +27,7 @@ namespace Pandemic
 
         public override string ToString()
         {
-            return "Curing " + position.name;
+            return "Treat " + position.name;
         }
     }
 }

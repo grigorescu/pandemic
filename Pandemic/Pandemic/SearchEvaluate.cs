@@ -46,7 +46,7 @@ namespace Pandemic
 
             }
 
-            Console.WriteLine("My best action was: " + bestAction.ToString() + " with a score of " + bestEvaluation);
+           // Console.WriteLine("My best action was: " + bestAction.ToString() + " with a score of " + bestEvaluation);
             return bestAction;
         }
 
@@ -65,7 +65,7 @@ namespace Pandemic
                 initialActions.Add(actionPair);
             }
             Action result = bfs_bestConsequenceReduced(initialActions, depth - 1);
-            Console.WriteLine("My best action was: " + result.ToString() + " with a score of " + bestEvaluation);
+            //Console.WriteLine("My best action was: " + result.ToString() + " with a score of " + bestEvaluation);
             return result;
         }
 
@@ -91,11 +91,11 @@ namespace Pandemic
         private class Pair { public Action initialAction; public GameState resultState; }
         private Action bfs_bestConsequenceReduced(List<Pair> currentStates, int depth)
         {
-            Console.WriteLine("At depth " + depth + " currentStates is " + currentStates.Count);
+            //Console.WriteLine("At depth " + depth + " currentStates is " + currentStates.Count);
             if (depth % 5 == 0)
             {
                 currentStates = reduceStatesDuplicates(currentStates);
-                Console.WriteLine("reduced to " + currentStates.Count);
+                //Console.WriteLine("reduced to " + currentStates.Count);
             }
 
             if (currentStates.Count > 10000)
@@ -160,7 +160,7 @@ namespace Pandemic
             //should result in a reduced search
             gameStates.Sort(delegate(Pair p1, Pair p2) { return evaluate(p2.resultState).CompareTo(evaluate(p1.resultState)); });
             List<Pair> result = gameStates.GetRange(0,5000);
-            Console.WriteLine("Selecting states with eval " + evaluate(result[0].resultState) + " to " + evaluate(result[4999].resultState));
+            //Console.WriteLine("Selecting states with eval " + evaluate(result[0].resultState) + " to " + evaluate(result[4999].resultState));
             return result;
             
         }

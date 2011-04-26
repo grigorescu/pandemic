@@ -59,5 +59,10 @@ namespace Pandemic
             }
             return result;
         }
+
+        public override string ToString()
+        {
+            return "Trading card: " + card.name + " from player: "+ from.playernum.ToString() + " to player: " + to.playernum.ToString();
+        }
     }
 }

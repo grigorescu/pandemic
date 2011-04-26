@@ -13,7 +13,6 @@ namespace Pandemic
         SearchEvaluate ev;
         public Action lastAction;
         public Random rand = new Random();
-        Player human;
 
         public GameEngine(Player.Type hType, int difficultyLevel, Boolean allAI)
         {
@@ -68,6 +67,12 @@ namespace Pandemic
             lastAction = a;
             gs = a.execute(gs);
 
+            if (gs.hasEpidemic)
+            {
+                gs.hasEpidemic = false;
+                MessageBox.Show("Epidemic Occured!");
+
+            }
 
             //throw up some GUI
             if (gs.hasLost())

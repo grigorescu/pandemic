@@ -83,8 +83,7 @@ namespace Pandemic
 
         override public string ToString()
         {
-            String s = "City: " + name;
-            return s;
+            return name;
         }
     }
 }

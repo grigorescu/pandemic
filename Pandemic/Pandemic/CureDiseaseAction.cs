@@ -48,5 +48,10 @@ namespace Pandemic
             }
             return result;
         }
+
+        public override string ToString()
+        {
+            return "Cure " + color.ToString() + " disease";
+        }
     }
 }
